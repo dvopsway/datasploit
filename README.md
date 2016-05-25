@@ -1,30 +1,39 @@
-# OSINT for Penetration Testing
+# Overview of the tool:
+*Performs OSINT on a domain / email / username / phone and find out information from different sources.
+*Correlates and collaborate the results, show them in a consolidated manner. 
+*Tries to find out credentials, api-keys, tokens, subdomains, domain history, legacy portals, etc. related to the target. 
+*Available as single consolidating tool as well as standalone scripts.
+*Available in both GUI and Console.
+ 
 
 ## Usage
+All the files starting with domain_ requires a domain name to be passed as first argument. Same follows for email, etc. 
+
+```
+python domain_subdomain.py <domain_name>
+```
+
+To launch an automated OSINT on domain, shoot following query:
 
 ```
 python domainOsint.py <domain_name>
 ```
-```
-python git_searcher.py <git_username>
-```
-```
-python emailOsint.py <emailId>
-```
 
 ## SETUP and Contribution
+* Change config_sample.py to config.py
+```
+mv config_sample.py config.py
+```
+* Configure respective API keys. Documentation for generating these keys will be shared very shortly. Believe us, we are working hard to get things in place. 
+* Sources for which API keys are missing, will be simply skipped for the search. 
 
 ### Config files
 
-```
-cp config_sample.py config.py
-```
-Then modify config.py with your API Keys
 
 ### Python dependencies
 
 ```
-pip install -r requirements.txt
+pip install -r requirements.txt (This list is unupdated right now, will be updated soon)
 ```
 
 If you have updated the code and want to push the pip dependencies in the requirements.txt 
@@ -32,30 +41,8 @@ If you have updated the code and want to push the pip dependencies in the requir
 ```
 pip freeze > requirements.txt
 ```
-Note: if you don't do this within virtual environment it will take list of all packages installed in system
 
 
-### Virtual Environment setup
-
-after first time clone you need to configure virtual environment
-```
-pip install virtualenv
-```
-
-Documentation 
-http://docs.python-guide.org/en/latest/dev/virtualenvs/
-
-Setup virtual environment for first time
-```
-virtualenv venv
-```
-
-Activate Virtual Environment
-```
-source venv/bin/activate
-```
-
-Deactivate
-```
-deactivate
-```
+# Note
+'''Currently project is in developement phase and lot of work is going on. Custom error handling is also not implemented, and all the focus is to create required functionality. 
+'''
