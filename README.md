@@ -2,7 +2,7 @@
 * Performs OSINT on a domain / email / username / phone and find out information from different sources.
 * Correlates and collaborate the results, show them in a consolidated manner. 
 * Tries to find out credentials, api-keys, tokens, subdomains, domain history, legacy portals, etc. related to the target. 
-* Available as single consolidating tool as well as standalone scripts.
+* Use specific script / launch automated OSINT for consolidated data.
 * Available in both GUI and Console.
  
 
