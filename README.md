@@ -33,7 +33,7 @@ mv config_sample.py config.py
 ### Python dependencies
 
 ```
-pip install -r requirements.txt (This list is unupdated right now, will be updated soon)
+pip install -r requirements.txt
 ```
 
 If you have updated the code and want to push the pip dependencies in the requirements.txt 
