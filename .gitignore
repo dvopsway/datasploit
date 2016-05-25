@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+config.py
+/config.py
+
 # C extensions
 *.so
 
@@ -60,3 +63,4 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+

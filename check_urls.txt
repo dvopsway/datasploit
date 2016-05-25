@@ -1,0 +1,16 @@
+web.config
+robots.txt
+htaccess.txt
+trace.axd
+readme.html
+admin.php
+admin
+phpinfo.php
+sitemap.xml
+config.xml
+crossdomain.xml
+Joomla.xml
+readme.txt
+.git
+admin/
+wp-login.php

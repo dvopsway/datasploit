@@ -1,0 +1,8 @@
+# Dump parent dictionary in Db.
+# Make web UI. Fetch from Db.
+# Old search? Get details from DB. New one, make a new search, ask user to wait for 5 minutes.
+# Seperate tile for each result set.
+# Result set data should be linkable to respective module. Ex. Clicking on username should call usernameosint.py
+
+# Design pluggable APIs structure so the tool works as a framework. 
+# Option to configure Alerting and monitoring on all result set specific to an entity. Based on hash mismatch, send alerts. 
