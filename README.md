@@ -1,9 +1,9 @@
 # Overview of the tool:
-*Performs OSINT on a domain / email / username / phone and find out information from different sources.
-*Correlates and collaborate the results, show them in a consolidated manner. 
-*Tries to find out credentials, api-keys, tokens, subdomains, domain history, legacy portals, etc. related to the target. 
-*Available as single consolidating tool as well as standalone scripts.
-*Available in both GUI and Console.
+* Performs OSINT on a domain / email / username / phone and find out information from different sources.
+* Correlates and collaborate the results, show them in a consolidated manner. 
+* Tries to find out credentials, api-keys, tokens, subdomains, domain history, legacy portals, etc. related to the target. 
+* Available as single consolidating tool as well as standalone scripts.
+* Available in both GUI and Console.
  
 
 ## Usage
@@ -44,5 +44,6 @@ pip freeze > requirements.txt
 
 
 # Note
-'''Currently project is in developement phase and lot of work is going on. Custom error handling is also not implemented, and all the focus is to create required functionality. 
-'''
+```
+Currently project is in developement phase and lot of work is going on. Custom error handling is also not implemented, and all the focus is to create required functionality. 
+```
