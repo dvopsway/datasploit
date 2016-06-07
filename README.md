@@ -1,4 +1,4 @@
--- This is project is on hold till 15th June. Checkout our release on 16th. Some new features coming in and major bugs going out. --
+Note: This is project is on hold till 15th June as I am packed up with some work. Checkout our release on 16th. Some new features coming in and major bugs going out. --
 
 # Overview of the tool:
 * Performs OSINT on a domain / email / username / phone and find out information from different sources.
