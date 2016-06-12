@@ -39,7 +39,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'djangotoolbox',
     'facebook',
-    'homepage'
+    'homepage',
+    'domain'
 )
 
 

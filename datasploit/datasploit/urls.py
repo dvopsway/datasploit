@@ -9,4 +9,5 @@ urlpatterns = patterns('',
     url(r'^admin/', include(admin.site.urls)),
     url(r'^',include('homepage.urls', namespace="homepage")),
     url(r'^facebook/',include('facebook.urls', namespace="facebook")),
+    url(r'^domain/',include('domain.urls', namespace="domain")),
 )
