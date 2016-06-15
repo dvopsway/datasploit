@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<br>
+    <div class="row">
+        <div class="col s12">
+            <form action="{% url 'domain:search' %}" method="post">
+                <div class="input-field">
+                    {% csrf_token %}
+                    <input id="search" name="search" type="search" class="form-control">
+                    <label for="search">Search Domain</label>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    {% if request.session.search_activated == "yes" %}
+    who is info is : {{ whois }}
+    {% endif %}
+{% endblock %}

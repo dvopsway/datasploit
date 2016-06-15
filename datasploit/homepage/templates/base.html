@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="padmakar ojha">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}">
+    <title>datasploit</title>
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.css' %}"  media="screen,projection"/>
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/highlight.min.js"></script>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/8.6/styles/default.min.css">
+    <script src="//cdn.jsdelivr.net/highlight.js/8.6/highlight.min.js"></script>
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    {% block customjs %}
+    {% endblock %}
+
+</head>
+
+<body>
+<div>
+    {% block navibar %}
+        <nav>
+          <div class="blue-grey darken-3 nav-wrapper">
+            <a href="/" class="brand-logo right">datasploit</a>
+            <ul id="nav-mobile" class="left hide-on-med-and-down">
+              <!--  <li><a href="/">dashboard</a></li> -->
+                <li><a href="{% url 'domain:home' %}">domain</a></li>
+                <li><a href="{% url 'facebook:home' %}">facebook</a></li>
+            </ul>
+          </div>
+        </nav>
+    {% endblock %}
+    <div id="content">
+        {% block content %}  {% endblock %}
+    </div>
+</div>
+
+<!--Import jQuery before materialize.js-->
+<script type="text/javascript" src="{% static 'js/jquery-2.1.1.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+{% block script %}  {% endblock %}
+
+</body>
+</html>
