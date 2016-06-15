@@ -7,7 +7,8 @@ import time
 import hashlib
 from bs4 import BeautifulSoup
 
-
+import os
+import urllib
 def git_user_details(username):
 	req = requests.get("https://api.github.com/users/%s" % (username))
 	return json.loads(req.content)
@@ -32,7 +33,89 @@ def usernamesearch(username):
 			profiles.append(at['href'])
 	return profiles
 
-
+def profilepic(urls):
+	
+	imglinks=[]
+	if len(urls) or git_data['avatar_url']:
+		if not os.path.exists(username):
+			os.makedirs(username)
+	if git_data['avatar_url']:
+		path=username+"/github.jpg"
+		urllib.urlretrieve(git_data['avatar_url'], path)
+	for url in urls:
+		if 'etsy' in url:
+			res=requests.get(url)
+			soup=BeautifulSoup(res.content,"lxml")
+			img=soup.find('meta',{'property':'og:image'})
+			imglinks.append(img['content'])
+			path=username+"/etsy.jpg"
+			urllib.urlretrieve(img['content'], path)
+			
+			continue
+		elif 'gravatar' in url:
+			try:
+				res=requests.get(url)
+				soup=BeautifulSoup(res.content,"lxml")
+				img=soup.find('a',{'class':'photo-0'})
+				imglinks.append(img['href'])
+				path=username+"/gravatar.jpg"
+				urllib.urlretrieve(img['href'], path)
+				continue
+			except KeyError:
+				pass
+		elif 'youtube' in url:
+			try:
+				res=requests.get(url)
+				soup=BeautifulSoup(res.content,"lxml")
+				img=soup.find('link',{'itemprop':'thumbnailUrl'})
+				imglinks.append(img['href'])	
+				path=username+"/youtube.jpg"
+				urllib.urlretrieve(img['href'], path)
+				continue
+			except KeyError:
+				pass
+		elif 'twitter' in url:
+			res=requests.get(url)
+			soup=BeautifulSoup(res.content,"lxml")
+			img=soup.find('img',{'class':'ProfileAvatar-image'})
+			imglinks.append(img['src'])
+			path=username+"/twitter.jpg"
+			urllib.urlretrieve(img['src'], path)
+			continue			
+		elif 'photobucket' in url:
+			res=requests.get(url)
+			soup=BeautifulSoup(res.content,"lxml")
+			img=soup.find('img',{'class':'avatar smallProfile'})
+			imglinks.append(img['src'])
+			path=username+"/photobucket.jpg"
+			urllib.urlretrieve(img['src'], path)
+			continue
+		elif 'pinterest' in url:
+			res=requests.get(url)
+			soup=BeautifulSoup(res.content,"lxml")
+			img=soup.find('meta',{'property':'og:image'})
+			imglinks.append(img['content'])
+			path=username+"/pinterest.jpg"
+			urllib.urlretrieve(img['content'], path)
+			continue
+		elif 'ebay' in url:
+			res=requests.get(url)
+			soup=BeautifulSoup(res.content,"lxml")
+			img=soup.find('img',{'class':'prof_img img'})
+			imglinks.append(img['src'])
+			path=username+"/ebay.jpg"
+			urllib.urlretrieve(img['src'], path)
+			continue
+		elif 'deviantart.' in url:
+			res=requests.get(url)
+			soup=BeautifulSoup(res.content,"lxml")
+			img=soup.find('img',{'class':'avatar float-left'})
+			imglinks.append(img['src'])
+			path=username+"/deviantart.jpg"
+			urllib.urlretrieve(img['src'], path)
+			continue
+		
+	return imglinks
 
 username = sys.argv[1]
 
@@ -62,4 +145,9 @@ for lnk in links:
 	print lnk
 print "\n-----------------------------\n"
 
-
+imagelinks=profilepic(links)
+imagelinks.append(git_data['avatar_url'])
+print "\t\t\t[+] Finding Profile Pics\n"
+for x in imagelinks:
+	print x
+print "\n\n-----------------------------\n"
