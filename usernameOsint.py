@@ -33,9 +33,24 @@ def usernamesearch(username):
 			profiles.append(at['href'])
 	return profiles
 
+imglinks=[]
+def extracting(prourl,tag,attribute,value,finattrib,profile):
+	res=requests.get(prourl)
+	soup=BeautifulSoup(res.content,"lxml")
+	img=soup.find(tag,{attribute:value})
+	if profile=="ask.fm":
+		img[finattrib]="http:"+img[finattrib]
+		imglinks.append(img[finattrib])
+		path=username+"/"+profile+".jpg"
+		urllib.urlretrieve(img[finattrib], path)
+	else:
+		imglinks.append(img[finattrib])
+		path=username+"/"+profile+".jpg"
+		urllib.urlretrieve(img[finattrib], path)
+
 def profilepic(urls):
 	
-	imglinks=[]
+	
 	if len(urls) or git_data['avatar_url']:
 		if not os.path.exists(username):
 			os.makedirs(username)
@@ -44,78 +59,172 @@ def profilepic(urls):
 		urllib.urlretrieve(git_data['avatar_url'], path)
 	for url in urls:
 		if 'etsy' in url:
-			res=requests.get(url)
-			soup=BeautifulSoup(res.content,"lxml")
-			img=soup.find('meta',{'property':'og:image'})
-			imglinks.append(img['content'])
-			path=username+"/etsy.jpg"
-			urllib.urlretrieve(img['content'], path)
-			
-			continue
+			try:
+				tg='meta'
+				att='property'
+				val='og:image'
+				valx='content'
+				pro="etsy"
+				extracting(url,tg,att,val,valx,pro)
+				continue
+			except KeyError:
+				pass
 		elif 'gravatar' in url:
 			try:
-				res=requests.get(url)
-				soup=BeautifulSoup(res.content,"lxml")
-				img=soup.find('a',{'class':'photo-0'})
-				imglinks.append(img['href'])
-				path=username+"/gravatar.jpg"
-				urllib.urlretrieve(img['href'], path)
+				tg='a'
+				att='class'
+				val='photo-0'
+				valx='href'
+				pro="gravatar"
+				extracting(url,tg,att,val,valx,pro)
 				continue
 			except KeyError:
-				pass
+				pass	
 		elif 'youtube' in url:
 			try:
-				res=requests.get(url)
-				soup=BeautifulSoup(res.content,"lxml")
-				img=soup.find('link',{'itemprop':'thumbnailUrl'})
-				imglinks.append(img['href'])	
-				path=username+"/youtube.jpg"
-				urllib.urlretrieve(img['href'], path)
+				tg='link'
+				att='itemprop'
+				val='thumbnailUrl'
+				valx='href'
+				pro="youtube"
+				extracting(url,tg,att,val,valx,pro)
+				continue
+			except KeyError:
+				pass		
+		elif 'twitter' in url:
+			try:
+				tg='img'
+				att='class'
+				val='ProfileAvatar-image'
+				valx='src'
+				pro="twitter"
+				extracting(url,tg,att,val,valx,pro)
 				continue
 			except KeyError:
 				pass
-		elif 'twitter' in url:
-			res=requests.get(url)
-			soup=BeautifulSoup(res.content,"lxml")
-			img=soup.find('img',{'class':'ProfileAvatar-image'})
-			imglinks.append(img['src'])
-			path=username+"/twitter.jpg"
-			urllib.urlretrieve(img['src'], path)
-			continue			
 		elif 'photobucket' in url:
-			res=requests.get(url)
-			soup=BeautifulSoup(res.content,"lxml")
-			img=soup.find('img',{'class':'avatar smallProfile'})
-			imglinks.append(img['src'])
-			path=username+"/photobucket.jpg"
-			urllib.urlretrieve(img['src'], path)
-			continue
+			try:
+				tg='img'
+				att='class'
+				val='avatar smallProfile'
+				valx='src'
+				pro="photobucket"
+				extracting(url,tg,att,val,valx,pro)
+				continue
+			except KeyError:
+				pass
 		elif 'pinterest' in url:
-			res=requests.get(url)
-			soup=BeautifulSoup(res.content,"lxml")
-			img=soup.find('meta',{'property':'og:image'})
-			imglinks.append(img['content'])
-			path=username+"/pinterest.jpg"
-			urllib.urlretrieve(img['content'], path)
-			continue
+			try:
+				tg='meta'
+				att='property'
+				val='og:image'
+				valx='content'
+				pro="pinterest"
+				extracting(url,tg,att,val,valx,pro)
+				continue
+			except KeyError:
+				pass
 		elif 'ebay' in url:
-			res=requests.get(url)
-			soup=BeautifulSoup(res.content,"lxml")
-			img=soup.find('img',{'class':'prof_img img'})
-			imglinks.append(img['src'])
-			path=username+"/ebay.jpg"
-			urllib.urlretrieve(img['src'], path)
-			continue
-		elif 'deviantart.' in url:
-			res=requests.get(url)
-			soup=BeautifulSoup(res.content,"lxml")
-			img=soup.find('img',{'class':'avatar float-left'})
-			imglinks.append(img['src'])
-			path=username+"/deviantart.jpg"
-			urllib.urlretrieve(img['src'], path)
-			continue
-		
+			try:
+				tg='img'
+				att='class'
+				val='prof_img img'
+				valx='src'
+				pro="ebay"
+				extracting(url,tg,att,val,valx,pro)
+				continue
+			except KeyError:
+				pass
+		elif 'steam' in url:
+			try:
+				tg='link'
+				att='rel'
+				val='image_src'
+				valx='href'
+				pro="steam"
+				extracting(url,tg,att,val,valx,pro)
+				continue
+			except KeyError:
+				pass
+		elif 'deviantart' in url:
+			try:
+				tg='img'
+				att='class'
+				val='avatar float-left'
+				valx='src'
+				pro="deviantart"
+				extracting(url,tg,att,val,valx,pro)
+				continue
+			except KeyError:
+				pass
+		elif 'last.fm' in url:
+			try:
+				tg='img'
+				att='class'
+				val='avatar'
+				valx='src'
+				pro="last.fm"
+				extracting(url,tg,att,val,valx,pro)
+				continue
+			except KeyError:
+				pass
+		elif 'vimeo' in url:
+			try:
+				tg='meta'
+				att='property'
+				val='og:image'
+				valx='content'
+				pro="vimeo"
+				extracting(url,tg,att,val,valx,pro)
+				continue
+			except KeyError:
+				pass
+		elif 'vimeo' in url:
+			try:
+				tg='meta'
+				att='property'
+				val='og:image'
+				valx='content'
+				pro="vimeo"
+				extracting(url,tg,att,val,valx,pro)
+				continue
+			except KeyError:
+				pass
+		elif 'ask.fm' in url:
+			try:
+				tg='meta'
+				att='property'
+				val='og:image'
+				valx='content'
+				pro="ask.fm"
+				extracting(url,tg,att,val,valx,pro)
+				continue
+			except KeyError:
+				pass
+		elif 'tripadvisor' in url:
+			try:
+				tg='img'
+				att='class'
+				val='avatarUrl'
+				valx='src'
+				pro="tripadvisor"
+				extracting(url,tg,att,val,valx,pro)
+				continue
+			except KeyError:
+				pass
+		elif 'tumblr' in url:
+			try:
+				tg='link'
+				att='rel'
+				val='icon'
+				valx='href'
+				pro="tumblr"
+				extracting(url,tg,att,val,valx,pro)
+				continue
+			except KeyError:
+				pass
 	return imglinks
+
 
 username = sys.argv[1]
 
