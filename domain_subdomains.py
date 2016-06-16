@@ -116,7 +116,7 @@ def find_subdomains_from_wolfram(domain):
 
 
 
-def netcraft_makecookies(cookie):
+#def netcraft_makecookies(cookie):
 	cookies = dict()
 	cookies_list = cookie[0:cookie.find(';')].split("=")
 	cookies[cookies_list[0]] = cookies_list[1]
@@ -125,10 +125,11 @@ def netcraft_makecookies(cookie):
 
 def subdomains_from_netcraft(domain):
 	target_dom_name = domain.split(".")
-	url = "http://searchdns.netcraft.com/?restriction=site+ends+with&host=%s" % (domain)
-	req = requests.get(url)
-	cookies = netcraft_makecookies(req.headers['set-cookie'])
-	req1 = requests.get("http://searchdns.netcraft.com/?host=%s" % (domain), cookies = cookies)
+	#url = "http://searchdns.netcraft.com/?restriction=site+ends+with&host=%s" % (domain)
+	#req = requests.get(url)
+	#cookies = netcraft_makecookies(req.headers['set-cookie'])
+	#req1 = requests.get("http://searchdns.netcraft.com/?host=%s" % (domain), cookies = cookies)
+	req1 = requests.get("http://searchdns.netcraft.com/?host=%s" % (domain))
 	link_regx = re.compile('<a href="http://toolbar.netcraft.com/site_report\?url=(.*)">')
 	links_list = link_regx.findall(req1.content)
 	for x in links_list:
