@@ -49,7 +49,7 @@ from ip_shodan import shodansearch
 from domain_zoomeye import get_accesstoken_zoomeye,search_zoomeye
 from domain_checkpunkspider import checkpunkspider
 from domain_wappalyzer import wappalyzeit
-from domain_subdomains import check_and_append_subdomains,subdomains,find_subdomains_from_wolfram,netcraft_makecookies,subdomains_from_netcraft
+from domain_subdomains import check_and_append_subdomains,subdomains,find_subdomains_from_wolfram,subdomains_from_netcraft
 from domain_pagelinks import pagelinks
 from domain_history import netcraft_domain_history
 from domain_emailhunter import emailhunter

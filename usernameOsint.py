@@ -7,7 +7,8 @@ import time
 import hashlib
 from bs4 import BeautifulSoup
 
-
+import os
+import urllib
 def git_user_details(username):
 	req = requests.get("https://api.github.com/users/%s" % (username))
 	return json.loads(req.content)
@@ -32,6 +33,197 @@ def usernamesearch(username):
 			profiles.append(at['href'])
 	return profiles
 
+imglinks=[]
+def extracting(prourl,tag,attribute,value,finattrib,profile):
+	res=requests.get(prourl)
+	soup=BeautifulSoup(res.content,"lxml")
+	img=soup.find(tag,{attribute:value})
+	if profile=="ask.fm":
+		img[finattrib]="http:"+img[finattrib]
+		imglinks.append(img[finattrib])
+		path=username+"/"+profile+".jpg"
+		urllib.urlretrieve(img[finattrib], path)
+	else:
+		imglinks.append(img[finattrib])
+		path=username+"/"+profile+".jpg"
+		urllib.urlretrieve(img[finattrib], path)
+
+def profilepic(urls):
+	
+	
+	if len(urls) or git_data['avatar_url']:
+		if not os.path.exists(username):
+			os.makedirs(username)
+	if git_data['avatar_url']:
+		path=username+"/github.jpg"
+		urllib.urlretrieve(git_data['avatar_url'], path)
+	for url in urls:
+		if 'etsy' in url:
+			try:
+				tg='meta'
+				att='property'
+				val='og:image'
+				valx='content'
+				pro="etsy"
+				extracting(url,tg,att,val,valx,pro)
+				continue
+			except KeyError:
+				pass
+		elif 'gravatar' in url:
+			try:
+				tg='a'
+				att='class'
+				val='photo-0'
+				valx='href'
+				pro="gravatar"
+				extracting(url,tg,att,val,valx,pro)
+				continue
+			except KeyError:
+				pass	
+		elif 'youtube' in url:
+			try:
+				tg='link'
+				att='itemprop'
+				val='thumbnailUrl'
+				valx='href'
+				pro="youtube"
+				extracting(url,tg,att,val,valx,pro)
+				continue
+			except KeyError:
+				pass		
+		elif 'twitter' in url:
+			try:
+				tg='img'
+				att='class'
+				val='ProfileAvatar-image'
+				valx='src'
+				pro="twitter"
+				extracting(url,tg,att,val,valx,pro)
+				continue
+			except KeyError:
+				pass
+		elif 'photobucket' in url:
+			try:
+				tg='img'
+				att='class'
+				val='avatar smallProfile'
+				valx='src'
+				pro="photobucket"
+				extracting(url,tg,att,val,valx,pro)
+				continue
+			except KeyError:
+				pass
+		elif 'pinterest' in url:
+			try:
+				tg='meta'
+				att='property'
+				val='og:image'
+				valx='content'
+				pro="pinterest"
+				extracting(url,tg,att,val,valx,pro)
+				continue
+			except KeyError:
+				pass
+		elif 'ebay' in url:
+			try:
+				tg='img'
+				att='class'
+				val='prof_img img'
+				valx='src'
+				pro="ebay"
+				extracting(url,tg,att,val,valx,pro)
+				continue
+			except KeyError:
+				pass
+		elif 'steam' in url:
+			try:
+				tg='link'
+				att='rel'
+				val='image_src'
+				valx='href'
+				pro="steam"
+				extracting(url,tg,att,val,valx,pro)
+				continue
+			except KeyError:
+				pass
+		elif 'deviantart' in url:
+			try:
+				tg='img'
+				att='class'
+				val='avatar float-left'
+				valx='src'
+				pro="deviantart"
+				extracting(url,tg,att,val,valx,pro)
+				continue
+			except KeyError:
+				pass
+		elif 'last.fm' in url:
+			try:
+				tg='img'
+				att='class'
+				val='avatar'
+				valx='src'
+				pro="last.fm"
+				extracting(url,tg,att,val,valx,pro)
+				continue
+			except KeyError:
+				pass
+		elif 'vimeo' in url:
+			try:
+				tg='meta'
+				att='property'
+				val='og:image'
+				valx='content'
+				pro="vimeo"
+				extracting(url,tg,att,val,valx,pro)
+				continue
+			except KeyError:
+				pass
+		elif 'vimeo' in url:
+			try:
+				tg='meta'
+				att='property'
+				val='og:image'
+				valx='content'
+				pro="vimeo"
+				extracting(url,tg,att,val,valx,pro)
+				continue
+			except KeyError:
+				pass
+		elif 'ask.fm' in url:
+			try:
+				tg='meta'
+				att='property'
+				val='og:image'
+				valx='content'
+				pro="ask.fm"
+				extracting(url,tg,att,val,valx,pro)
+				continue
+			except KeyError:
+				pass
+		elif 'tripadvisor' in url:
+			try:
+				tg='img'
+				att='class'
+				val='avatarUrl'
+				valx='src'
+				pro="tripadvisor"
+				extracting(url,tg,att,val,valx,pro)
+				continue
+			except KeyError:
+				pass
+		elif 'tumblr' in url:
+			try:
+				tg='link'
+				att='rel'
+				val='icon'
+				valx='href'
+				pro="tumblr"
+				extracting(url,tg,att,val,valx,pro)
+				continue
+			except KeyError:
+				pass
+	return imglinks
 
 
 username = sys.argv[1]
@@ -62,4 +254,9 @@ for lnk in links:
 	print lnk
 print "\n-----------------------------\n"
 
-
+imagelinks=profilepic(links)
+imagelinks.append(git_data['avatar_url'])
+print "\t\t\t[+] Finding Profile Pics\n"
+for x in imagelinks:
+	print x
+print "\n\n-----------------------------\n"
