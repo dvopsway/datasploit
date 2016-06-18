@@ -96,13 +96,6 @@ def main():
 			#print type(dns_records[x])
 	print "\n-----------------------------\n"
 
-	#checks results from zoomeye
-	#filters need to be applied
-	zoomeye_results = search_zoomeye(domain)
-	dict_zoomeye_results = json.loads(zoomeye_results)
-	print dict_zoomeye_results
-	print "\n-----------------------------\n"
-
 	#convert domain to reverse_domain for passing to checkpunkspider()
 	reversed_domain = ""
 	for x in reversed(domain.split(".")):
