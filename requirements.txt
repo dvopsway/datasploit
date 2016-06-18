@@ -8,7 +8,6 @@ argparse
 dnspython
 clearbit
 bs4
-emailhunter
 lxml
 tqdm
 json
