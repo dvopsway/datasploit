@@ -15,17 +15,16 @@ print email
 def haveIbeenpwned(email):
 	print "\t\t\t[+] Checking on Have_I_Been_Pwned...\n"
 	req = requests.get("https://haveibeenpwned.com/api/v2/breachedaccount/%s" % (email))
-	return req.content
+	return json.loads(req.content)
 
 
 def clearbit(email):
-	print "s"
 	header = {"Authorization" : "Bearer %s" % (cfg.clearbit_apikey)}
 	req = requests.get("https://person.clearbit.com/v1/people/email/%s" % (email), headers = header)
 	person_details = json.loads(req.content)
 	if ("error" in req.content and "queued" in req.content):
+		print "This might take some more time, Please run this script again, after 5 minutes."
 		time.sleep(20)
-		clearbit(email)
 	else:
 		return person_details
 
@@ -66,11 +65,22 @@ def emailscribddocs(email):
 	return links
 	
 	
-print haveIbeenpwned(email)
+'''hbp = haveIbeenpwned(email)
+for x in hbp:
+	print "Pwned at %s Instances\n" % len(hbp)
+	print "Title:%s\nBreachDate%s\nPwnCount%s\nDescription%s\nDataClasses%s\n" % (x['Title'], x['BreachDate'], x['PwnCount'], x['Description'],x['DataClasses'])
 print "\n-----------------------------\n"
-
+'''
 print "\t\t\t[+] Finding user information based on emailId\n"
-print clearbit(email)
+clb_data = clearbit(email)
+for x in clb_data.keys():
+	print '%s details:' % x
+	if type(clb_data[x]) == dict:
+		for y in clb_data[x].keys():
+			if clb_data[x][y] is not None:
+				print "%s:  %s, " % (y, clb_data[x][y])
+	elif clb_data[x] is not None:
+		print "\n%s:  %s" % (x, clb_data[x])
 print "\n-----------------------------\n"
 
 print "\t\t\t[+] Gravatar Link\n"
