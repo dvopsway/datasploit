@@ -17,7 +17,7 @@ def search_zoomeye(domain):
 	print "\t\t\t[+] Checking %s on Zoomeye" % (domain) 
 	zoomeye_token = get_accesstoken_zoomeye(domain)
 	authData = {"Authorization": "JWT " + str(zoomeye_token)}
-	req = requests.get('http://api.zoomeye.org/web/search/?query=site:nokia.com&page=1', headers=authData)
+	req = requests.get('http://api.zoomeye.org/web/search/?query=site:%s&page=1' % domain, headers=authData)
 	return req.text
 	
 
@@ -27,7 +27,10 @@ def main():
 	#filters need to be applied
 	zoomeye_results = search_zoomeye(domain)
 	dict_zoomeye_results = json.loads(zoomeye_results)
-	print dict_zoomeye_results
+	if 'matches' in dict_zoomeye_results.keys():
+		for x in dict_zoomeye_results['matches']:
+			if x['site'].split('.')[-2] == domain.split('.')[-2]:
+				print "IP: %s\nSite: %s\nTitle: %s\nHeaders: %s\nLocation: %s\n" % (x['ip'], x['site'], x['title'], x['headers'].replace("\n",""), x['geoinfo'])
 	print "\n-----------------------------\n"
 
 if __name__ == "__main__":
