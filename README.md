@@ -21,7 +21,7 @@ Other modules:
 * instagram_client_secret
 * jsonwhois
 
-*We are working towards few sample API keys which we can deliver as part of the project so new users can quickly evaluate the tool. Although those will help only in evaluating as al evaluations will go with these keys and hence more chances of hitting the rate limiting on them.*
+*We are working towards few sample API keys which we can deliver as part of the project, so that new users can quickly evaluate the tool. Although those will help only in running basic scans, as all the evaluations will go with these keys and hence more chances of hitting the rate limiting on these APIs.*
 
 ## Usage
 To launch an automated OSINT on domain, shoot following query:
