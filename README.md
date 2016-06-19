@@ -64,8 +64,3 @@ If you have updated the code and want to push the pip dependencies in the requir
 pip freeze > requirements.txt
 ```
 
-
-# Note
-```
-Currently project is in developement phase and lot of work is going on. Custom error handling is also not implemented, and all the focus is to create required functionality. 
-```
