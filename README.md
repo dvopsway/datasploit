@@ -21,10 +21,15 @@ Other modules:
 * instagram_client_secret
 * jsonwhois
 
-*We are working towards few sample API keys which we can deliver as part of the project so new users can quickly evaluate the tool. Although those will help only in evaluating as al evaluations will go with these keys and hence more chances of hitting the rate limiting on them.  *
+*We are working towards few sample API keys which we can deliver as part of the project so new users can quickly evaluate the tool. Although those will help only in evaluating as al evaluations will go with these keys and hence more chances of hitting the rate limiting on them.*
 
 ## Usage
-All the files starting with domain_ requires a domain name to be passed as first argument. Same follows for email, etc. 
+To launch an automated OSINT on domain, shoot following query:
+
+```
+python domainOsint.py <domain_name>
+```
+You can also run an standalone script, e.g.you might want to only run the subdomain finding script and avoid all other modules. In such case, use below mentioned command. *All the files starting with domain_ requires a domain name to be passed as first argument. Same follows for email, ip, etc.*
 
 ```
 python domain_subdomain.py <domain_name>
