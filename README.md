@@ -5,8 +5,7 @@
 * Use specific script / launch automated OSINT for consolidated data.
 * Available in both GUI and Console.
  
-Following API configs are mandatory for proper results in domainOsint.py [Automatic Osint] 
-domainOsint.py:
+Following API configs are mandatory for proper results in domainOsint.py:
 * shodan_api
 * censysio_id
 * censysio_secret
