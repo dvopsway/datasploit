@@ -1,5 +1,3 @@
-Note: This is project is on hold till 15th June as I am packed up with some work. Checkout our release on 16th. Some new features coming in and major bugs going out. --
-
 # Overview of the tool:
 * Performs OSINT on a domain / email / username / phone and find out information from different sources.
 * Correlates and collaborate the results, show them in a consolidated manner. 
@@ -7,6 +5,24 @@ Note: This is project is on hold till 15th June as I am packed up with some work
 * Use specific script / launch automated OSINT for consolidated data.
 * Available in both GUI and Console.
  
+Following API configs are mandatory for proper results as of now. 
+shodan_api
+github_access_token
+censysio_id
+censysio_secret
+facebook_access_token
+zoomeyeuser
+zoomeyepass
+clearbit_apikey
+emailhunter
+jsonwhois
+instagram_token
+instagram_client_id
+instagram_client_secret
+twitter_api
+twitter_secret
+
+We are working towards few sample API keys which we can deliver as part of the project so new users can quickly evaluate the tool. Although those will help only in evaluating as al evaluations will go with these keys and hence more chances of hitting the rate limiting on them.  
 
 ## Usage
 All the files starting with domain_ requires a domain name to be passed as first argument. Same follows for email, etc. 

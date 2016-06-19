@@ -10,5 +10,3 @@ clearbit
 bs4
 lxml
 tqdm
-json
-re
