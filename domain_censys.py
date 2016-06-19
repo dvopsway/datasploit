@@ -6,7 +6,6 @@ import config as cfg
 
 
 def censys_search(domain):
-    print "[+]\t Kicking off Censys Search. This may take a while.."
     pages = float('inf')
     page = 1
 

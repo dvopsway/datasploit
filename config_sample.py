@@ -1,8 +1,6 @@
 #Store all your config's here.
 #added to gitignore so will not be syned
 shodan_api="XYZ"
-zoomeyeuser = "XYZ"
-zoomeyepass = "XYZ"
 bing_api="XYZ"
 github_access_token="XYZ"
 builtwith_api="XYZ"

@@ -1,5 +1,3 @@
-Note: This is project is on hold till 15th June as I am packed up with some work. Checkout our release on 16th. Some new features coming in and major bugs going out. --
-
 # Overview of the tool:
 * Performs OSINT on a domain / email / username / phone and find out information from different sources.
 * Correlates and collaborate the results, show them in a consolidated manner. 
@@ -7,9 +5,31 @@ Note: This is project is on hold till 15th June as I am packed up with some work
 * Use specific script / launch automated OSINT for consolidated data.
 * Available in both GUI and Console.
  
+Following API configs are mandatory for proper results in domainOsint.py:
+* shodan_api
+* censysio_id
+* censysio_secret
+* zoomeyeuser
+* zoomeyepass
+* clearbit_apikey
+* emailhunter
+
+Other modules:
+* github_access_token
+* instagram_token
+* instagram_client_id
+* instagram_client_secret
+* jsonwhois
+
+*We are working towards few sample API keys which we can deliver as part of the project, so that new users can quickly evaluate the tool. Although those will help only in running basic scans, as all the evaluations will go with these keys and hence more chances of hitting the rate limiting on these APIs.*
 
 ## Usage
-All the files starting with domain_ requires a domain name to be passed as first argument. Same follows for email, etc. 
+To launch an automated OSINT on domain, shoot following query:
+
+```
+python domainOsint.py <domain_name>
+```
+You can also run an standalone script, e.g.you might want to only run the subdomain finding script and avoid all other modules. In such case, use below mentioned command. *All the files starting with domain_ requires a domain name to be passed as first argument. Same follows for email, ip, etc.*
 
 ```
 python domain_subdomain.py <domain_name>
@@ -44,8 +64,3 @@ If you have updated the code and want to push the pip dependencies in the requir
 pip freeze > requirements.txt
 ```
 
-
-# Note
-```
-Currently project is in developement phase and lot of work is going on. Custom error handling is also not implemented, and all the focus is to create required functionality. 
-```
