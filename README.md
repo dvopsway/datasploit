@@ -6,21 +6,21 @@
 * Available in both GUI and Console.
  
 Following API configs are mandatory for proper results as of now. 
-shodan_api
-github_access_token
-censysio_id
-censysio_secret
-facebook_access_token
-zoomeyeuser
-zoomeyepass
-clearbit_apikey
-emailhunter
-jsonwhois
-instagram_token
-instagram_client_id
-instagram_client_secret
-twitter_api
-twitter_secret
+* shodan_api
+* github_access_token
+* censysio_id
+* censysio_secret
+* facebook_access_token
+* zoomeyeuser
+* zoomeyepass
+* clearbit_apikey
+* emailhunter
+* jsonwhois
+* instagram_token
+* instagram_client_id
+* instagram_client_secret
+* twitter_api
+* twitter_secret
 
 We are working towards few sample API keys which we can deliver as part of the project so new users can quickly evaluate the tool. Although those will help only in evaluating as al evaluations will go with these keys and hence more chances of hitting the rate limiting on them.  
 
