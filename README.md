@@ -5,24 +5,24 @@
 * Use specific script / launch automated OSINT for consolidated data.
 * Available in both GUI and Console.
  
-Following API configs are mandatory for proper results as of now. 
+Following API configs are mandatory for proper results in domainOsint.py [Automatic Osint] 
+domainOsint.py:
 * shodan_api
-* github_access_token
 * censysio_id
 * censysio_secret
-* facebook_access_token
 * zoomeyeuser
 * zoomeyepass
 * clearbit_apikey
 * emailhunter
-* jsonwhois
+
+Other modules:
+* github_access_token
 * instagram_token
 * instagram_client_id
 * instagram_client_secret
-* twitter_api
-* twitter_secret
+* jsonwhois
 
-We are working towards few sample API keys which we can deliver as part of the project so new users can quickly evaluate the tool. Although those will help only in evaluating as al evaluations will go with these keys and hence more chances of hitting the rate limiting on them.  
+*We are working towards few sample API keys which we can deliver as part of the project so new users can quickly evaluate the tool. Although those will help only in evaluating as al evaluations will go with these keys and hence more chances of hitting the rate limiting on them.  *
 
 ## Usage
 All the files starting with domain_ requires a domain name to be passed as first argument. Same follows for email, etc. 
