@@ -205,13 +205,14 @@ def main():
 
 	#checks results from zoomeye
 	#filters need to be applied
-	zoomeye_results = search_zoomeye(domain)
-	dict_zoomeye_results = json.loads(zoomeye_results)
-	if 'matches' in dict_zoomeye_results.keys():
-		for x in dict_zoomeye_results['matches']:
-			if x['site'].split('.')[-2] == domain.split('.')[-2]:
-				print "IP: %s\nSite: %s\nTitle: %s\nHeaders: %s\nLocation: %s\n" % (x['ip'], x['site'], x['title'], x['headers'].replace("\n",""), x['geoinfo'])
-	print "\n-----------------------------\n"
+	if cfg.zoomeyeuser != "" and cfg.zoomeyepass != "":
+		zoomeye_results = search_zoomeye(domain)
+		dict_zoomeye_results = json.loads(zoomeye_results)
+		if 'matches' in dict_zoomeye_results.keys():
+			for x in dict_zoomeye_results['matches']:
+				if x['site'].split('.')[-2] == domain.split('.')[-2]:
+					print "IP: %s\nSite: %s\nTitle: %s\nHeaders: %s\nLocation: %s\n" % (x['ip'], x['site'], x['title'], x['headers'].replace("\n",""), x['geoinfo'])
+		print "\n-----------------------------\n"
 
 	print "[+]\t Kicking off Censys Search. This may take a while.."
 	censys_search(domain)
