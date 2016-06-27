@@ -10,3 +10,4 @@ clearbit
 bs4
 lxml
 tqdm
+config

@@ -1,10 +1,13 @@
 import requests
 import sys
 import json
+import warnings
+
+warnings.filterwarnings("ignore")
 
 def checkpunkspider(reversed_domain):
 	print "\t\t\t[+] Checking PunkSpider" 
-	req= requests.post("http://www.punkspider.org/service/search/detail/" + reversed_domain)
+	req= requests.post("http://www.punkspider.org/service/search/detail/" + reversed_domain, verify=False)
 	res = json.loads(req.content)
 	if res['data']:
 		print "[+] Few vulnerabilities found at Punkspider"
