@@ -11,8 +11,9 @@ def emailhunter(domain):
 	url="https://api.emailhunter.co/v1/search?api_key=%s&domain=%s" % (cfg.emailhunter, domain)
 	res=requests.get(url)
 	parsed=json.loads(res.text)
-	for email in parsed['emails']:
-		collected_emails.append(email['value'])
+	if 'emails' in parsed.keys():
+		for email in parsed['emails']:
+			collected_emails.append(email['value'])
 
 def main():
 	domain = sys.argv[1]
