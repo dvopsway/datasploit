@@ -17,11 +17,12 @@ def emailhunter(domain):
 
 def main():
 	domain = sys.argv[1]
-	emailhunter(domain)
-	print "\t\t\t[+] Finding Email Ids\n"
-	for x in collected_emails:
-		print str(x) + ", ",
-	print "\n\n-----------------------------\n"
+	if cfg.emailhunter != "" and cfg.emailhunter != "":
+		emailhunter(domain)
+		print "\t\t\t[+] Finding Email Ids\n"
+		for x in collected_emails:
+			print str(x) + ", ",
+		print "\n\n-----------------------------\n"
 
 
 if __name__ == "__main__":
