@@ -254,18 +254,25 @@ def twitterdetails(username):
 
 	#extracting hashtags
 	f = open('temptweets.txt', 'r')
-	strings = re.findall(r'(?:\#+[\w_]+[\w\'_\-]*[\w_]+)', f.read())	#Regex Source: https://marcobonzanini.com/2015/03/09/mining-twitter-data-with-python-part-2/
-
+	q=f.read()
+	strings = re.findall(r'(?:\#+[\w_]+[\w\'_\-]*[\w_]+)', q)	#Regex(s) Source: https://marcobonzanini.com/2015/03/09/mining-twitter-data-with-python-part-2/
+	#extracting users
+	tusers = re.findall(r'(?:@[\w_]+)', q)
 	f.close()
 
 	hashlist=[]
-
+	userlist=[]
 	for item in strings:
 		item=item.strip( '#' )
 		item=item.lower()
 		hashlist.append(item)
 	
-	return hashlist
+	for itm in tusers:
+		itm=itm.strip( '@' )
+		itm=itm.lower()
+		userlist.append(itm)
+		
+	return hashlist,userlist
 
 
 
@@ -307,9 +314,16 @@ print "\n\n-----------------------------\n"
 
 if (twitterex==1):
 #counting hashtag occurrence
-	hashlist=twitterdetails(username)
+	hashlist,userlist=twitterdetails(username)
 	count= Counter(hashlist).most_common()
 	print "Hashtag Occurrence for user "+username+" based on last 1000 tweets"
 	for hash,cnt in count:
 		print "#"+hash+" : "+str(cnt)
+		print "\n"
+		
+#counting user occurrence
+	countu= Counter(userlist).most_common()
+	print "Users Occurrence for user "+username+" based on last 1000 tweets"
+	for usr,cnt in countu:
+		print "@"+usr+" : "+str(cnt)
 		print "\n"
