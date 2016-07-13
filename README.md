@@ -1,66 +1,16 @@
-# Overview of the tool:
-* Performs OSINT on a domain / email / username / phone and find out information from different sources.
+# Welcome to the DataSploit!!!
+![DataSploit Logo](DataSploit_logo.png)
+## Overview
+
+* Performs automated OSINT on a domain / email / username / phone and find out relevant information from different sources. 
+* Useful for Pen-testers, Cyber Investigators, Product companies, defensive security professionals, etc. 
 * Correlates and collaborate the results, show them in a consolidated manner. 
-* Tries to find out credentials, api-keys, tokens, subdomains, domain history, legacy portals, etc. related to the target. 
-* Use specific script / launch automated OSINT for consolidated data.
+* Tries to find out credentials, api-keys, tokens, subdomains, domain history, legacy portals, etc. related to the target.
+* Available as single consolidating tool as well as standalone scripts. 
 * Available in both GUI and Console.
- 
-Following API configs are mandatory for proper results in domainOsint.py:
-* shodan_api
-* censysio_id
-* censysio_secret
-* zoomeyeuser
-* zoomeyepass
-* clearbit_apikey
-* emailhunter
 
-Other modules:
-* github_access_token
-* instagram_token
-* instagram_client_id
-* instagram_client_secret
-* jsonwhois
-
-*We are working towards few sample API keys which we can deliver as part of the project, so that new users can quickly evaluate the tool. Although those will help only in running basic scans, as all the evaluations will go with these keys and hence more chances of hitting the rate limiting on these APIs.*
-
-## Usage
-To launch an automated OSINT on domain, shoot following query:
-
-```
-python domainOsint.py <domain_name>
-```
-You can also run an standalone script, e.g.you might want to only run the subdomain finding script and avoid all other modules. In such case, use below mentioned command. *All the files starting with domain_ requires a domain name to be passed as first argument. Same follows for email, ip, etc.*
-
-```
-python domain_subdomain.py <domain_name>
-```
-
-To launch an automated OSINT on domain, shoot following query:
-
-```
-python domainOsint.py <domain_name>
-```
-
-## SETUP and Contribution
-* Change config_sample.py to config.py
-```
-mv config_sample.py config.py
-```
-* Configure respective API keys. Documentation for generating these keys will be shared very shortly. Believe us, we are working hard to get things in place. 
-* Sources for which API keys are missing, will be simply skipped for the search. 
-
-### Config files
-
-
-### Python dependencies
-
-```
-pip install -r requirements.txt
-```
-
-If you have updated the code and want to push the pip dependencies in the requirements.txt 
-
-```
-pip freeze > requirements.txt
-```
-
+### More Details About the tool:
+* [Click here for detailed documentation](../../wiki).
+* [Click here to check step by step installation guide](../../wiki/Setup-Guide).
+* [Click here to check step by step guide to generate API keys](../../wiki/API-Generation).
+* Feel free to fork, Contribute, raise issues and suggest the feature you want in the tool. We will love to hear from you.
