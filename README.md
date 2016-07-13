@@ -1,5 +1,5 @@
 # Welcome to the DataSploit!!!
-![DataSploit Logo](https://github.com/nkpanda/datasploit/blob/master/DataSploit_logo.png)
+![DataSploit Logo](DataSploit_logo.png)
 ## Overview
 
 * Performs automated OSINT on a domain / email / username / phone and find out relevant information from different sources. 
@@ -10,7 +10,7 @@
 * Available in both GUI and Console.
 
 ### More Details About the tool:
-* [Click here for detailed documentation](https://github.com/nkpanda/datasploit/wiki).
-* [Click here to check step by step installation guide](https://github.com/nkpanda/datasploit/wiki/Setup-Guide).
-* [Click here to check step by step guide to generate API keys](https://github.com/nkpanda/datasploit/wiki/API-Generation).
+* [Click here for detailed documentation](../../wiki).
+* [Click here to check step by step installation guide](../../wiki/Setup-Guide).
+* [Click here to check step by step guide to generate API keys](../../wiki/API-Generation).
 * Feel free to fork, Contribute, raise issues and suggest the feature you want in the tool. We will love to hear from you.
