@@ -1,3 +1,4 @@
+site_name: DataSploit
 pages:
 - Home: 'index.md'
 - About: 'apiGeneration.md'
