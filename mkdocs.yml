@@ -1,0 +1,6 @@
+site_name: DataSploit
+pages:
+- Home: README.md
+- SetupGuide: setupGuide.md
+- API Help: apiGeneration.md
+
