@@ -1,0 +1,4 @@
+pages:
+- Home: 'index.md'
+- About: 'apiGeneration.md'
+- Setup: 'setupGuide.md'
