@@ -22,14 +22,15 @@ We need following API keys to run this tool efficiently.
 
 ## Zoomeye Username and Password:
 * [Register](https://www.zoomeye.org/accounts/register) an user with zoomeye and use the credentials for this tool.
-* If you are a non chinese user it will be difficult for you to fill the register form so here are the respective fields you need to fill. 1. email, 2. username, 3. nickname, 4. password, 5. confirm_password, 6. captcha
+  * Don't worry if you are redirected to sso.telnet404.com. *(This is the way it works. :P)*
+  * Name of fields in the signup form -  *1. email, 2. username, 3. nickname, 4. password, 5. confirm_password, 6. captcha*
 * Once you fill out the details it will redirect you to the account page.
-* There you will found something: (Status: Inactive. Activate Now)
+* There you will found something: *(Status: Inactive. Activate Now)*
 * Click on activate now and two fileds will be populated.
 * The first field will be captcha and the second one will be email id.
 * Once you fill the email id in the second text box, click on send activation code.
-* Check the activation code in the email id.
-* Put that code in the email id text box and click on determine.
+* Check the activation code your email account.
+* Put this activation code in the email id text box and click on determine.
 * Now your account is activated and use those credentials in the tool.
 
 ## Clearbit_apikey:
