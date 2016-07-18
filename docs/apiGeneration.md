@@ -21,8 +21,7 @@ We need following API keys to run this tool efficiently.
 * Visit [Account](https://www.censys.io/account) tab to get API ID and Secret.
 
 ## Zoomeye Username and Password:
-* [Register](https://www.zoomeye.org/accounts/register) an user with zoomeye and use the credentials for this tool.
-  * Don't worry if you are redirected to sso.telnet404.com. *(This is the way it works. :P)*
+* [Register](https://www.zoomeye.org/accounts/register) an user with zoomeye and use the credentials for this tool. (Don't worry if you are redirected to sso.telnet404.com. *This is the way it works. :P)*
   * Name of fields in the signup form -  *1. email, 2. username, 3. nickname, 4. password, 5. confirm_password, 6. captcha*
 * Once you fill out the details it will redirect you to the account page.
 * There you will found something: *(Status: Inactive. Activate Now)*
