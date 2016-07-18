@@ -1,5 +1,5 @@
 site_name: DataSploit
 pages:
-- Home: 'home.md'
+- Home: 'index.md'
 - APIs: 'apiGeneration.md'
 - Setup: 'setupGuide.md'
