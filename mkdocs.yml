@@ -1,5 +1,7 @@
 site_name: DataSploit
 pages:
-- Home: 'index.md'
-- 'Generate ApiKeys': 'apiGeneration.md'
-- Setup: 'setupGuide.md'
+- 'Overview': 'index.md'
+- 'Setting up the Environment': 'setupGuide.md'
+- 'How to Generate Api Keys': 'apiGeneration.md'
+- Usage: 'Usage.md'
+
