@@ -27,6 +27,6 @@ Options:
 
 ```
 
-## Detailed Tool Documentation: -
-***[http://datasploit.readthedocs.io/en/latest/](http://datasploit.readthedocs.io/en/latest/)***
+## Detailed Tool Documentation:
+> [http://datasploit.readthedocs.io/en/latest/](http://datasploit.readthedocs.io/en/latest/)
 
