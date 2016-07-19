@@ -60,7 +60,9 @@ from domain_forumsearch import boardsearch_forumsearch
 from domain_wikileaks import wikileaks
 from domain_censys import view,censys_search,censys_list
 from domain_shodan import shodandomainsearch
-
+import optparse
+parser = optparse.OptionParser()
+parser.add_option('-d', '--domain', action="store", dest="domain", help="Domain name against which automated Osint is to be performed.", default="spam")
 
 
 '''
@@ -85,9 +87,9 @@ def printart():
 	print "\t \__,_/ \__,_/ \__/ \__,_//____// .___//_/ \____//_/ \__/  "
 	print "\t                               /_/                        "
 	print "\t\t\t\t\t\t"
-	print "\t         	   Open Source Assistant for #OSINT            "
-	print "\t               website: www.datasploit.info               "
-	print "\t\n\n"
+	print "         	   Open Source Assistant for #OSINT            "
+	print "                     website: www.datasploit.info               "
+	print "\t"
 
 
 
@@ -369,35 +371,37 @@ def do_everything(domain):
 
 
 def main(): 
+	options, args = parser.parse_args()
 	printart()
-
-	domain = sys.argv[1]
-
-	cursor = db.domaindata.find({"targetname": domain})
-
-	if cursor.count() > 0:
-		while True:
-			a = raw_input("Would you like to delete all the data for %s and launch a new scan? (Note: Deleting all data will disable alerting options.) [(Y)es/(N)o/(C)ancel]: " % domain)
-			if a.lower() =="yes" or a.lower() == "y":
-				print "Deleting all data for %s..." % domain
-				result = db.domaindata.delete_many({"targetname": domain})
-				print "Deleted %s document(s)" % result.deleted_count
-				print "Launching new scan....\n"
-				do_everything(domain)
-				break
-			elif a.lower() =="no" or a.lower() == "n":
-				print "Note: This will create another entry for %s\n" % domain
-				do_everything(domain)
-				break
-			elif a.lower() =="cancel" or a.lower() == "c":
-				print "I lost the battle against your will. Quitting..."
-				break
-			else:
-				print("[-] Wrong choice. Please enter Yes or No  [Y/N]: \n")
+	domain = options.domain
+	if domain == 'spam':
+		print "[-] Invalid argument passed. \nUsage: domainOsint.py [options]\n\nOptions:\n  -h,\t\t--help\t\t\tshow this help message and exit\n  -d DOMAIN,\t--domain=DOMAIN\t\tDomain name against which automated Osint is to be performed."
 	else:
-		print "No earlier scans found for %s, Launching fresh scan in 3, 2, 1..\n" % domain
-		do_everything(domain)
-		
+		cursor = db.domaindata.find({"targetname": domain})
+
+		if cursor.count() > 0:
+			while True:
+				a = raw_input("Would you like to delete all the data for %s and launch a new scan? (Note: Deleting all data will disable alerting options.) [(Y)es/(N)o/(C)ancel]: " % domain)
+				if a.lower() =="yes" or a.lower() == "y":
+					print "Deleting all data for %s..." % domain
+					result = db.domaindata.delete_many({"targetname": domain})
+					print "Deleted %s document(s)" % result.deleted_count
+					print "Launching new scan....\n"
+					do_everything(domain)
+					break
+				elif a.lower() =="no" or a.lower() == "n":
+					print "Note: This will create another entry for %s\n" % domain
+					do_everything(domain)
+					break
+				elif a.lower() =="cancel" or a.lower() == "c":
+					print "I lost the battle against your will. Quitting..."
+					break
+				else:
+					print("[-] Wrong choice. Please enter Yes or No  [Y/N]: \n")
+		else:
+			print "No earlier scans found for %s, Launching fresh scan in 3, 2, 1..\n" % domain
+			do_everything(domain)
+			
 
 if __name__ == "__main__":
 	main()
