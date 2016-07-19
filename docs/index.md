@@ -20,7 +20,7 @@ Created using our beloved Python, MongoDb and Django, DataSploit simply requires
 
 Worried about setup? Well, there are two major requirements here: 
 
-* Setting up the db, django, libraries, etc. We have got a script which will automate this for you, so can just go ahead and shoot the OSINT job. 
+* Setting up the db, django, libraries, etc. We will soon have script which will automate this for you, so can just go ahead and shoot the OSINT job. 
 * Feeding specific API keys for few specific sources. We are going to have a knowledge base where step by step instructions to generate these API keys will be documented. Sweet deal? 
 * [Click here to check step by step setup guide](http://datasploit.readthedocs.io/en/latest/setupGuide/)
 
