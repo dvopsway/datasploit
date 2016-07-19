@@ -17,7 +17,6 @@
          	   Open Source Assistant for #OSINT            
                  website: www.datasploit.info               
 	
-[-] Invalid argument passed. 
 Usage: domainOsint.py [options]
 
 Options:
