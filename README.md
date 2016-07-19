@@ -5,67 +5,28 @@
 * Use specific script / launch automated OSINT for consolidated data.
 * Available in both GUI and Console.
  
-Following API configs are mandatory for proper results in domainOsint.py:
-* shodan_api
-* censysio_id
-* censysio_secret
-* zoomeyeuser
-* zoomeyepass
-* clearbit_apikey
-* emailhunter
-
-Other modules:
-* github_access_token
-* instagram_token
-* instagram_client_id
-* instagram_client_secret
-* jsonwhois
-
-
-## Before running the program, please make sure that you have:
-* Changed the name of the file 'config_sample.py' to config.py
-* Entered all the required APIs in config.py file, as mentioned above. 
-* Installed MongoDb and the mongodb is running. [Refer to documentation](https://docs.mongodb.com/manual/installation/): 
-
-
-## Usage
-To launch an automated OSINT on domain, shoot following query:
-
-```
-python domainOsint.py <domain_name>
-```
-You can also run an standalone script, e.g.you might want to only run the subdomain finding script and avoid all other modules. In such case, use below mentioned command. *All the files starting with domain_ requires a domain name to be passed as first argument. Same follows for email, ip, etc.*
-
-```
-python domain_subdomain.py <domain_name>
+## Basic Usage:
 ```
 
-To launch an automated OSINT on domain, shoot following query:
+	  ____/ /____ _ / /_ ____ _ _____ ____   / /____  (_)/ /_
+	  / __  // __ `// __// __ `// ___// __ \ / // __ \ / // __/
+	 / /_/ // /_/ // /_ / /_/ /(__  )/ /_/ // // /_/ // // /_  
+	 \__,_/ \__,_/ \__/ \__,_//____// .___//_/ \____//_/ \__/  
+	                               /_/                        
+						
+         	   Open Source Assistant for #OSINT            
+                 website: www.datasploit.info               
+	
+[-] Invalid argument passed. 
+Usage: domainOsint.py [options]
+
+Options:
+  -h,	    	--help			    show this help message and exit
+  -d DOMAIN,	--domain=DOMAIN		Domain name against which automated Osint 
+                                    is to be performed.
 
 ```
-python domainOsint.py <domain_name>
-```
 
-## SETUP and Contribution
-* Change config_sample.py to config.py
-```
-mv config_sample.py config.py
-```
-* Configure respective API keys. Documentation for generating these keys will be shared very shortly. Believe us, we are working hard to get things in place. 
-* Sources for which API keys are missing, will be simply skipped for the search. 
-
-### Config files
-
-
-### Python dependencies
-
-```
-pip install -r requirements.txt
-```
-
-If you have updated the code and want to push the pip dependencies in the requirements.txt 
-
-```
-pip freeze > requirements.txt
-```
+## Detailed Tool Documentation: -
+***[http://datasploit.readthedocs.io/en/latest/](http://datasploit.readthedocs.io/en/latest/)***
 
