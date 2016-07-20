@@ -17,10 +17,11 @@ def fullcontact(email):
 
 
 def main():
-	email_id = sys.argv[1]
-	data = fullcontact(email_id)
+	email = sys.argv[1]
+	data = fullcontact(email)
 	if data.get("status","") == 200:
-		print "Name: %s" % data.get("contactInfo","").get('fullName', '')
+		if data.get("contactInfo","") != "":
+			print "Name: %s" % data.get("contactInfo","").get('fullName', '')
 		print "\nOrganizations:"
 		for x in data.get("organizations",""):
 			if x.get('isPrimary', '') == True:
@@ -31,14 +32,15 @@ def main():
 				print "\t%s at %s - (From %s to Unknown Date)%s" % (x.get('title', ''), x.get('name',''), x.get('startDate',''), primarycheck)
 			else:
 				print "\t%s - (From %s to %s)%s" % (x.get('name',''), x.get('startDate',''), x.get('endDate',''), primarycheck)
-		if data.get("contactInfo","").get('websites', '') != "":
-			print "\nWebsite(s):"
-			for x in data.get("contactInfo","").get('websites', ''):
-				print "\t%s" % x.get('url', '')
-		if data.get("contactInfo","").get('chats', '') != "":
-			print '\nChat Accounts'
-			for x in data.get("contactInfo","").get('chats', ''):
-				print "\t%s on %s" % (x.get('handle', ''), x.get('client', ''))
+		if data.get("contactInfo","") != "":
+			if data.get("contactInfo","").get('websites', '') != "":
+				print "\nWebsite(s):"
+				for x in data.get("contactInfo","").get('websites', ''):
+					print "\t%s" % x.get('url', '')
+			if data.get("contactInfo","").get('chats', '') != "":
+				print '\nChat Accounts'
+				for x in data.get("contactInfo","").get('chats', ''):
+					print "\t%s on %s" % (x.get('handle', ''), x.get('client', ''))
 		
 		print "\nSocial Profiles:"
 		for x in data.get("socialProfiles",""):

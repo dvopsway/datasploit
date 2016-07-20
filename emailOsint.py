@@ -15,12 +15,10 @@ print email
 
 
 def haveIbeenpwned(email):
-	print "\t\t\t[+] Checking on Have_I_Been_Pwned...\n"
 	req = requests.get("https://haveibeenpwned.com/api/v2/breachedaccount/%s" % (email))
 	if req.content != "":
 		return json.loads(req.content)
 	else:
-		print 'No Results Found'
 		return {}
 
 
@@ -70,96 +68,115 @@ def emailscribddocs(email):
 		links.append("https://www.scribd.com/doc/"+m[lt])
 	return links
 	
+def print_emailosint(email):
+	hbp = haveIbeenpwned(email)
+	if len(hbp.keys()) != 0:
+		print "\t\t\t[+] Checking on Have_I_Been_Pwned...\n"
+		for x in hbp:
+			print "Pwned at %s Instances\n" % len(hbp)
+			print "Title:%s\nBreachDate%s\nPwnCount%s\nDescription%s\nDataClasses%s\n" % (x.get('Title', ''), x.get('BreachDate', ''), x.get('PwnCount', ''), x.get('Description', ''),x.get('DataClasses', ''))
+		print "\n-----------------------------\n"
+	else:
+		print "[-] No breach status found."
+
+
+	print "[+] Finding user information based on emailId"
+
+	data = fullcontact(email)
+	if data.get("status","") == 200:
+		if data.get("contactInfo","") != "":
+			print "Name: %s" % data.get("contactInfo","").get('fullName', '')
+		print "\nOrganizations:"
+		for x in data.get("organizations",""):
+			if x.get('isPrimary', '') == True:
+				primarycheck = " - Primary"
+			else:
+				primarycheck = ""
+			if x.get('endDate','') == '':
+				print "\t%s at %s - (From %s to Unknown Date)%s" % (x.get('title', ''), x.get('name',''), x.get('startDate',''), primarycheck)
+			else:
+				print "\t%s - (From %s to %s)%s" % (x.get('name',''), x.get('startDate',''), x.get('endDate',''), primarycheck)
+		if data.get("contactInfo","") != "":
+			if data.get("contactInfo","").get('websites', '') != "":
+				print "\nWebsite(s):"
+				for x in data.get("contactInfo","").get('websites', ''):
+					print "\t%s" % x.get('url', '')
+			if data.get("contactInfo","").get('chats', '') != "":
+				print '\nChat Accounts'
+				for x in data.get("contactInfo","").get('chats', ''):
+					print "\t%s on %s" % (x.get('handle', ''), x.get('client', ''))
+		
+		print "\nSocial Profiles:"
+		for x in data.get("socialProfiles",""):
+			print "\t%s:" % x.get('type','').upper()
+			for y in x.keys():
+				if y != 'type' and y != 'typeName' and y != 'typeId':
+					print '\t%s: %s' % (y, x.get(y,''))
+			print ''
+
+		print "Other Details:"
+		if data.get("demographics","") != "":
+			print "\tGender: %s" % data.get("demographics","").get('gender', '')
+			print "\tCountry: %s" % data.get("demographics","").get('country', '')
+			print "\tTentative City: %s" % data.get("demographics","").get('locationGeneral', '')
+
+		print "Photos:"
+		for x in data.get("photos",""):
+			print "\t%s: %s" % (x.get('typeName', ''), x.get('url', ''))
+
+	else:
+		print '[-] Error Occured - Encountered Status Code: %s. Please check if Email_id exist or not?' % data.get("status","")
+
+
+
+	'''clb_data = clearbit(email)
+	for x in clb_data.keys():
+		print '%s details:' % x
+		if type(clb_data[x]) == dict:
+			for y in clb_data[x].keys():
+				if clb_data[x][y] is not None:
+					print "%s:  %s, " % (y, clb_data[x][y])
+		elif clb_data[x] is not None:
+			print "\n%s:  %s" % (x, clb_data[x])
+
+	print "\n-----------------------------\n"
+
+	print "\t\t\t[+] Gravatar Link\n"
+	print gravatar(email)
+	print "\n-----------------------------\n"
+
+	print "\t\t\t[+] Associated Domains\n"
+	for doms in emaildom(email):
+		print doms
+	'''
+
 	
-hbp = haveIbeenpwned(email)
-for x in hbp:
-	print "Pwned at %s Instances\n" % len(hbp)
-	print "Title:%s\nBreachDate%s\nPwnCount%s\nDescription%s\nDataClasses%s\n" % (x.get('Title', ''), x.get('BreachDate', ''), x.get('PwnCount', ''), x.get('Description', ''),x.get('DataClasses', ''))
-print "\n-----------------------------\n"
+	slds=emailslides(email)
+	if len(slds) != 0:
+		print "\t\t\t[+] Associated Slides"
+		for tl,lnk in slds.items():
+			print tl+"http://www.slideshare.net"+lnk
+	else:
+		print '[-] No Associated Slides found.'
 
-
-print "\t\t\t[+] Finding user information based on emailId\n"
-
-data = fullcontact(email)
-if data.get("status","") == 200:
-	print "Name: %s" % data.get("contactInfo","").get('fullName', '')
-	print "\nOrganizations:"
-	for x in data.get("organizations",""):
-		if x.get('isPrimary', '') == True:
-			primarycheck = " - Primary"
-		else:
-			primarycheck = ""
-		if x.get('endDate','') == '':
-			print "\t%s at %s - (From %s to Unknown Date)%s" % (x.get('title', ''), x.get('name',''), x.get('startDate',''), primarycheck)
-		else:
-			print "\t%s - (From %s to %s)%s" % (x.get('name',''), x.get('startDate',''), x.get('endDate',''), primarycheck)
-	if data.get("contactInfo","").get('websites', '') != "":
-		print "\nWebsite(s):"
-		for x in data.get("contactInfo","").get('websites', ''):
-			print "\t%s" % x.get('url', '')
-	if data.get("contactInfo","").get('chats', '') != "":
-		print '\nChat Accounts'
-		for x in data.get("contactInfo","").get('chats', ''):
-			print "\t%s on %s" % (x.get('handle', ''), x.get('client', ''))
 	
-	print "\nSocial Profiles:"
-	for x in data.get("socialProfiles",""):
-		print "\t%s:" % x.get('type','').upper()
-		for y in x.keys():
-			if y != 'type' and y != 'typeName' and y != 'typeId':
-				print '\t%s: %s' % (y, x.get(y,''))
-		print ''
-
-	print "Other Details:"
-	if data.get("demographics","") != "":
-		print "\tGender: %s" % data.get("demographics","").get('gender', '')
-		print "\tCountry: %s" % data.get("demographics","").get('country', '')
-		print "\tTentative City: %s" % data.get("demographics","").get('locationGeneral', '')
-
-	print "Photos:"
-	for x in data.get("photos",""):
-		print "\t%s: %s" % (x.get('typeName', ''), x.get('url', ''))
-
-else:
-	print 'Error Occured - Encountered Status Code: %s' % data.get("status","")
+	scdlinks=emailscribddocs(email)
+	if len(scdlinks) != 0:
+		print "\t\t\t[+] Associated Scribd Docs"
+		for sl in scdlinks:
+			print sl
+		print ""
+		print "More results might be available:"
+		print "https://www.scribd.com/search?page=1&content_type=documents&query="+email
+		print "\n-----------------------------\n"
+	else:
+		print '[-] No Associated Scribd Documents found.\n-----------------------------'
 
 
 
-'''clb_data = clearbit(email)
-for x in clb_data.keys():
-	print '%s details:' % x
-	if type(clb_data[x]) == dict:
-		for y in clb_data[x].keys():
-			if clb_data[x][y] is not None:
-				print "%s:  %s, " % (y, clb_data[x][y])
-	elif clb_data[x] is not None:
-		print "\n%s:  %s" % (x, clb_data[x])
-
-print "\n-----------------------------\n"
-
-print "\t\t\t[+] Gravatar Link\n"
-print gravatar(email)
-print "\n-----------------------------\n"
-
-print "\t\t\t[+] Associated Domains\n"
-for doms in emaildom(email):
-	print doms
-'''
-print "\n-----------------------------\n"
-
-print "\t\t\t[+] Associated Slides\n"
-slds=emailslides(email)
-for tl,lnk in slds.items():
-	print tl+"http://www.slideshare.net"+lnk
-print "\n-----------------------------\n"
-
-print "\t\t\t[+] Associated Scribd Docs\n"
-scdlinks=emailscribddocs(email)
-for sl in scdlinks:
-	print sl
-print ""
-print "More results might be available:"
-print "https://www.scribd.com/search?page=1&content_type=documents&query="+email
-print "\n-----------------------------\n"
-
+def main():
+	print_emailosint(email)
+	
+if __name__ == "__main__":
+	main()
 

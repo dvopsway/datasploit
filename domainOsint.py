@@ -41,6 +41,11 @@ from urlparse import urlparse
 import hashlib
 import urllib
 from pymongo import MongoClient
+import clearbit
+import time
+import hashlib
+
+
 
 
 
@@ -60,6 +65,11 @@ from domain_forumsearch import boardsearch_forumsearch
 from domain_wikileaks import wikileaks
 from domain_censys import view,censys_search,censys_list
 from domain_shodan import shodandomainsearch
+from email_fullcontact import fullcontact
+from emailOsint import print_emailosint
+
+
+
 import optparse
 parser = optparse.OptionParser()
 parser.add_option('-d', '--domain', action="store", dest="domain", help="Domain name against which automated Osint is to be performed.", default="spam")
@@ -199,6 +209,17 @@ def do_everything(domain):
 			dict_to_apend['email_ids'] = collected_emails
 		print "\n-----------------------------\n"
 
+	while True:
+		a = raw_input("Do you want to launch osint check for these emails?.) [(Y)es/(N)o]: ")
+		if a.lower() =="yes" or a.lower() == "y":	
+			for x in collected_emails:
+				print "Checking for %s" % x
+				print_emailosint(x)
+			break
+		elif a.lower() =="no" or a.lower() == "n":
+			break
+		else:
+			print("[-] Wrong choice. Please enter Yes or No  [Y/N]: \n")
 
 	
 	dns_ip_history = netcraft_domain_history(domain)
