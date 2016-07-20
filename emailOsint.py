@@ -17,7 +17,11 @@ print email
 def haveIbeenpwned(email):
 	print "\t\t\t[+] Checking on Have_I_Been_Pwned...\n"
 	req = requests.get("https://haveibeenpwned.com/api/v2/breachedaccount/%s" % (email))
-	return json.loads(req.content)
+	if req.content != "":
+		return json.loads(req.content)
+	else:
+		print 'No Results Found'
+		return {}
 
 
 def clearbit(email):
@@ -67,12 +71,13 @@ def emailscribddocs(email):
 	return links
 	
 	
-'''hbp = haveIbeenpwned(email)
+hbp = haveIbeenpwned(email)
 for x in hbp:
 	print "Pwned at %s Instances\n" % len(hbp)
-	print "Title:%s\nBreachDate%s\nPwnCount%s\nDescription%s\nDataClasses%s\n" % (x['Title'], x['BreachDate'], x['PwnCount'], x['Description'],x['DataClasses'])
+	print "Title:%s\nBreachDate%s\nPwnCount%s\nDescription%s\nDataClasses%s\n" % (x.get('Title', ''), x.get('BreachDate', ''), x.get('PwnCount', ''), x.get('Description', ''),x.get('DataClasses', ''))
 print "\n-----------------------------\n"
-'''
+
+
 print "\t\t\t[+] Finding user information based on emailId\n"
 
 data = fullcontact(email)
