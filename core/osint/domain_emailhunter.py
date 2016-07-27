@@ -24,7 +24,7 @@ def emailhunter(domain, taskId):
 
 def main():
 	domain = sys.argv[1]
-	api_key = "6c132ef72b64c40d64882b8fd4d0edfd7741d481"
+	api_key = ""
 	if api_key != "":
 		collected_emails = emailhunter(domain)
 		print "\t\t\t[+] Finding Email Ids\n"
