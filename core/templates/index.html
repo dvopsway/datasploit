@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block css %}
+	<style>
+		#ds-search, #ds-search:active, #ds-search:focus {
+			margin:0;
+			border: none;
+			box-shadow:none;
+			font-size:22pt;
+		}
+	</style>
+{% endblock %}
+{% block content %}	
+	<section class="blue" style="height:300px;">
+		<div class="heading center white-text" style="padding-top:50px;">
+			<span style="font-size:46pt;font-weight:300;">DataSploit</span>
+		</div>
+		<div class="sub-heading center white-text" style="padding-top:5px;">
+			<span style="font-size:20pt;font-weight:300;">The OSINT Database</span>
+		</div>
+	</section>
+
+	<div class="container">
+		<div class="pushup" style="margin-top:-50px">
+			<div class="row">
+				<div class="col s12">
+					<div class="card white">
+						<div class="card-content">
+							<form id="ds-search-form" method="POST" action="search">
+								<input name="domain" id='ds-search' placeholder="" type="text"></input>
+								{% csrf_token %}
+							</form>
+						</div>		
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>	
+	<div class="container">
+	<div class="row">
+		<div class="col s12 m4">
+			<div class="card">
+				<div class="card-content">
+					<span class="card-title">Feature 1</span>
+					<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas non sem ligula. Curabitur a ornare neque. Mauris fringilla dolor a nibh commodo, eu vehicula diam porta. Pellentesque quis interdum enim, nec blandit tellus. Fusce auctor sodales hendrerit. Maecenas porta dictum nisi eu consequat. Fusce auctor nulla erat, ut pulvinar magna pulvinar nec. Curabitur placerat egestas tempor. Suspendisse sed orci in ex luctus malesuada. Suspendisse vulputate fermentum tellus, a interdum mauris imperdiet a. Integer et maximus massa, et facilisis tortor.</p>
+				</div>
+			</div>
+		</div>
+		<div class="col s12 m4">
+			<div class="card">
+				<div class="card-content">
+					<span class="card-title">Feature 2</span>
+					<p>Sed fermentum ornare sapien, non vehicula lacus feugiat nec. Quisque consequat faucibus erat. Quisque commodo augue in viverra tempor. Phasellus facilisis diam vitae interdum auctor. Mauris convallis arcu sed orci pulvinar convallis. Proin varius malesuada mauris, in tincidunt ante suscipit nec. Vivamus fermentum imperdiet volutpat. Quisque vitae orci metus. Vestibulum vel commodo orci. Nunc eget placerat quam. Integer odio nibh, vulputate et convallis sit amet, bibendum eget arcu.</p>
+				</div>
+			</div>
+		</div>
+		<div class="col s12 m4">
+			<div class="card">
+				<div class="card-content">
+					<span class="card-title">Feature 3</span>
+					<p>Suspendisse nec suscipit nibh. Vivamus at pretium eros. Donec tristique tellus lacus, at elementum dolor tristique sed. Morbi varius est et arcu tempus, at ullamcorper eros placerat. Nulla bibendum risus vitae diam lacinia facilisis. Aenean placerat commodo tellus eu auctor. Maecenas a sagittis neque. Aliquam mattis eleifend egestas. Fusce sed dolor at justo aliquam rhoncus. Sed tellus sem, feugiat non feugiat a, lobortis non mauris. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Suspendisse turpis risus, rhoncus non nisl at, rhoncus fringilla tellus. Aliquam pulvinar auctor magna sed dapibus.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+{% endblock %}
+
+{% block js %}
+	<script type="text/javascript" src="{% static 'js/typed.js' %}"></script>
+	<script>
+		$(function() {
+			$('#ds-search-form').submit(function() {
+				var domain = $('#ds-search').val();
+				if(!(/^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9](?:\.[a-zA-Z]{2,})+$/.test(domain)))
+				{
+					Materialize.toast("Yikes! That doesn't look like a domain!", 4000);
+					return false;
+				}
+			});
+			$('#ds-search').typed({
+				strings: ["It all starts with a search!", "www.google.com", "www.goibibo.com", "www.amazon.in", "www.imdb.com", "www.github.com", "www.twitter.com"],
+				typeSpeed: 5,
+				loop: true,
+				backDelay: 2000,
+				startdelay: 500,
+				attr: "placeholder"
+			});
+			$('#ds-search').focus();
+		});
+	</script>
+{% endblock %}
