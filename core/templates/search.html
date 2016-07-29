@@ -104,7 +104,7 @@
 						for(var i in results.message)
 						{
 							var doc = results.message[i];
-							var lh = '<li><div class="collapsible-header">' + doc.type + '</div><div class="collapsible-body"><p>' + JSON.stringify(doc.data) + '</p></div></li>';
+							var lh = '<li><div class="collapsible-header">' + doc.type + '</div><div class="collapsible-body">' + doc.data + '</div></li>';
 							html.push(lh)
 						}
 						mainhtml += html.join("");
