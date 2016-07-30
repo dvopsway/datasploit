@@ -7,19 +7,22 @@ from osint.utils import *
 
 @shared_task
 def wappalyzeit(domain, taskId):
-	wappalyzer = Wappalyzer.latest()
-	odomain = "http://%s" % domain 
-	webpage = WebPage.new_from_url(odomain)
-	set1 = wappalyzer.analyze(webpage)
-	wap = []
-	if set1:
-		print "[+] Third party libraries in Use:"
-		for s in set1:
-			wap.append(s)
-	else:
-		print "\t\t\t[-] Nothing found. Make sure domain name is passed properly"
-	save_record(domain, taskId, "WapAlyzer", wap)
-	return wap
+	try:
+		wappalyzer = Wappalyzer.latest()
+		odomain = "http://%s" % domain 
+		webpage = WebPage.new_from_url(odomain)
+		set1 = wappalyzer.analyze(webpage)
+		wap = []
+		if set1:
+			print "[+] Third party libraries in Use:"
+			for s in set1:
+				wap.append(s)
+		else:
+			print "\t\t\t[-] Nothing found. Make sure domain name is passed properly"
+		save_record(domain, taskId, "WapAlyzer", wap)
+		return wap
+	except:
+		return []
 
 
 def main():

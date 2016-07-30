@@ -9,30 +9,26 @@ import hashlib
 from urlparse import urlparse
 import urllib
 
-
 subdomain_list = []
 
 
 def check_and_append_subdomains(subdomain):
 	if subdomain not in subdomain_list:
-		subdomain_list.append(subdomain)
+		if re.match("^[a-zA-Z0-9][a-zA-Z0-9-]{1,61}[a-zA-Z0-9]\.[a-zA-Z\.]{2,}$", subdomain):
+			subdomain_list.append(subdomain)
 
 
 def subdomains(domain):
 	r = requests.get("https://dnsdumpster.com/")
 	cookies = {}
 	cookies['csrftoken'] = r.cookies['csrftoken']
-
 	data = {}
 	data['csrfmiddlewaretoken'] = cookies['csrftoken']
-	data['targetip'] = sys.argv[1]
-
+	data['targetip'] = domain
 	headers = {}
 	headers['Referer'] = "https://dnsdumpster.com/"
-
 	req = requests.post("https://dnsdumpster.com/", data = data, cookies = cookies, headers = headers)
 	soup =  BeautifulSoup(req.content, 'lxml')
-
 	subdomains=soup.findAll('td',{"class":"col-md-4"})
 	for subd in subdomains:
 		if domain in subd.text:
@@ -167,8 +163,18 @@ def subdomains_from_netcraft(domain):
 
 
 
+from celery import shared_task
+from osint.utils import *
 
-
+@shared_task
+def run(domain, taskId):
+	global subdomain_list
+	odomain = domain.replace("www.", "")
+	subdomains(odomain)
+	subdomains_from_netcraft(odomain)
+	save_record(domain, taskId, "Subdomains", subdomain_list)
+	return subdomain_list
+	
 
 
 def main():
@@ -178,7 +184,7 @@ def main():
 	subdomains(domain)
 	##print "\t\t\t[+] Check_subdomains from wolframalpha"
 	##find_subdomains_from_wolfram(domain)
-	pagelinks_list = pagelinks(domain)
+	#pagelinks_list = pagelinks(domain)
 
 	subdomains_from_netcraft(domain)
 

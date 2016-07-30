@@ -7,13 +7,15 @@ from celery import shared_task
 from osint.utils import *
 import config
 
+longhandler = lambda obj: str(obj) if isinstance(obj, long) else None
+
 @shared_task
 def shodandomainsearch(domain, taskId):
 	print "\t\t\t[+] Searching in Shodan" 
 	if config.shodan_api:
 		endpoint =  "https://api.shodan.io/shodan/host/search?key=%s&query=hostname:%s&facets={facets}" % (config.shodan_api, domain)
 		req = requests.get(endpoint)
-		data = json.loads(req.content)
+		data = json.loads(req.content, parse_int=str)
 		save_record(domain, taskId, "Shodan", data)
 		return data
 
