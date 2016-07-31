@@ -9,7 +9,7 @@ Took out time from busy schedule and got their hands dirty with the code.
 
 ##### Mentors:
 Chaps who were quick to give feedback and suggest changes. Kudos to you guys. 
-* Anant Srivastata ([@anantshri](https://twitter.com/anantshri))
+* Anant aSrivastata ([@anantshri](https://twitter.com/anantshri))
 * Prashant Mahajan ([@prashant3535](https://twitter.com/prashant3535))
 * Shadab Siddiqui ([@sh4ds1dd](https://twitter.com/sh4ds1dd))
 
