@@ -8,6 +8,10 @@ import hashlib
 from bs4 import BeautifulSoup
 import re
 from email_fullcontact import fullcontact
+from termcolor import colored
+class style:
+   BOLD = '\033[1m'
+   END = '\033[0m'
 
 
 email = sys.argv[1]
@@ -19,6 +23,8 @@ def check_and_append_username(username):
 
 
 def haveIbeenpwned(email):
+	print colored(style.BOLD + '\n---> Checking breach status in HIBP (@troyhunt)\n' + style.END, 'blue')
+	time.sleep(0.3)
 	req = requests.get("https://haveibeenpwned.com/api/v2/breachedaccount/%s" % (email))
 	if req.content != "":
 		return json.loads(req.content)
@@ -75,7 +81,7 @@ def emailscribddocs(email):
 
 def list_down_usernames():
 	if len(username_list) != 0:
-		print "[+] Enumerated Username(s):"
+		print colored(style.BOLD + '\n---> Enumerated Usernames\n' + style.END, 'blue')
 		for x in username_list:
 			print x
 		print "\n"
@@ -84,22 +90,19 @@ def list_down_usernames():
 def print_emailosint(email):
 	hbp = haveIbeenpwned(email)
 	if len(hbp) != 0:
-		print "\t\t\t[+] Checking on Have_I_Been_Pwned...\n"
-		print "Pwned at %s Instances\n" % len(hbp)
+		print colored("Pwned at %s Instances\n", 'green') % len(hbp)
 		for x in hbp:
 			print "Title:%s\nBreachDate%s\nPwnCount%s\nDescription%s\nDataClasses%s\n" % (x.get('Title', ''), x.get('BreachDate', ''), x.get('PwnCount', ''), x.get('Description', ''),x.get('DataClasses', ''))
-		print "\n-----------------------------\n"
 	else:
-		print "[-] No breach status found."
+		print colored("[-] No breach status found.", 'red')
 
-
-	print "[+] Finding user information based on emailId"
-
+	print colored(style.BOLD + '\n---> Finding User Information\n' + style.END, 'blue')
+	time.sleep(0.3)
 	data = fullcontact(email)
 	if data.get("status","") == 200:
 		if data.get("contactInfo","") != "":
 			print "Name: %s" % data.get("contactInfo","").get('fullName', '')
-		print "\nOrganizations:"
+		print colored(style.BOLD + '\n Organizations / Work History\n' + style.END, 'green')
 		for x in data.get("organizations",""):
 			if x.get('isPrimary', '') == True:
 				primarycheck = " - Primary"
@@ -119,9 +122,10 @@ def print_emailosint(email):
 				for x in data.get("contactInfo","").get('chats', ''):
 					print "\t%s on %s" % (x.get('handle', ''), x.get('client', ''))
 		
-		print "\nSocial Profiles:"
+		print colored(style.BOLD + '\n Social Profiles\n' + style.END, 'green')
 		for x in data.get("socialProfiles",""):
-			print "\t%s:" % x.get('type','').upper()
+			head = "\t%s:" % x.get('type','').upper()
+			print colored(style.BOLD + str(head) + style.END)
 			for y in x.keys():
 				if y != 'type' and y != 'typeName' and y != 'typeId':
 					print '\t%s: %s' % (y, x.get(y,''))
@@ -130,7 +134,7 @@ def print_emailosint(email):
 
 			print ''
 
-		print "Other Details:"
+		print colored(style.BOLD + '\n Other Details\n' + style.END, 'green')
 		if data.get("demographics","") != "":
 			print "\tGender: %s" % data.get("demographics","").get('gender', '')
 			print "\tCountry: %s" % data.get("demographics","").get('country', '')
@@ -169,7 +173,8 @@ def print_emailosint(email):
 	
 	slds=emailslides(email)
 	if len(slds) != 0:
-		print "\t\t\t[+] Associated Slides"
+		print colored(style.BOLD + '\n---> Slides Published:' + style.END, 'blue')
+		time.sleep(0.3)
 		for tl,lnk in slds.items():
 			print tl+"http://www.slideshare.net"+lnk
 	else:
@@ -178,15 +183,15 @@ def print_emailosint(email):
 	
 	scdlinks=emailscribddocs(email)
 	if len(scdlinks) != 0:
-		print "\t\t\t[+] Associated Scribd Docs"
+		print colored(style.BOLD + '\n---> Associated SCRIBD documents:\n' + style.END, 'blue')
+		time.sleep(0.5)
 		for sl in scdlinks:
 			print sl
 		print ""
-		print "More results might be available:"
+		print colored(style.BOLD + 'More results might be available:' + style.END)
 		print "https://www.scribd.com/search?page=1&content_type=documents&query="+email
-		print "\n-----------------------------\n"
 	else:
-		print '[-] No Associated Scribd Documents found.\n-----------------------------'
+		print colored('[-] No Associated Scribd Documents found.', 'red')
 
 
 
