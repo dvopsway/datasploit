@@ -145,7 +145,7 @@ def print_emailosint(email):
 			print "\t%s: %s" % (x.get('typeName', ''), x.get('url', ''))
 
 	else:
-		print '[-] Error Occured - Encountered Status Code: %s. Please check if Email_id exist or not?' % data.get("status","")
+		print colored('[-] Error Occured - Encountered Status Code: %s. Please check if Email_id exist or not?', 'red') % data.get("status","")
 
 
 
@@ -178,7 +178,7 @@ def print_emailosint(email):
 		for tl,lnk in slds.items():
 			print tl+"http://www.slideshare.net"+lnk
 	else:
-		print '[-] No Associated Slides found.'
+		print colored('[-] No Associated Slides found.', 'red')
 
 	
 	scdlinks=emailscribddocs(email)

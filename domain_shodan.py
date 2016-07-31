@@ -16,7 +16,6 @@ def shodandomainsearch(domain):
 	time.sleep(0.3)
 	endpoint =  "https://api.shodan.io/shodan/host/search?key=%s&query=hostname:%s&facets={facets}" % (cfg.shodan_api, domain)
 	req = requests.get(endpoint)
-	print req.content
 	return req.content
 
 

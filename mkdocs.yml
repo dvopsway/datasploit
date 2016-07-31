@@ -4,4 +4,5 @@ pages:
 - 'Setting up the Environment': 'setupGuide.md'
 - 'How to Generate Api Keys': 'apiGeneration.md'
 - Usage: 'Usage.md'
+- Contributors: 'contiributors.md'
 

@@ -112,7 +112,7 @@ def find_subdomains_from_wolfram(domain):
 
 
 
-#def netcraft_makecookies(cookie):
+def netcraft_makecookies(cookie):
 	cookies = dict()
 	cookies_list = cookie[0:cookie.find(';')].split("=")
 	cookies[cookies_list[0]] = cookies_list[1]

@@ -46,6 +46,9 @@ import time
 import hashlib
 from termcolor import colored
 
+reload(sys)
+sys.setdefaultencoding("utf-8")
+
 
 
 
@@ -261,7 +264,7 @@ def do_everything(domain):
 
 	subdomains_from_netcraft(domain)
 	print colored(style.BOLD + '---> Finding subdomains: \n' + style.END, 'blue')
-	time.sleep(0.3)
+	time.sleep(0.9)
 	if len(subdomain_list) >= 1:
 		for sub in subdomain_list:
 			print sub
@@ -316,7 +319,6 @@ def do_everything(domain):
 					htb_res_lists.append(results['VALUE'][x])
 	htb_res_dict['issues'] = htb_res_lists
 	dict_to_apend['ssl_scan'] = htb_res_dict
-	print "\n-----------------------------\n"
 
 	
 	
@@ -346,7 +348,6 @@ def do_everything(domain):
 							print "%s: %s" % (val, x[val])
 		if len(temp_list) >= 1:
 			dict_to_apend['zoomeye'] = temp_list
-		print "\n-----------------------------\n"
 		
 
 
@@ -357,8 +358,8 @@ def do_everything(domain):
 		if len(censys_list) >= 1:
 			dict_to_apend['censys'] = censys_list
 			for x in censys_list:
-				print x
-		print "\n-----------------------------\n"
+				if x is not None and x != 'None':
+					print x
 
 
 	
@@ -379,14 +380,10 @@ def do_everything(domain):
 	
 	if cfg.shodan_api != "":
 		res_from_shodan = json.loads(shodandomainsearch(domain))
-		print res_from_shodan
-		'''
 		if 'matches' in res_from_shodan.keys():
 			dict_to_apend['shodan'] = res_from_shodan['matches']
 			for x in res_from_shodan['matches']:
 				print "IP: %s\nHosts: %s\nDomain: %s\nPort: %s\nData: %s\nLocation: %s\n" % (x['ip_str'], x['hostnames'], x['domains'], x['port'], x['data'].replace("\n",""), x['location'])
-		'''
-		print "-----------------------------\n"
 
 
 	#insert data into mongodb instance
