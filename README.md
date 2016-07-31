@@ -26,6 +26,12 @@ Options:
 
 ```
 
+# Required Setup:
+* Bunch of python libraries (use requirements.txt)
+* MongoDb, Django, Celery and RabbitMq (Refer to setup guide).
+
+
 ## Detailed Tool Documentation:
 > [http://datasploit.readthedocs.io/en/latest/](http://datasploit.readthedocs.io/en/latest/)
+
 
