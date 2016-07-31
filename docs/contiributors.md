@@ -2,8 +2,8 @@ Well, lets accept the fact that nothing goes well without contributors. Here is 
 
 ##### Core Contributors:
 Took out time from busy schedule and got their hands dirty with the code.
-* *Shubham Mittal* ([@upgoingstar](https://twitter.com/upgoingstar))
-* *Sudhanshu Chauhan* ([@upgoingstar](https://twitter.com/sudhanshu_c))
+* Shubham Mittal ([@upgoingstar](https://twitter.com/upgoingstar))
+* Sudhanshu Chauhan ([@upgoingstar](https://twitter.com/sudhanshu_c))
 * *Kunal Aggarwal* ([@KunalAggarwal92](https://twitter.com/KunalAggarwal92))
 * *Nutan Kumar Panda* ([@nutankumarpanda](https://twitter.com/nutankumarpanda))
 
