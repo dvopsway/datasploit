@@ -2,8 +2,11 @@ import json
 import requests
 from Wappalyzer import Wappalyzer, WebPage
 import sys
+import time
 
 def wappalyzeit(domain):
+	print colored(style.BOLD + '---> Wapplyzing web page:\n' + style.END, 'blue')
+	time.sleep(0.3)
 	wappalyzer = Wappalyzer.latest()
 	webpage = WebPage.new_from_url(domain)
 	set1 = wappalyzer.analyze(webpage)

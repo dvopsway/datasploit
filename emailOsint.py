@@ -11,7 +11,11 @@ from email_fullcontact import fullcontact
 
 
 email = sys.argv[1]
-print email
+username_list = []
+
+def check_and_append_username(username):
+	if username not in username_list:
+		username_list.append(username)
 
 
 def haveIbeenpwned(email):
@@ -67,13 +71,22 @@ def emailscribddocs(email):
 	for lt in range(0,length-1):
 		links.append("https://www.scribd.com/doc/"+m[lt])
 	return links
+
+
+def list_down_usernames():
+	if len(username_list) != 0:
+		print "[+] Enumerated Username(s):"
+		for x in username_list:
+			print x
+		print "\n"
+
 	
 def print_emailosint(email):
 	hbp = haveIbeenpwned(email)
-	if len(hbp.keys()) != 0:
+	if len(hbp) != 0:
 		print "\t\t\t[+] Checking on Have_I_Been_Pwned...\n"
+		print "Pwned at %s Instances\n" % len(hbp)
 		for x in hbp:
-			print "Pwned at %s Instances\n" % len(hbp)
 			print "Title:%s\nBreachDate%s\nPwnCount%s\nDescription%s\nDataClasses%s\n" % (x.get('Title', ''), x.get('BreachDate', ''), x.get('PwnCount', ''), x.get('Description', ''),x.get('DataClasses', ''))
 		print "\n-----------------------------\n"
 	else:
@@ -112,6 +125,9 @@ def print_emailosint(email):
 			for y in x.keys():
 				if y != 'type' and y != 'typeName' and y != 'typeId':
 					print '\t%s: %s' % (y, x.get(y,''))
+			if x.get('username', '') != "":
+				check_and_append_username(x.get('username', ''))
+
 			print ''
 
 		print "Other Details:"
@@ -174,8 +190,10 @@ def print_emailosint(email):
 
 
 
+
 def main():
 	print_emailosint(email)
+	list_down_usernames()
 	
 if __name__ == "__main__":
 	main()

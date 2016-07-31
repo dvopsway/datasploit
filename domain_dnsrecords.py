@@ -1,5 +1,9 @@
 import sys
 import dns.resolver
+from termcolor import colored
+class style:
+   BOLD = '\033[1m'
+   END = '\033[0m'
 
 def fetch_dns_records(domain,rec_type):
 	try:
@@ -9,11 +13,11 @@ def fetch_dns_records(domain,rec_type):
 			rec_list.append(rdata)
 		return rec_list
 	except:
-		return "No Records Found"
+		return colored("No Records Found", 'red')
 
 
 def parse_dns_records(domain):
-	print "\t\t\t[+] Fetching all DNS Records" 
+	print colored(style.BOLD + '---> Finding Whois Information.\n' + style.END, 'blue')
 	dict_dns_record = {}
 	dict_dns_record['SOA Records'] = fetch_dns_records(domain,"SOA")
 	dict_dns_record['MX Records'] = fetch_dns_records(domain,"MX")  	

@@ -3,8 +3,16 @@ import json
 from bs4 import BeautifulSoup
 import sys
 import re
+from termcolor import colored
+import time
+
+class style:
+   BOLD = '\033[1m'
+   END = '\033[0m'
 
 def boardsearch_forumsearch(domain):
+	print colored(style.BOLD + '---> Gathering links from Forums:\n' + style.END, 'blue')
+	time.sleep(0.3)
 	req = requests.get('http://boardreader.com/index.php?a=l&q=%s&d=0&extended_search=1&q1=%s&ltype=all&p=50'%(domain,domain))
 	soup=BeautifulSoup(req.content, "lxml")
 	text=soup.findAll('bdo',{"dir":"ltr"})

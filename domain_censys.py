@@ -3,6 +3,7 @@ import re
 import requests
 import json
 import config as cfg
+import time
 
 
 def censys_search(domain):
@@ -11,6 +12,7 @@ def censys_search(domain):
 
     while page <= pages:
         print "Parsed and collected results from page %s" % (str(page))
+        time.sleep(0.5)
         params = {'query' : domain, 'page' : page}
         res = requests.post("https://www.censys.io/api/v1/search/ipv4", json = params, auth = (cfg.censysio_id, cfg.censysio_secret))
         payload = res.json()
@@ -40,7 +42,6 @@ def censys_search(domain):
                 page += 1
         else:
             print "X"
-            print payload['error']
             return None
             break
 

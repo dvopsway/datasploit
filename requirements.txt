@@ -27,3 +27,4 @@ simplejson==3.8.2
 six==1.10.0
 tldextract==2.0.1
 tqdm==4.7.6
+termcolor

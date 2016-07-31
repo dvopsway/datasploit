@@ -3,6 +3,10 @@ import json
 import requests 
 from bs4 import BeautifulSoup
 import re
+from termcolor import colored
+class style:
+   BOLD = '\033[1m'
+   END = '\033[0m'
 
 def check_ssl_htbsecurity(domain):
 	headers = {}
@@ -18,7 +22,7 @@ def main():
 	if 'ERROR' in results.keys():
 		print results['ERROR']
 	elif 'TOKEN' in results.keys():
-		print 'Picking up One IP from bunch of IPs returned: %s' % results['MULTIPLE_IPS'][0]
+		print colored('Picking up One IP from bunch of IPs returned: %s', 'blue') % results['MULTIPLE_IPS'][0]
 		results_new = check_ssl_htbsecurity(results['MULTIPLE_IPS'][0])
 		print "OverAll Rating: %s" % results_new['GRADE']
 		print 'Check https://www.htbridge.com/ssl/ for more information'

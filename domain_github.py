@@ -2,10 +2,17 @@ import sys
 import requests
 from bs4 import BeautifulSoup
 import json
+from termcolor import colored
+import time
+
+class style:
+   BOLD = '\033[1m'
+   END = '\033[0m'
 
 
 def github_search(query, code):
-	print "\t\t\t[+] Searching domain results in github" + code + ":" + query + "\n"
+	print colored(style.BOLD + '\n---> Searching Github for domain results\n' + style.END, 'blue')
+	time.sleep(0.3)
 	endpoint_git =  "https://github.com/search?q=\"" + query + "\"&type=" + code
 	req = requests.get(endpoint_git) 
 	soup = BeautifulSoup(req.content, 'html.parser')
@@ -23,7 +30,7 @@ def main():
 	if git_results is not None:
 		print git_results
 	else:
-		print "Sad! Nothing found on github"
+		print colored("Sad! Nothing found on github", 'red')
 	print "\n-----------------------------\n"
 
 if __name__ == "__main__":

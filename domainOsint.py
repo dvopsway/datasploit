@@ -44,7 +44,7 @@ from pymongo import MongoClient
 import clearbit
 import time
 import hashlib
-
+from termcolor import colored
 
 
 
@@ -88,7 +88,12 @@ dict_to_apend= {}
 client = MongoClient()
 db = client.database1
 
+allusernames_list = []
 
+
+class style:
+   BOLD = '\033[1m'
+   END = '\033[0m'
 
 def printart():
 	print "\n\t  ____/ /____ _ / /_ ____ _ _____ ____   / /____  (_)/ /_"
@@ -114,7 +119,6 @@ def do_everything(domain):
 	whoisdata = whoisnew(domain)
 	print whoisdata
 	dict_to_apend['whois'] = whoisdata
-	print "\n-----------------------------\n"
 
 
 	
@@ -131,7 +135,6 @@ def do_everything(domain):
 			for y in dns_records[x]:
 				print "\t%s" % (y)
 			#print type(dns_records[x])
-	print "\n-----------------------------\n"
 
 	
 	#convert domain to reverse_domain for passing to checkpunkspider()
@@ -142,21 +145,22 @@ def do_everything(domain):
 	res = checkpunkspider(reversed_domain)
 	if 'data' in res.keys() and len(res['data']) >= 1:
 		dict_to_apend['punkspider'] = res['data']
-		print "[+] Few vulnerabilities found at Punkspider"	
+		print colored("[+] Few vulnerabilities found at Punkspider", 'green'	)
 		for x in res['data']:
 			print "==> ", x['bugType']
 			print "Method:", x['verb'].upper()
 			print "URL:\n" + x['vulnerabilityUrl']
 			print "Param:", x['parameter']
 	else:
-		print "[-] No Vulnerabilities found on PunkSpider"
-	print "\n-----------------------------\n"
+		print colored("[-] No Vulnerabilities found on PunkSpider", 'red')
 
 
 
 	#make proper URL with domain. Check on ssl as well as 80.
-	#print "\t\t\t[+] Wapplyzing " + domain 
-	print "Hitting HTTP: ",
+	#print "---> Wapplyzing " + domain 
+	print colored(style.BOLD + '\n---> Wappalyzing web pages\n' + style.END, 'blue')
+	time.sleep(0.3)
+	print colored("->Trying Wapalyzer on HTTP: ", 'blue')
 	wappalyze_results = {}
 	try:
 		targeturl = "http://" + domain
@@ -169,9 +173,9 @@ def do_everything(domain):
 			pass
 		print "\n"
 	except:	
-		print "[-] HTTP connection was unavailable"
+		print colored("[-] HTTP connection was unavailable", 'red')
 	
-	print "Hitting HTTPS: ",
+	print colored("->Trying Wapalyzer on HTTPS: ", 'blue')
 	try:
 		targeturl = "https://" + domain
 		list_of_techs = wappalyzeit(targeturl)
@@ -183,7 +187,7 @@ def do_everything(domain):
 			pass
 		print "\n"
 	except:
-		print "[-] HTTP connection was unavailable"
+		print colored("[-] HTTP connection was unavailable", 'red')
 	if len(wappalyze_results.keys()) >= 1:
 		dict_to_apend['wappalyzer'] = wappalyze_results
 
@@ -192,25 +196,23 @@ def do_everything(domain):
 
 	
 	#make Search github code for the given domain.
+	
 	git_results = github_search(domain, 'Code')
 	if git_results is not None:
 		print git_results
 	else:
-		print "Sad! Nothing found on github"
-	print "\n-----------------------------\n"
+		print colored("Sad! Nothing found on github", 'red')
 	
 	#collecting emails for the domain and adding information in master email list. 
 	if cfg.emailhunter != "":
 		emails = emailhunter(domain)
-		print "\t\t\t[+] Finding Email Ids\n"
 		if len(collected_emails) >= 1:
 			for x in collected_emails:
 				print str(x) + ", ",
 			dict_to_apend['email_ids'] = collected_emails
-		print "\n-----------------------------\n"
 
 	while True:
-		a = raw_input("Do you want to launch osint check for these emails?.) [(Y)es/(N)o]: ")
+		a = raw_input(colored("\n\nDo you want to launch osint check for these emails? [(Y)es/(N)o/(S)pecificEmail]: ", 'red'))
 		if a.lower() =="yes" or a.lower() == "y":	
 			for x in collected_emails:
 				print "Checking for %s" % x
@@ -218,8 +220,19 @@ def do_everything(domain):
 			break
 		elif a.lower() =="no" or a.lower() == "n":
 			break
+		elif a.lower() =="s":
+			while True:
+				b = raw_input("Please Enter the EmailId you want to tun OSINT.) [(C)ancel?]: ")
+				if b.lower() =="c":
+					break
+				else:
+					print_emailosint(b)
+					break
+			break
+
 		else:
 			print("[-] Wrong choice. Please enter Yes or No  [Y/N]: \n")
+		#print emailOsint.username_list
 
 	
 	dns_ip_history = netcraft_domain_history(domain)
@@ -227,60 +240,51 @@ def do_everything(domain):
 		for x in dns_ip_history.keys():
 			print "%s: %s" % (dns_ip_history[x], x)
 		dict_to_apend['domain_ip_history'] = dns_ip_history
-	print "\n-----------------------------\n"	
 
-	
-	
+
 	#subdomains [to be called before pagelinks so as to avoid repititions.]
-	print "\t\t\t[+] Finding Subdomains and appending\n"
 	subdomains(domain)
-	##print "\t\t\t[+] Check_subdomains from wolframalpha"
+	##print "---> Check_subdomains from wolframalpha"
 	##find_subdomains_from_wolfram(domain)
-	print "\n-----------------------------\n"
 
 	
 
 	#domain pagelinks
-	print "\t\t\t[+] Pagelinks\n"
 	links=pagelinks(domain)	
 	if len(links) >= 1:
 		for x in links:
 			print x
 		dict_to_apend['pagelinks'] = links
-	print "\n-----------------------------\n"
 
 	
 	#calling and printing subdomains after pagelinks.
 
 	subdomains_from_netcraft(domain)
-	print "\n\t\t\t[+] List of subdomains found\n"
-
+	print colored(style.BOLD + '---> Finding subdomains: \n' + style.END, 'blue')
+	time.sleep(0.3)
 	if len(subdomain_list) >= 1:
 		for sub in subdomain_list:
 			print sub
 		dict_to_apend['subdomains'] = subdomain_list
 	
 	#wikileaks
-	print "\t\t\t[+] Associated WikiLeaks\n"
 	leaklinks=wikileaks(domain)
 	for tl,lnk in leaklinks.items():
 		print "%s (%s)" % (lnk, tl)
 	if len(leaklinks.keys()) >= 1:
 		dict_to_apend['wikileaks'] = leaklinks
 	print "For all results, visit: "+ 'https://search.wikileaks.org/?query=&exact_phrase=%s&include_external_sources=True&order_by=newest_document_date'%(domain)
-	print "\n-----------------------------\n"
 	
 	
-	print "\t\t\t[+] Associated Forum Links\n"
+
 	links_brd =boardsearch_forumsearch(domain)
 	for tl,lnk in links_brd.items():
 		print "%s (%s)" % (lnk, tl)
 	if len(links_brd.keys()) >= 1:
 		dict_to_apend['forum_links'] = links_brd
-	print "\n-----------------------------\n"
 
 	
-	
+	print colored(style.BOLD + '\n---> Performing passive SSL Scan\n' + style.END, 'blue')
 	results = check_ssl_htbsecurity(domain)
 	htb_res_dict = {}
 	htb_res_lists = []
@@ -288,7 +292,7 @@ def do_everything(domain):
 		print results['ERROR']
 	elif 'TOKEN' in results.keys():
 		if 'MULTIPLE_IPS' in results.keys():
-			print 'Picking up One IP from bunch of IPs returned: %s' % results['MULTIPLE_IPS'][0]
+			print colored('Picking up One IP from bunch of IPs returned: %s', 'green') % results['MULTIPLE_IPS'][0]
 			results_new = check_ssl_htbsecurity(results['MULTIPLE_IPS'][0])
 			print "OverAll Rating: %s" % results_new['GRADE']
 			htb_res_dict['rating'] = results_new['GRADE']
@@ -346,16 +350,16 @@ def do_everything(domain):
 		
 
 
-	'''
+
 	if cfg.censysio_id != "" and cfg.censysio_secret != "":
-		print "[+]\t Kicking off Censys Search. This may take a while.."
+		print colored(style.BOLD + '\n---> Kicking off Censys Search. This may take a while..\n' + style.END, 'blue')
 		censys_search(domain)
 		if len(censys_list) >= 1:
 			dict_to_apend['censys'] = censys_list
 			for x in censys_list:
 				print x
 		print "\n-----------------------------\n"
-	'''
+
 
 	
 	#Code for shodan Ip search. now we are doing Hostname search.
@@ -375,10 +379,13 @@ def do_everything(domain):
 	
 	if cfg.shodan_api != "":
 		res_from_shodan = json.loads(shodandomainsearch(domain))
+		print res_from_shodan
+		'''
 		if 'matches' in res_from_shodan.keys():
 			dict_to_apend['shodan'] = res_from_shodan['matches']
 			for x in res_from_shodan['matches']:
 				print "IP: %s\nHosts: %s\nDomain: %s\nPort: %s\nData: %s\nLocation: %s\n" % (x['ip_str'], x['hostnames'], x['domains'], x['port'], x['data'].replace("\n",""), x['location'])
+		'''
 		print "-----------------------------\n"
 
 
@@ -402,25 +409,25 @@ def main():
 
 		if cursor.count() > 0:
 			while True:
-				a = raw_input("Would you like to delete all the data for %s and launch a new scan? (Note: Deleting all data will disable alerting options.) [(Y)es/(N)o/(C)ancel]: " % domain)
+				a = raw_input(colored("Would you like to delete all the data for %s and launch a new scan? (Note: Deleting all data will disable alerting options.) [(Y)es/(N)o/(C)ancel]: ",'red') % domain,)
 				if a.lower() =="yes" or a.lower() == "y":
-					print "Deleting all data for %s..." % domain
+					print colored("Deleting all data for %s...", 'blue') % domain
 					result = db.domaindata.delete_many({"targetname": domain})
-					print "Deleted %s document(s)" % result.deleted_count
-					print "Launching new scan....\n"
+					print colored("Deleted %s document(s)", 'green') % result.deleted_count
+					print colored("Launching new scan....\n",'blue')
 					do_everything(domain)
 					break
 				elif a.lower() =="no" or a.lower() == "n":
-					print "Note: This will create another entry for %s\n" % domain
+					print colored("Note: This will create another entry for %s\n", 'red') % domain
 					do_everything(domain)
 					break
 				elif a.lower() =="cancel" or a.lower() == "c":
-					print "I lost the battle against your will. Quitting..."
+					print colored("I lost the battle against your will. Quitting...", 'red')
 					break
 				else:
 					print("[-] Wrong choice. Please enter Yes or No  [Y/N]: \n")
 		else:
-			print "No earlier scans found for %s, Launching fresh scan in 3, 2, 1..\n" % domain
+			print colored("No earlier scans found for %s, Launching fresh scan in 3, 2, 1..\n", 'blue') % domain
 			do_everything(domain)
 			
 

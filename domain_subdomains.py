@@ -8,7 +8,13 @@ import config as cfg
 import hashlib
 from urlparse import urlparse
 import urllib
+from termcolor import colored
+import time
 
+
+class style:
+   BOLD = '\033[1m'
+   END = '\033[0m'
 
 subdomain_list = []
 
@@ -151,7 +157,7 @@ def subdomains_from_netcraft(domain):
 			for x in range(2,num_pages):
 				print "....."
 				url  = "http://searchdns.netcraft.com/?host=%s&last=%s&from=%s&restriction=site%%20contains" % (domain, last_item, next_page)
-				req2 = requests.get(url, cookies = cookies)
+				req2 = requests.get(url)
 				link_regx = re.compile('<a href="http://toolbar.netcraft.com/site_report\?url=(.*)">')
 				links_list = link_regx.findall(req2.content)
 				for y in links_list:
@@ -163,7 +169,7 @@ def subdomains_from_netcraft(domain):
 				#print last_item
 				#print next_page
 	else:
-		print 'zero subdomains found here'
+		print colored('zero subdomains found here', 'red')
 
 
 
@@ -174,16 +180,17 @@ def subdomains_from_netcraft(domain):
 def main():
 	domain = sys.argv[1]
 	#subdomains [to be called before pagelinks so as to avoid repititions.]
-	print "\t\t\t[+] Finding Subdomains and appending\n"
+	print colored(style.BOLD + '---> Finding subdomains, will be back soon with list. \n' + style.END, 'blue')
+	time.sleep(0.3)
 	subdomains(domain)
 	##print "\t\t\t[+] Check_subdomains from wolframalpha"
 	##find_subdomains_from_wolfram(domain)
-	pagelinks_list = pagelinks(domain)
+	#pagelinks_list = pagelinks(domain)
 
 	subdomains_from_netcraft(domain)
 
 	#printing all subdomains
-	print "\n\t\t\t[+] List of subdomains found\n"
+	print colored("List of subdomains found\n", 'green')
 	for sub in subdomain_list:
 		print sub
 

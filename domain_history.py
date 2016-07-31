@@ -3,11 +3,18 @@ import json
 import requests 
 from bs4 import BeautifulSoup
 import re
+from termcolor import colored
+import time
+
+class style:
+   BOLD = '\033[1m'
+   END = '\033[0m'
 
 
 def netcraft_domain_history(domain):
 	ip_history_dict= {}
-	print "\t\t\t[+] Searching domain history in netcraft\n"
+	print colored(style.BOLD + '\n---> Searching Domain history in Netcraft\n' + style.END, 'blue')
+	time.sleep(0.3)
 	endpoint =  "http://toolbar.netcraft.com/site_report?url=%s" % (domain)
 	req = requests.get(endpoint)
 

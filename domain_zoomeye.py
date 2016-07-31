@@ -2,6 +2,12 @@ import requests
 import json
 import sys
 import config as cfg
+from termcolor import colored
+import time
+
+class style:
+   BOLD = '\033[1m'
+   END = '\033[0m'
 
 def get_accesstoken_zoomeye(domain):
 	username = cfg.zoomeyeuser
@@ -14,7 +20,8 @@ def get_accesstoken_zoomeye(domain):
 
 
 def search_zoomeye(domain):
-	print "\t\t\t[+] Checking %s on Zoomeye" % (domain) 
+	print colored(style.BOLD + '\n---> Finding hosts from ZoomEye\n' + style.END, 'blue')
+	time.sleep(0.3)
 	zoomeye_token = get_accesstoken_zoomeye(domain)
 	authData = {"Authorization": "JWT " + str(zoomeye_token)}
 	req = requests.get('http://api.zoomeye.org/web/search/?query=site:%s&page=1' % domain, headers=authData)

@@ -233,6 +233,7 @@ def profilepic(urls):
 				continue
 			except KeyError:
 				pass
+	print "Profile pics will be saved in %s" % username
 	return imglinks
 
 

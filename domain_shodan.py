@@ -3,11 +3,20 @@ import requests
 import json
 import sys
 import socket
+from termcolor import colored
+import time
+
+
+class style:
+   BOLD = '\033[1m'
+   END = '\033[0m'
 
 def shodandomainsearch(domain):
-	print "\t\t\t[+] Searching in Shodan" 
+	print colored(style.BOLD + '---> Searching in Shodan:\n' + style.END, 'blue')
+	time.sleep(0.3)
 	endpoint =  "https://api.shodan.io/shodan/host/search?key=%s&query=hostname:%s&facets={facets}" % (cfg.shodan_api, domain)
 	req = requests.get(endpoint)
+	print req.content
 	return req.content
 
 
