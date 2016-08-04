@@ -11,6 +11,7 @@ from uuid import uuid4
 from pymongo import MongoClient
 from bson import json_util
 from json2html import *
+import cgi
 # Create your views here.
 
 def index(request):
@@ -94,7 +95,7 @@ def status(request):
 							elif rec['type'] == "Page Links":
 								html = "<ul class='collection'>"
 								for i in rec['data']:
-									html += "<li class='collection-item'><a href='%s'>%s</a></li>" % (i, i)
+									html += "<li class='collection-item'><a href='%s'>%s</a></li>" % (cgi.escape(i), cgi.escape(i))
 								html += "</ul>"		
 								rec['data'] = html
 							elif rec['type'] == "Domain History":
