@@ -21,17 +21,6 @@ def check_and_append_username(username):
 	if username not in username_list:
 		username_list.append(username)
 
-
-def haveIbeenpwned(email):
-	print colored(style.BOLD + '\n---> Checking breach status in HIBP (@troyhunt)\n' + style.END, 'blue')
-	time.sleep(0.3)
-	req = requests.get("https://haveibeenpwned.com/api/v2/breachedaccount/%s" % (email))
-	if req.content != "":
-		return json.loads(req.content)
-	else:
-		return {}
-
-
 def clearbit(email):
 	header = {"Authorization" : "Bearer %s" % (cfg.clearbit_apikey)}
 	req = requests.get("https://person.clearbit.com/v1/people/email/%s" % (email), headers = header)
@@ -88,14 +77,6 @@ def list_down_usernames():
 
 	
 def print_emailosint(email):
-	hbp = haveIbeenpwned(email)
-	if len(hbp) != 0:
-		print colored("Pwned at %s Instances\n", 'green') % len(hbp)
-		for x in hbp:
-			print "Title:%s\nBreachDate%s\nPwnCount%s\nDescription%s\nDataClasses%s\n" % (x.get('Title', ''), x.get('BreachDate', ''), x.get('PwnCount', ''), x.get('Description', ''),x.get('DataClasses', ''))
-	else:
-		print colored("[-] No breach status found.", 'red')
-
 	print colored(style.BOLD + '\n---> Finding User Information\n' + style.END, 'blue')
 	time.sleep(0.3)
 	data = fullcontact(email)
