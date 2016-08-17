@@ -42,7 +42,6 @@ def subdomains(domain):
 	subdomains=soup.findAll('td',{"class":"col-md-4"})
 	for subd in subdomains:
 		if domain in subd.text:
-			print subd.text.split()[0]
 			check_and_append_subdomains(subd.text.split()[0])
 		else:
 			pass

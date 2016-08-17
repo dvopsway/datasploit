@@ -1,5 +1,7 @@
 This page holds the setup guide you will need before kicking off the datasploit in your system. Please note that all the documentation is as per *nix machines, and the tool has not been thoroughly tested on Windows platform. If you would like to volunteer for the same, give us a shout at helpme@datasploit.info. Following are the quick steps to get you going:
 
+If you want to work with web GUI, follow the steps till 7. Otherwise, follow till 5th and you should be good to go. 
+
 ### Step 1 - Download DataSploit to your system.
 
 You can either use the git command line tools using the following command:
@@ -41,6 +43,19 @@ Create a directory for storing the db files, and Start the mongoDb service with 
 mkdir datasploitDb
 mongod --dbpath datasploitDb
 ```
+
+### Step 6: Install RabitMQ
+Install rabbitMq so that celery framework can work efficiently. Use the following link for download and install instructions:
+> https://www.rabbitmq.com/download.html
+
+Step 7: Start all services:
+```
+brew services restart mongodb 
+brew services restart rabbitmq
+C_FORCE_ROOT=root celery -A core worker -l info --concurrency 20       
+python manage.py runserver 0.0.0.0:8000  
+```
+
 Congratulations, you are now good to go. Lets go ahead and run our automated script for OSINT on a domain. 
 ```
 python domainOsint.py <domain_name>

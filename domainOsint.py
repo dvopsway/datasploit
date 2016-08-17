@@ -387,9 +387,12 @@ def do_everything(domain):
 
 
 	#insert data into mongodb instance
+	try:
+		result = db.domaindata.insert(dict_to_apend, check_keys=False)
+		print 'output saved to MongoDb'
+	except:
+		print "More data than I can handle, hence not saved in MongoDb. Apologies."
 
-	result = db.domaindata.insert(dict_to_apend, check_keys=False)
-	print 'done'
 
 
 
