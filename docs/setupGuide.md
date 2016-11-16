@@ -26,7 +26,7 @@ Please make sure that config.py is added in your gitIgnore file so that this is 
 ```
 mv config_sample.py config.py
 ```
-### Step 4: Generate API Keys and paste inside config_sample.py
+### Step 4: Generate API Keys and paste inside config.py
 
 Generate API keys using the *api Key Generation* guide at 
 > http://datasploit.readthedocs.io/en/latest/apiGeneration/ 
