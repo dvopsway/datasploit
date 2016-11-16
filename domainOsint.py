@@ -59,7 +59,6 @@ from domain_zoomeye import get_accesstoken_zoomeye,search_zoomeye
 from domain_checkpunkspider import checkpunkspider
 from domain_wappalyzer import wappalyzeit
 from domain_subdomains import check_and_append_subdomains,subdomains,find_subdomains_from_wolfram,subdomains_from_netcraft,subdomain_list
-from domain_sslinfo import check_ssl_htbsecurity
 from domain_pagelinks import pagelinks
 from domain_history import netcraft_domain_history
 from domain_emailhunter import emailhunter,collected_emails
@@ -159,41 +158,29 @@ def do_everything(domain):
 
 
 
-	#make proper URL with domain. Check on ssl as well as 80.
-	#print "---> Wapplyzing " + domain 
-	print colored(style.BOLD + '\n---> Wappalyzing web pages\n' + style.END, 'blue')
-	time.sleep(0.3)
-	print colored("->Trying Wapalyzer on HTTP: ", 'blue')
+	print colored(style.BOLD + '---> Wapplyzing web page of base domain:\n' + style.END, 'blue')
+
+
 	wappalyze_results = {}
+	#make proper URL with domain. Check on ssl as well as 80.
+	print "Hitting HTTP:\n",
 	try:
 		targeturl = "http://" + domain
 		list_of_techs = wappalyzeit(targeturl)
-		if len(list_of_techs) >= 1:
-			wappalyze_results['http'] = list_of_techs
-			for abc in list_of_techs:
-				print abc,
-		else:
-			pass
-		print "\n"
-	except:	
-		print colored("[-] HTTP connection was unavailable", 'red')
-	
-	print colored("->Trying Wapalyzer on HTTPS: ", 'blue')
+		wappalyze_results['http'] = list_of_techs
+	except:
+		print "[-] HTTP connection was unavailable"
+		wappalyze_results['http'] = []
+	print "\nHitting HTTPS:\n",
 	try:
 		targeturl = "https://" + domain
 		list_of_techs = wappalyzeit(targeturl)
-		if len(list_of_techs) >= 1:
-			wappalyze_results['https'] = list_of_techs
-			for abc in list_of_techs:
-				print abc,
-		else:
-			pass
-		print "\n"
+		wappalyze_results['https'] = list_of_techs
 	except:
-		print colored("[-] HTTP connection was unavailable", 'red')
+		print "[-] HTTPS connection was unavailable"
+		wappalyze_results['https'] = []
 	if len(wappalyze_results.keys()) >= 1:
 		dict_to_apend['wappalyzer'] = wappalyze_results
-
 
 
 
@@ -286,41 +273,7 @@ def do_everything(domain):
 	if len(links_brd.keys()) >= 1:
 		dict_to_apend['forum_links'] = links_brd
 
-	
-	print colored(style.BOLD + '\n---> Performing passive SSL Scan\n' + style.END, 'blue')
-	results = check_ssl_htbsecurity(domain)
-	htb_res_dict = {}
-	htb_res_lists = []
-	if 'ERROR' in results.keys():
-		print results['ERROR']
-	elif 'TOKEN' in results.keys():
-		if 'MULTIPLE_IPS' in results.keys():
-			print colored('Picking up One IP from bunch of IPs returned: %s', 'green') % results['MULTIPLE_IPS'][0]
-			results_new = check_ssl_htbsecurity(results['MULTIPLE_IPS'][0])
-			print "OverAll Rating: %s" % results_new['GRADE']
-			htb_res_dict['rating'] = results_new['GRADE']
-			print 'Check https://www.htbridge.com/ssl/ for more information'
-			for x in results_new['VALUE'].keys():
-				if str("[5]") in str(results_new['VALUE'][x]) or str("[3]") in str(results_new['VALUE'][x]):
-					if x == 'httpHeaders':
-						pass
-					else:
-						print results_new['VALUE'][x]
-						htb_res_lists.append(results_new['VALUE'][x])
-	else:
-		print "OverAll Rating: %s" % results['GRADE']
-		htb_res_dict['rating'] = results['GRADE']
-		for x in results['VALUE'].keys():
-			if str("[5]") in str(results['VALUE'][x]) or str("[3]") in str(results['VALUE'][x]):
-				if x == 'httpHeaders':
-					pass
-				else:
-					print results['VALUE'][x]
-					htb_res_lists.append(results['VALUE'][x])
-	htb_res_dict['issues'] = htb_res_lists
-	dict_to_apend['ssl_scan'] = htb_res_dict
 
-	
 	
 	#checks results from zoomeye
 	#filters need to be applied

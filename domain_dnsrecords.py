@@ -17,7 +17,7 @@ def fetch_dns_records(domain,rec_type):
 
 
 def parse_dns_records(domain):
-	print colored(style.BOLD + '---> Finding Whois Information.\n' + style.END, 'blue')
+	print colored(style.BOLD + '---> Finding DNS Records.\n' + style.END, 'blue')
 	dict_dns_record = {}
 	dict_dns_record['SOA Records'] = fetch_dns_records(domain,"SOA")
 	dict_dns_record['MX Records'] = fetch_dns_records(domain,"MX")  	
