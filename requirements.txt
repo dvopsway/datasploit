@@ -16,7 +16,6 @@ json2html==1.0.1
 kombu==3.0.35
 lxml==3.6.0
 piplapis-python==5.1.0
-pyinotify==0.9.6
 pymongo==3.3.0
 python-Wappalyzer==0.2.2
 python-whois==0.6.2
