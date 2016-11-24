@@ -31,6 +31,8 @@ def clearbit(email):
 	else:
 		return person_details
 
+
+
 def gravatar(email):
 	gravatar_url = "http://www.gravatar.com/avatar/" + hashlib.md5(email.lower()).hexdigest() 
 	return gravatar_url

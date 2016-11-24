@@ -10,6 +10,7 @@ class style:
    END = '\033[0m'
 
 def wappalyzeit(domain):
+	temp_list = []
 	time.sleep(0.3)
 	wappalyzer = Wappalyzer.latest()
 	webpage = WebPage.new_from_url(domain)
@@ -17,9 +18,12 @@ def wappalyzeit(domain):
 	if set1:
 		print "[+] Third party libraries in Use:"
 		for s in set1:
+			temp_list.append("\t%s" % s)
 			print "\t%s" % s
+		return temp_list
 	else:
 		print "\t\t\t[-] Nothing found. Make sure domain name is passed properly"
+		return temp_list
 
 
 

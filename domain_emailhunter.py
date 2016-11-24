@@ -16,20 +16,23 @@ def emailhunter(domain):
 	time.sleep(0.3)
 	url="https://api.emailhunter.co/v1/search?api_key=%s&domain=%s" % (cfg.emailhunter, domain)
 	res=requests.get(url)
-	parsed=json.loads(res.text)
-	print parsed.keys()
-	if 'emails' in parsed.keys():
-		for email in parsed['emails']:
-			collected_emails.append(email['value'])
+	try:
+		parsed=json.loads(res.text)
+		if 'emails' in parsed.keys():
+			for email in parsed['emails']:
+				collected_emails.append(email['value'])
+	except:
+		print 'CAPTCHA has been implemented, skipping this for now.'
 
 def main():
 	domain = sys.argv[1]
 	if cfg.emailhunter != "" and cfg.emailhunter != "":
 		emailhunter(domain)
 		for x in collected_emails:
-			print str(x) + ", ",
+			print str(x)
 		print "\n\n-----------------------------\n"
 
 
 if __name__ == "__main__":
 	main()
+

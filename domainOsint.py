@@ -15,16 +15,7 @@
 	#	server profiling of subdomains
 	#	check for .git/htaccess/web.config/extractc.
 
-#https://github.com/ivanlei/threatbutt
-#	harvest emails
-#	find files
-#	extract info from files 
-#	find information, harvest email. 
-#	check on fb, relate to username. 
-#	show possible graph search links
-#	twiter graph on the username
-#	namecheck with usernamejjjj
-#	hibp
+
 
 import time
 import whois
@@ -37,6 +28,7 @@ from bs4 import BeautifulSoup
 import dns.resolver
 import config as cfg
 import re
+import csv
 from urlparse import urlparse
 import hashlib
 import urllib
@@ -45,9 +37,14 @@ import clearbit
 import time
 import hashlib
 from termcolor import colored
+import signal
+from json2html import *
+
+
 
 reload(sys)
 sys.setdefaultencoding("utf-8")
+
 
 
 
@@ -87,15 +84,25 @@ censys_list = []
 ######
 
 dict_to_apend= {}
+csv_dict = {}
+
+'''
+# Code for mongoDb
 client = MongoClient()
 db = client.database1
-
+'''
 allusernames_list = []
 
 
 class style:
    BOLD = '\033[1m'
    END = '\033[0m'
+
+
+def signal_handler(signal, frame):
+	print colored(style.BOLD + '\n [-] Brrrr...You pressed Ctrl+c and this is sad. Exiting..\n' + style.END, 'red')
+	sys.exit(0)
+
 
 def printart():
 	print "\n\t  ____/ /____ _ / /_ ____ _ _____ ____   / /____  (_)/ /_"
@@ -107,6 +114,7 @@ def printart():
 	print "         	   Open Source Assistant for #OSINT            "
 	print "                     website: www.datasploit.info               "
 	print "\t"
+
 
 
 
@@ -179,6 +187,8 @@ def do_everything(domain):
 	except:
 		print "[-] HTTPS connection was unavailable"
 		wappalyze_results['https'] = []
+	
+
 	if len(wappalyze_results.keys()) >= 1:
 		dict_to_apend['wappalyzer'] = wappalyze_results
 
@@ -198,8 +208,12 @@ def do_everything(domain):
 		emails = emailhunter(domain)
 		if len(collected_emails) >= 1:
 			for x in collected_emails:
-				print str(x) + ", ",
+				print str(x)	
 			dict_to_apend['email_ids'] = collected_emails
+
+
+	'''
+	##### code for automated osint on enumerated email email_ids
 
 	while True:
 		a = raw_input(colored("\n\nDo you want to launch osint check for these emails? [(Y)es/(N)o/(S)pecificEmail]: ", 'red'))
@@ -223,6 +237,8 @@ def do_everything(domain):
 		else:
 			print("[-] Wrong choice. Please enter Yes or No  [Y/N]: \n")
 		#print emailOsint.username_list
+	'''
+
 
 	
 	dns_ip_history = netcraft_domain_history(domain)
@@ -339,27 +355,31 @@ def do_everything(domain):
 				print "IP: %s\nHosts: %s\nDomain: %s\nPort: %s\nData: %s\nLocation: %s\n" % (x['ip_str'], x['hostnames'], x['domains'], x['port'], x['data'].replace("\n",""), x['location'])
 
 
+	'''
 	#insert data into mongodb instance
 	try:
 		result = db.domaindata.insert(dict_to_apend, check_keys=False)
 		print 'output saved to MongoDb'
 	except:
 		print "More data than I can handle, hence not saved in MongoDb. Apologies."
-
+	'''
 
 
 
 
 
 def main(): 
+	signal.signal(signal.SIGINT, signal_handler)
 	options, args = parser.parse_args()
 	printart()
 	domain = options.domain
 	if domain == 'spam':
 		print "[-] Invalid argument passed. \nUsage: domainOsint.py [options]\n\nOptions:\n  -h,\t\t--help\t\t\tshow this help message and exit\n  -d DOMAIN,\t--domain=DOMAIN\t\tDomain name against which automated Osint is to be performed."
 	else:
+		do_everything(domain)
+		'''
+		Since mongodb support is gone, dont need this snippet
 		cursor = db.domaindata.find({"targetname": domain})
-
 		if cursor.count() > 0:
 			while True:
 				a = raw_input(colored("Would you like to delete all the data for %s and launch a new scan? (Note: Deleting all data will disable alerting options.) [(Y)es/(N)o/(C)ancel]: ",'red') % domain,)
@@ -382,7 +402,7 @@ def main():
 		else:
 			print colored("No earlier scans found for %s, Launching fresh scan in 3, 2, 1..\n", 'blue') % domain
 			do_everything(domain)
-			
+		'''
 
 if __name__ == "__main__":
 	main()
