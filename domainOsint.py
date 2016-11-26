@@ -83,8 +83,9 @@ class style:
 
 
 def signal_handler(signal, frame):
-	print colored(style.BOLD + '\n [-] Brrrr...You pressed Ctrl+c and this is sad. Exiting..\n' + style.END, 'red')
+	print colored(style.BOLD + '\n [-] Brrrr...You pressed Ctrl+c and this is sad. Trying to exit..\n' + style.END, 'red')
 	sys.exit(0)
+	quit()
 
 
 def printart():
