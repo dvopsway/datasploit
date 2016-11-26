@@ -41,7 +41,7 @@ def main():
 		for x in dict_zoomeye_results['matches']:
 			if x['site'].split('.')[-2] == domain.split('.')[-2]:
 				if 'title' in x.keys():
-					print "IP: %s\nSite: %s\nTitle: %s\nHeaders: %s\nLocation: %s\n" % (x['ip'], x['site'], x['title'], x['headers'].replace("\n",""), x['geoinfo'])
+					print "IP: %s\nSite: %s\nTitle: %s\nHeaders: %s\nLocation: %s\n" % (x['ip'], x['site'], x['title'], x['headers'].replace("\n\n",""), x['geoinfo'])
 				else:
 					for val in x.keys():
 						print "%s: %s" % (val, x[val])
