@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import config as cfg
 import requests
 import json

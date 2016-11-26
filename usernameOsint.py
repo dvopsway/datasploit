@@ -1,4 +1,5 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python
+
 import tweepy
 import re
 from collections import Counter

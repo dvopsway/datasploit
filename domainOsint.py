@@ -1,21 +1,4 @@
-#input domain name
-
-#domain_osint
-
-#pip lxml json 
-
-#http://searchdns.netcraft.com/?restriction=site+contains&host=olacabs.com&lookup=wait..&position=limited
-
-#completed
-
-#punkspider, shodan, whois,
-
-#show whois , dns, buildwith, wappalyzer, punkspider info
-	#	subdomain find. knocy.py / google 
-	#	server profiling of subdomains
-	#	check for .git/htaccess/web.config/extractc.
-
-
+#!/usr/bin/env python
 
 import time
 import whois
