@@ -45,15 +45,12 @@ We need following API keys to run this tool efficiently.
 
 
 ## Google Custom Search Engine API key and CX id
-To generate API key.
 * Go to https://console.developers.google.com/ > Credentials
 * Click on 'Create Credentials' and select API key. 
 * Click on restrict key. 
 * Select HTTP Headers (Websites) radio button.
 * Add **.datasploit.info/\** in restrictions. This is done in order to stop unintentional usage of your api key. 
 * Copy the API key and click on save button. This is the value for *google_cse_key* field in the config.py file. 
-
-To generate CX id (Search engine id)
 * Go to https://cse.google.com/cse/all, Click on Add button. 
 * In sites to search box, enter "pastebin.com" and "pastie.org"
 * Give any name to your search engine and click on Create button. 
