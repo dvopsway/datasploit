@@ -129,9 +129,9 @@ def do_everything(domain):
 			for y in dns_records[x]:
 				print "\t%s" % (y)
 			#print type(dns_records[x])
-
+	
+	print colored(style.BOLD + '\n---> Finding Paste(s)..\n' + style.END, 'blue')
 	if cfg.google_cse_key != "" and cfg.google_cse_key != "XYZ" and cfg.google_cse_cx != "" and cfg.google_cse_cx != "XYZ":
-		print colored(style.BOLD + '\n---> Finding Paste(s)..\n' + style.END, 'blue')
 		total_results = google_search(domain, 1)
 		if (total_results != 0 and total_results > 10):
 			more_iters = (total_results / 10)

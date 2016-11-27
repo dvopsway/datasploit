@@ -31,7 +31,6 @@ def colorize(string):
 def google_search(domain,start_index):
 	time.sleep(0.3)
 	url="https://www.googleapis.com/customsearch/v1?key=%s&cx=%s&q=\"%s\"&start=%s" % (cfg.google_cse_key, cfg.google_cse_cx, domain, start_index)
-	print url
 	res=requests.get(url)
 	results = json.loads(res.text)
 	if 'items' in results.keys():
@@ -55,8 +54,8 @@ def google_search(domain,start_index):
 
 def main():
 	domain = sys.argv[1]
+	print colored(style.BOLD + '\n---> Finding Paste(s)..\n' + style.END, 'blue')
 	if cfg.google_cse_key != "" and cfg.google_cse_key != "XYZ" and cfg.google_cse_cx != "" and cfg.google_cse_cx != "XYZ":
-		print colored(style.BOLD + '\n---> Finding Paste(s)..\n' + style.END, 'blue')
 		total_results = google_search(domain, 1)
 		if (total_results != 0 and total_results > 10):
 			more_iters = (total_results / 10)
