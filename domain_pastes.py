@@ -31,6 +31,7 @@ def colorize(string):
 def google_search(domain,start_index):
 	time.sleep(0.3)
 	url="https://www.googleapis.com/customsearch/v1?key=%s&cx=%s&q=\"%s\"&start=%s" % (cfg.google_cse_key, cfg.google_cse_cx, domain, start_index)
+	print url
 	res=requests.get(url)
 	results = json.loads(res.text)
 	if 'items' in results.keys():
@@ -40,9 +41,10 @@ def google_search(domain,start_index):
 			print "Title: %s\nURL: %s\nSnippet: %s\n" % (x['title'], colorize(x['link']), colorize(x['snippet']))
 			start_index = +1
 		return int(results['searchInformation']['totalResults'])
-	elif results['searchInformation']['totalResults'] == "0":
-		print '0 Results found'
-		return 0
+	elif results['error']['code'] != 403:
+		if results['searchInformation']['totalResults'] == "0":
+			print '0 Results found'
+			return 0
 	elif results['error']['code'] == 403:
 		print 'Rate limit Exceeded'
 		return 0
