@@ -13,9 +13,13 @@ class style:
 def pagelinks(domain):
 	print colored(style.BOLD + '\n---> Finding Pagelinks:\n' + style.END, 'blue')
 	time.sleep(0.3)
-	req = requests.get('http://api.hackertarget.com/pagelinks/?q=%s'%(domain))
-	page_links = req.content.split("\n")
-	return page_links
+	try:
+		req = requests.get('http://api.hackertarget.com/pagelinks/?q=%s'%(domain))
+		page_links = req.content.split("\n")
+		return page_links
+	except: 
+		print 'Connection time out.'
+		return []
 
 def main():
 	domain = sys.argv[1]

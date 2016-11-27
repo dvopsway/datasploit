@@ -31,7 +31,7 @@ def wappalyzeit(domain):
 
 def main():
 	domain = sys.argv[1]
-	print colored(style.BOLD + '---> Wapplyzing web page of base domain:\n' + style.END, 'blue')
+	print colored(style.BOLD + '\n---> Wapplyzing web page of base domain:\n' + style.END, 'blue')
 
 	#make proper URL with domain. Check on ssl as well as 80.
 	print "Hitting HTTP:\n",

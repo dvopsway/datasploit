@@ -48,6 +48,7 @@ from domain_wikileaks import wikileaks
 from domain_censys import view,censys_search,censys_list
 from domain_shodan import shodandomainsearch
 from email_fullcontact import fullcontact
+from domain_pastes import google_search,colorize
 
 
 
@@ -129,7 +130,20 @@ def do_everything(domain):
 				print "\t%s" % (y)
 			#print type(dns_records[x])
 
-	
+	if cfg.google_cse_key != "" and cfg.google_cse_key != "XYZ" and cfg.google_cse_cx != "" and cfg.google_cse_cx != "XYZ":
+		print colored(style.BOLD + '\n---> Finding Paste(s)..\n' + style.END, 'blue')
+		total_results = google_search(domain, 1)
+		if (total_results != 0 and total_results > 10):
+			more_iters = (total_results / 10)
+			if more_iters >= 10:
+					print colored(style.BOLD + '\n---> Too many results, Daily API limit might exceed\n' + style.END, 'red')
+			for x in xrange(1,more_iters + 1):	
+				google_search(domain, (x*10)+1)
+		print "\n\n-----------------------------\n"
+	else:
+		print colored(style.BOLD + '\n[-] google_cse_key and google_cse_cx not configured. Skipping paste(s) search.\nPlease refer to http://datasploit.readthedocs.io/en/latest/apiGeneration/.\n' + style.END, 'red')
+
+
 	#convert domain to reverse_domain for passing to checkpunkspider()
 	reversed_domain = ""
 	for x in reversed(domain.split(".")):
@@ -149,7 +163,7 @@ def do_everything(domain):
 
 
 
-	print colored(style.BOLD + '---> Wapplyzing web page of base domain:\n' + style.END, 'blue')
+	print colored(style.BOLD + '\n---> Wapplyzing web page of base domain:\n' + style.END, 'blue')
 
 
 	wappalyze_results = {}
@@ -174,8 +188,6 @@ def do_everything(domain):
 
 	if len(wappalyze_results.keys()) >= 1:
 		dict_to_apend['wappalyzer'] = wappalyze_results
-
-
 
 	
 	#make Search github code for the given domain.
@@ -273,17 +285,6 @@ def do_everything(domain):
 		dict_to_apend['forum_links'] = links_brd
 
 
-	
-	#checks results from zoomeye
-	#filters need to be applied
-	#zoomeye_results = search_zoomeye(domain)
-	#dict_zoomeye_results = json.loads(zoomeye_results)
-	#if 'matches' in dict_zoomeye_results.keys():
-	#	for x in dict_zoomeye_results['matches']:
-	#		if x['site'].split('.')[-2] == domain.split('.')[-2]:
-	#			print "IP: %s\nSite: %s\nTitle: %s\nHeaders: %s\nLocation: %s\n" % (x['ip'], x['site'], x['title'], x['headers'].replace("\n",""), x['geoinfo'])
-	#print "\n-----------------------------\n"
-
 	if cfg.zoomeyeuser != "" and cfg.zoomeyepass != "":
 		temp_list =[]
 		zoomeye_results = search_zoomeye(domain)
@@ -300,8 +301,6 @@ def do_everything(domain):
 							print "%s: %s" % (val, x[val])
 		if len(temp_list) >= 1:
 			dict_to_apend['zoomeye'] = temp_list
-		
-
 
 
 	if cfg.censysio_id != "" and cfg.censysio_secret != "":
@@ -314,22 +313,6 @@ def do_everything(domain):
 					print x
 
 
-	
-	#Code for shodan Ip search. now we are doing Hostname search.
-		
-		#converts domain to IP. Prints a statement for the same.
-		#ip_addr = socket.gethostbyname(domain)
-
-		#checks for information at shodan, and comes back with whatever available.
-		## need to apply filter here (lot of noise coming in)
-		#res_from_shodan = json.loads(shodansearch(ip_addr))
-		#print res_from_shodan
-		#for iterate_shodan_list in res_from_shodan['data']:
-		#	print "ISP: %s \n Hosts: %s \n IP: %s \n Data: %s\n" % (iterate_shodan_list['isp'], iterate_shodan_list['hostnames'], iterate_shodan_list['ip_str'], iterate_shodan_list['data'].strip("\n"))
-		#print "\n-----------------------------\n"
-	
-
-	
 	if cfg.shodan_api != "":
 		res_from_shodan = json.loads(shodandomainsearch(domain))
 		if 'matches' in res_from_shodan.keys():

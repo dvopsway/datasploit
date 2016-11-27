@@ -14,7 +14,7 @@ class style:
    END = '\033[0m'
 
 def shodandomainsearch(domain):
-	print colored(style.BOLD + '---> Searching in Shodan:\n' + style.END, 'blue')
+	print colored(style.BOLD + '\n---> Searching in Shodan:\n' + style.END, 'blue')
 	time.sleep(0.3)
 	endpoint =  "https://api.shodan.io/shodan/host/search?key=%s&query=hostname:%s&facets={facets}" % (cfg.shodan_api, domain)
 	req = requests.get(endpoint)
