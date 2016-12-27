@@ -40,8 +40,7 @@ def google_search(domain,start_index):
 			print "Title: %s\nURL: %s\nSnippet: %s\n" % (x['title'], colorize(x['link']), colorize(x['snippet']))
 			start_index = +1
 		return int(results['searchInformation']['totalResults'])
-	elif results['error']['code'] != 403:
-		if results['searchInformation']['totalResults'] == "0":
+	elif results['searchInformation']['totalResults'] == "0":
 			print '0 Results found'
 			return 0
 	elif results['error']['code'] == 403:
