@@ -62,9 +62,12 @@ def shodansearch(ip):
 		print 'Hostnames: %s' % parsed_res['hostnames']
 		print 'Postal Code: %s' % parsed_res['postal_code']
 		print 'Country Code: %s' % parsed_res['country_code']
-		print 'Organization: %s' % x['org']
+		print 'Organization: %s' % parsed_res['org']
 		if asn != '':
 			print 'ASN: %s' % asn
+		if 'vulns' in parsed_res.keys():
+			print colored(style.BOLD + 'Vulnerabilties: %s'  + style.END, 'red') % parsed_res['vulns']
+	
 
 def domaintoip(domain):
 	return socket.gethostbyname(domain)
