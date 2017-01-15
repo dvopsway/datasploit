@@ -36,19 +36,30 @@ def shodansearch(ip):
 					print '\tServer: %s' % x['http']['server']
 					print '\tComponents: %s' % x['http']['components']
 					print '\tSitemap: %s' % x['http']['sitemap']
+				if 'ssh' in x.keys():	
+					print colored(style.BOLD + '[+] HTTP port present:\t'  + style.END, 'green')
+					print '\tType: %s' % x['ssh']['type']
+					print '\tCipher: %s' % x['ssh']['cipher']
+					print '\tFingerprint: %s' % x['ssh']['fingerprint']
+					print '\tMac: %s' % x['ssh']['mac']
+					print '\tKey: %s' % x['ssh']['key']
 				if 'ssl' in x.keys():
 					print '\tSSL Versions: %s' % x['ssl']['versions'] 	
-				print x['org']
 				asn = parsed_res['asn']
 				if 'vulns' in x['opts']:
 					for y in x['opts'].keys():
 						print x['opts'][y]
+				if 'product' in x.keys():
+					print 'Product: %s' % x['product']
+				if 'version' in x.keys():
+					print 'Version: %s' % x['version']
 		print colored(style.BOLD + '\n----------- Basic Info -----------' + style.END, 'blue')
 		print 'Open Ports: %s' % parsed_res['ports'] 
 		print 'Latitude: %s' % parsed_res['latitude']
 		print 'Hostnames: %s' % parsed_res['hostnames']
 		print 'Postal Code: %s' % parsed_res['postal_code']
 		print 'Country Code: %s' % parsed_res['country_code']
+		print 'Organization: %s' % x['org']
 		print 'ASN: %s' % asn
 
 def domaintoip(domain):
