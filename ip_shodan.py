@@ -11,7 +11,8 @@ class style:
    END = '\033[0m'
 
 
-asn = ''
+
+
 def shodansearch(ip):
 	print colored(style.BOLD + '[+] Searching in Shodan' + style.END)
 	endpoint =  "https://api.shodan.io/shodan/host/" + str(ip) + "?key=" + cfg.shodan_api
@@ -20,6 +21,7 @@ def shodansearch(ip):
 	if 'error' in parsed_res.keys():
 		print 'No information available for that IP.'
 	else:
+		asn = ''
 		print colored(style.BOLD + 'Report for IP: %s' + style.END, 'blue') % str(ip)
 		print colored(style.BOLD + '\n----------- Per Port Results -----------' + style.END)
 		if 'data' in parsed_res.keys():
@@ -61,7 +63,8 @@ def shodansearch(ip):
 		print 'Postal Code: %s' % parsed_res['postal_code']
 		print 'Country Code: %s' % parsed_res['country_code']
 		print 'Organization: %s' % x['org']
-		print 'ASN: %s' % asn
+		if asn != '':
+			print 'ASN: %s' % asn
 
 def domaintoip(domain):
 	return socket.gethostbyname(domain)
