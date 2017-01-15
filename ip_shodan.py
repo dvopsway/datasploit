@@ -45,7 +45,8 @@ def shodansearch(ip):
 					print '\tKey: %s' % x['ssh']['key']
 				if 'ssl' in x.keys():
 					print '\tSSL Versions: %s' % x['ssl']['versions'] 	
-				asn = parsed_res['asn']
+				if 'asn' in x.keys():
+					asn = parsed_res['asn']
 				if 'vulns' in x['opts']:
 					for y in x['opts'].keys():
 						print x['opts'][y]
