@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import sys
 
 combination = ["123@%s", "%s@123", "123%s", "%s123"]

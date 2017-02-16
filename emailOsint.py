@@ -11,6 +11,7 @@ from bs4 import BeautifulSoup
 import re
 from email_fullcontact import fullcontact
 from termcolor import colored
+from email_pastes import google_search,colorize
 class style:
    BOLD = '\033[1m'
    END = '\033[0m'
@@ -93,6 +94,7 @@ def list_down_usernames():
 	
 def print_emailosint(email):
 	
+	'''
 	hbp = haveIbeenpwned(email)
 	if len(hbp) != 0:
 		print colored("Pwned at %s Instances\n", 'green') % len(hbp)
@@ -100,7 +102,7 @@ def print_emailosint(email):
 			print "Title:%s\nBreachDate%s\nPwnCount%s\nDescription%s\nDataClasses%s\n" % (x.get('Title', ''), x.get('BreachDate', ''), x.get('PwnCount', ''), x.get('Description', ''),x.get('DataClasses', ''))
 	else:
 		print colored("[-] No breach status found.", 'red')
-	
+	'''
 	print colored(style.BOLD + '\n---> Finding User Information\n' + style.END, 'blue')
 	time.sleep(0.3)
 	data = fullcontact(email)
@@ -176,6 +178,21 @@ def print_emailosint(email):
 	'''
 
 	
+	print colored(style.BOLD + '\n---> Finding Paste(s)..\n' + style.END, 'blue')
+	if cfg.google_cse_key != "" and cfg.google_cse_key != "XYZ" and cfg.google_cse_cx != "" and cfg.google_cse_cx != "XYZ":
+		total_results = google_search(email, 1)
+		if (total_results != 0 and total_results > 10):
+			more_iters = (total_results / 10)
+			if more_iters >= 10:
+					print colored(style.BOLD + '\n---> Too many results, Daily API limit might exceed\n' + style.END, 'red')
+			for x in xrange(1,more_iters + 1):	
+				google_search(email, (x*10)+1)
+		print "\n\n-----------------------------\n"
+	else:
+		print colored(style.BOLD + '\n[-] google_cse_key and google_cse_cx not configured. Skipping paste(s) search.\nPlease refer to http://datasploit.readthedocs.io/en/latest/apiGeneration/.\n' + style.END, 'red')
+
+
+
 	slds=emailslides(email)
 	if len(slds) != 0:
 		print colored(style.BOLD + '\n---> Slides Published:' + style.END, 'blue')

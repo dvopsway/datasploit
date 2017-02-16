@@ -18,7 +18,7 @@ def colorize(string):
 	resetStr = colourFormat.format(0)
 	lastMatch = 0
 	formattedText = ''
-	for match in re.finditer(r'([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+(\.[a-zA-Z]{2,4})|/(?:http:\/\/)?(?:([^.]+)\.)?datasploit\.info/|/(?:http:\/\/)?(?:([^.]+)\.)?(?:([^.]+)\.)?datasploit\.info/)', string):
+	for match in re.finditer(r'([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+(\.[a-zA-Z]{2,4})|/(?:http:\/\/)?(?:([^.]+)\.)?nokia\.com/|/(?:http:\/\/)?(?:([^.]+)\.)?(?:([^.]+)\.)?nokia\.com/)', string):
 	    start, end = match.span()
 	    formattedText += string[lastMatch: start]
 	    formattedText += colourStr
@@ -52,16 +52,16 @@ def google_search(domain,start_index):
 	
 
 def main():
-	domain = sys.argv[1]
+	email = sys.argv[1]
 	print colored(style.BOLD + '\n---> Finding Paste(s)..\n' + style.END, 'blue')
 	if cfg.google_cse_key != "" and cfg.google_cse_key != "XYZ" and cfg.google_cse_cx != "" and cfg.google_cse_cx != "XYZ":
-		total_results = google_search(domain, 1)
+		total_results = google_search(email, 1)
 		if (total_results != 0 and total_results > 10):
 			more_iters = (total_results / 10)
 			if more_iters >= 10:
 					print colored(style.BOLD + '\n---> Too many results, Daily API limit might exceed\n' + style.END, 'red')
 			for x in xrange(1,more_iters + 1):	
-				google_search(domain, (x*10)+1)
+				google_search(email, (x*10)+1)
 		print "\n\n-----------------------------\n"
 	else:
 		print colored(style.BOLD + '\n[-] google_cse_key and google_cse_cx not configured. Skipping paste(s) search.\nPlease refer to http://datasploit.readthedocs.io/en/latest/apiGeneration/.\n' + style.END, 'red')
