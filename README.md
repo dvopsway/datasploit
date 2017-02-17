@@ -2,8 +2,6 @@
 
 [![Black Hat Arsenal](https://www.toolswatch.org/badges/arsenal/2016.svg)](https://www.blackhat.com/us-16/arsenal.html#datasploit)
 
-[![Demolabs 24 Demolabs](https://raw.githubusercontent.com/upgoingstar/randomfiles/master/bh_arsenal2016_us.svg)](https://www.blackhat.com/us-16/arsenal.html#datasploit)
-
 # Overview of the tool:
 * Performs OSINT on a domain / email / username / phone and find out information from different sources.
 * Correlates and collaborate the results, show them in a consolidated manner. 
