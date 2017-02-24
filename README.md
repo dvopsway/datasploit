@@ -2,7 +2,6 @@
 
 [![Black Hat Arsenal](https://www.toolswatch.org/badges/arsenal/2016.svg)](https://www.blackhat.com/us-16/arsenal.html#datasploit)
 
-<a href="https://www.blackhat.com/asia-17/arsenal.html#datasploit-automated-open-source-intelligence-osint-tool"><img alt="Black Hat Arsenal" src="https://github.com/toolswatch/badges/blob/master/arsenal/2017.svg" /></a>
 
 # Overview of the tool:
 * Performs OSINT on a domain / email / username / phone and find out information from different sources.
