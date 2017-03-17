@@ -33,29 +33,6 @@ Generate API keys using the *api Key Generation* guide at
 
 and enter the respective values in config.py file. Leave all other key value pairs blank.
 
-### Step 5: Install MongoDB
-
-Datasploit uses mongoDb in the backend and hence require a running instance of mongoDb in order to save and query data. Install the mongoDb database as per the instructions from the below mentioned site:
-> https://docs.mongodb.com/manual/installation
-
-Create a directory for storing the db files, and Start the mongoDb service with this database path:
-```
-mkdir datasploitDb
-mongod --dbpath datasploitDb
-```
-
-### Step 6: Install RabitMQ
-Install rabbitMq so that celery framework can work efficiently. Use the following link for download and install instructions:
-> https://www.rabbitmq.com/download.html
-
-Step 7: Start all services:
-```
-brew services restart mongodb 
-brew services restart rabbitmq
-C_FORCE_ROOT=root celery -A core worker -l info --concurrency 20       
-python manage.py runserver 0.0.0.0:8000  
-```
-
 Congratulations, you are now good to go. Lets go ahead and run our automated script for OSINT on a domain. 
 ```
 python domainOsint.py <domain_name>

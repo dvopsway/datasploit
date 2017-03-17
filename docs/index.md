@@ -14,7 +14,7 @@ Irrespective of whether you are attacking a target or defending one, you need to
 
 ## Tool Background 
 
-Created using our beloved Python, MongoDb and Django, DataSploit simply requires the bare minimum data (such as domain name, email ID, person name, etc.) before it goes out on a mining spree. Once the data is collected, firstly the noise is removed, after which data is correlated and after multiple iterations it is stored locally in a database which could be easily visualised on the UI provided. The sources that have been integrated are all hand picked and are known to be providing reliable information. We have used them previously during different offensive as well as defensive engagements and found them helpful.
+Created using our beloved Python, DataSploit simply requires the bare minimum data (such as domain name, email ID, person name, etc.) before it goes out on a mining spree. Once the data is collected, firstly the noise is removed, after which data is correlated and after multiple iterations it is stored locally in a database which could be easily visualised on the UI provided. The sources that have been integrated are all hand picked and are known to be providing reliable information. We have used them previously during different offensive as well as defensive engagements and found them helpful.
 
 ## Setup
 

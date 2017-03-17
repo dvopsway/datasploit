@@ -12,9 +12,9 @@ Chaps who were generous enough to give feedback and suggest changes. Kudos to yo
 * Anant Srivastata ([@anantshri](https://twitter.com/anantshri))
 * Prashant Mahajan ([@prashant3535](https://twitter.com/prashant3535))
 * Shadab Siddiqui ([@sh4ds1dd](https://twitter.com/sh4ds1dd))
+* Chandrapal ([@bnchandrapal](https://twitter.com/bnchandrapal))
 
 ##### Testers
 Below people helped us by quickly adopting the tool and raised few naive issues we missed out. Kudos to you guys too. 
 * Sagar Belure ([@sagarbelure](https://twitter.com/sagarbelure))
-* Amay Gat ([@ameygat](https://twitter.com/ameygat))
 * Chandrapal ([@bnchandrapal](https://twitter.com/bnchandrapal))
