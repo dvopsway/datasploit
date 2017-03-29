@@ -404,7 +404,7 @@ def do_everything(domain, output):
 		if len(temp_list) >= 1:
 			dict_to_apend['zoomeye'] = temp_list
 
-	"""
+	
 	if cfg.censysio_id != "" and cfg.censysio_secret != "":
 		print colored(style.BOLD + '\n---> Kicking off Censys Search. This may take a while..\n' + style.END, 'blue')
 		censys_search(domain)
@@ -413,7 +413,7 @@ def do_everything(domain, output):
 			for x in censys_list:
 				if x is not None and x != 'None':
 					print x
-	"""
+	
 
 	if cfg.shodan_api != "":
 		res_from_shodan = json.loads(shodandomainsearch(domain))
