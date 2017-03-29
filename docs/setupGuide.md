@@ -6,9 +6,9 @@ If you want to work with web gui, follow the steps till 7. Otherwise, follow til
 
 You can either use the git command line tools using the following command:
 ```
-git clone https://github.com/upgoingstar/datasploit.git
+git clone https://github.com/datasploit/datasploit.git
 ```
-, or you can simply download the zip file *([link](https://github.com/upgoingstar/datasploit/archive/master.zip))* and extract the same using unzip.
+, or you can simply download the zip file *([link](https://github.com/datasploit/datasploit/archive/master.zip))* and extract the same using unzip.
 ```
 unzip master.zip
 ```

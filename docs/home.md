@@ -25,7 +25,6 @@ Other modules:
 ## Before running the program, please make sure that you have:
 * Changed the name of the file 'config_sample.py' to config.py
 * Entered all the required APIs in config.py file, as mentioned above. 
-* Installed MongoDb and the mongodb is running. [Refer to documentation](https://docs.mongodb.com/manual/installation/): 
 
 
 ## Usage
