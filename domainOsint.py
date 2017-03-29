@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import os
 import time
 import whois
 import requests
@@ -22,7 +23,7 @@ import hashlib
 from termcolor import colored
 import signal
 from json2html import *
-
+from datetime import datetime
 
 
 reload(sys)
@@ -55,6 +56,7 @@ from domain_pastes import google_search,colorize
 import optparse
 parser = optparse.OptionParser()
 parser.add_option('-d', '--domain', action="store", dest="domain", help="Domain name against which automated Osint is to be performed.", default="spam")
+parser.add_option('-o', '--output', action="store_true", dest="output", help="Save the result in an HTML file")
 
 
 '''
@@ -101,48 +103,94 @@ def printart():
 
 
 
+def make_html(html, name, code, data, scroll):
+	base = """
+<div class="row section scrollspy" id="%s">
+        <div class="col s12">
+                <div class="card">
+                        <div class="card-content">
+                                <span style="font-size:22pt;" class="card-title">%s</span>
+				%s
+                        </div>
+                </div>
+        </div>
+</div>
+""" % (code, name, data)
+	html += base
+	scroll.append((code, name))
+	return html, scroll
 
-def do_everything(domain):
+
+def do_everything(domain, output):
 	dict_to_apend['targetname'] = domain
 	
 	API_URL = "https://www.censys.io/api/v1"
 	#print cfg.zoomeyeuser
 
+	html = ""
 	
+	scroll = []
+
 	#print WhoIs information
 	whoisdata = whoisnew(domain)
 	print whoisdata
 	dict_to_apend['whois'] = whoisdata
-
-
+	html, scroll = make_html(html, "WHOIS Information", "whois", "<pre>%s</pre>" % str(whoisdata), scroll)
 	
 	#print DNS Information
 	dns_records = parse_dns_records(domain)
 	#dict_to_apend['dns_records'] = dns_records > not working 
 	#bson.errors.InvalidDocument: Cannot encode object: <DNS IN A rdata: 54.208.84.166>
-	
+	lhtml = "<ul class='collection'>"	
 	for x in dns_records.keys():
 		print x
+		lhtml += "<li class='collection-item'>%s<ul class='collection'>" % x
 		if "No" in dns_records[x] and "Found" in dns_records[x]:
 			print "\t%s" % (dns_records[x])
+			lhtml += "<li class='collection-item'>%s</li>" % dns_records[x]
 		else:
 			for y in dns_records[x]:
+				lhtml += "<li class='collection-item'>%s</li>" % y
 				print "\t%s" % (y)
 			#print type(dns_records[x])
+		lhtml += "</ul></li>"
+	lhtml += "</ul>"
+	html, scroll = make_html(html, "DNS Records", "dns-records", lhtml, scroll)
 	
+
 	print colored(style.BOLD + '\n---> Finding Paste(s)..\n' + style.END, 'blue')
 	if cfg.google_cse_key != "" and cfg.google_cse_key != "XYZ" and cfg.google_cse_cx != "" and cfg.google_cse_cx != "XYZ":
-		total_results = google_search(domain, 1)
-		if (total_results != 0 and total_results > 10):
-			more_iters = (total_results / 10)
-			if more_iters >= 10:
-					print colored(style.BOLD + '\n---> Too many results, Daily API limit might exceed\n' + style.END, 'red')
-			for x in xrange(1,more_iters + 1):	
-				google_search(domain, (x*10)+1)
-		print "\n\n-----------------------------\n"
+		total_results, results = google_search(domain, 1)
+		if not total_results == 0:
+			lhtml = """<div style='overflow-x: scroll;'><table class='bordered highlight'>
+					<thead>
+					<tr>
+						<th>Title</th>
+						<th>URL</th>
+						<th>Snippet</th>
+					</tr>
+					</thead>
+					<tbody>
+			"""
+			for x in results['items']:
+				lhtml += "<tr>"
+				lhtml += "<td>%s</td><td>%s</td><td>%s</td>" % (x['title'], x['link'], x['snippet'])
+				lhtml += "</tr>"
+			if (total_results != 0 and total_results > 10):
+				more_iters = (total_results / 10)
+				if more_iters >= 10:
+						print colored(style.BOLD + '\n---> Too many results, Daily API limit might exceed\n' + style.END, 'red')
+				for x in xrange(1,more_iters + 1):	
+					cnt, results = google_search(domain, (x*10)+1)
+					for y in results['items']:
+						lhtml += "<tr>"
+						lhtml += "<td>%s</td><td>%s</td><td>%s</td>" % (y['title'], y['link'], y['snippet'])
+						lhtml += "</tr>"
+			print "\n\n-----------------------------\n"
+			lhtml += "</tbody></table></div>"
+			html, scroll = make_html(html, "Google Search Pastes", "google-search-pastes", lhtml, scroll)
 	else:
 		print colored(style.BOLD + '\n[-] google_cse_key and google_cse_cx not configured. Skipping paste(s) search.\nPlease refer to http://datasploit.readthedocs.io/en/latest/apiGeneration/.\n' + style.END, 'red')
-
 
 	#convert domain to reverse_domain for passing to checkpunkspider()
 	reversed_domain = ""
@@ -153,15 +201,28 @@ def do_everything(domain):
 	if 'data' in res.keys() and len(res['data']) >= 1:
 		dict_to_apend['punkspider'] = res['data']
 		print colored("[+] Few vulnerabilities found at Punkspider", 'green'	)
+		lhtml = "<div style='overflow-x: scroll;'><table class='bordered highlight'><thead>"
+		lhtml += "<tr>"
+		lhtml += "<th>Bug Type</th>"
+		lhtml += "<th>Method</th>"
+		lhtml += "<th>URL</th>"
+		lhtml += "<th>Parameter</th>"
+		lhtml += "</tr></thead><tbody>"
 		for x in res['data']:
+			lhtml += "<tr>"
 			print "==> ", x['bugType']
+			lhtml += "<td>%s</td>" % x['bugType']
 			print "Method:", x['verb'].upper()
+			lhtml += "<td>%s</td>" % x['verb'].upper()
 			print "URL:\n" + x['vulnerabilityUrl']
+			lhtml += "<td>%s</td>" % x['vulnerabilityUrl']
 			print "Param:", x['parameter']
+			lhtml += "<td>%s</td>" % x['parameter']
+			lhtml += "</tr>"
+		lhtml += "</tbody></table></div>"
+		html, scroll = make_html(html, "Punkspider Vulnerabilities", "punkspider-vulns", lhtml, scroll)
 	else:
 		print colored("[-] No Vulnerabilities found on PunkSpider", 'red')
-
-
 
 	print colored(style.BOLD + '\n---> Wapplyzing web page of base domain:\n' + style.END, 'blue')
 
@@ -169,6 +230,7 @@ def do_everything(domain):
 	wappalyze_results = {}
 	#make proper URL with domain. Check on ssl as well as 80.
 	print "Hitting HTTP:\n",
+	lhtml = ""
 	try:
 		targeturl = "http://" + domain
 		list_of_techs = wappalyzeit(targeturl)
@@ -176,6 +238,11 @@ def do_everything(domain):
 	except:
 		print "[-] HTTP connection was unavailable"
 		wappalyze_results['http'] = []
+	if wappalyze_results['http']:
+		lhtml += "<ul class='collection'><li class='collection-item'>HTTP<ul class='collection'>"
+		for i in wappalyze_results['http']:
+			lhtml += "<li class='collection-item'>%s</li>" % i
+		lhtml += "</ul></li></ul>"
 	print "\nHitting HTTPS:\n",
 	try:
 		targeturl = "https://" + domain
@@ -184,16 +251,21 @@ def do_everything(domain):
 	except:
 		print "[-] HTTPS connection was unavailable"
 		wappalyze_results['https'] = []
-	
+	if wappalyze_results['https']:
+		lhtml += "<ul class='collection'><li class='collection-item'>HTTPS<ul class='collection'>"
+		for i in wappalyze_results['https']:
+			lhtml += "<li class='collection-item'>%s</li>" % i
+		lhtml += "</ul></li></ul>"
+	html, scroll = make_html(html, "WappAlyzer Report", "wappalyzer-report", lhtml, scroll)
 
 	if len(wappalyze_results.keys()) >= 1:
 		dict_to_apend['wappalyzer'] = wappalyze_results
-
 	
 	#make Search github code for the given domain.
 	
 	git_results = github_search(domain, 'Code')
 	if git_results is not None:
+		html, scroll = make_html(html, "Github Report", "github-report", git_results, scroll)
 		print git_results
 	else:
 		print colored("Sad! Nothing found on github", 'red')
@@ -202,10 +274,13 @@ def do_everything(domain):
 	if cfg.emailhunter != "":
 		emails = emailhunter(domain)
 		if len(collected_emails) >= 1:
+			lhtml = "<ul class='collection'>"
 			for x in collected_emails:
+				lhtml += "<li class='collection-item'>%s</li>" % str(x)
 				print str(x)	
+			lhtml += "</ul>"
+			html, scroll = make_html(html, "Email Harvesting", "email-harvesting", lhtml, scroll)
 			dict_to_apend['email_ids'] = collected_emails
-
 
 	'''
 	##### code for automated osint on enumerated email email_ids
@@ -233,15 +308,18 @@ def do_everything(domain):
 			print("[-] Wrong choice. Please enter Yes or No  [Y/N]: \n")
 		#print emailOsint.username_list
 	'''
-
-
 	
 	dns_ip_history = netcraft_domain_history(domain)
 	if len(dns_ip_history.keys()) >= 1:
+		lhtml = "<div style='overflow-x: scroll;'><table class='bordered highlight'><thead>"
+		lhtml += "<tr><th>IP</th><th>Description</th></tr></thead><tbody>"
 		for x in dns_ip_history.keys():
+			lhtml += "<tr><td>%s</td><td>%s</td></tr>" % (dns_ip_history[x], x)
 			print "%s: %s" % (dns_ip_history[x], x)
+		lhtml += "</tbody></table></div>"
 		dict_to_apend['domain_ip_history'] = dns_ip_history
-
+	
+	html, scroll = make_html(html, "DNS IP History", "dns-ip-history", lhtml, scroll)
 
 	#subdomains [to be called before pagelinks so as to avoid repititions.]
 	subdomains(domain)
@@ -252,10 +330,16 @@ def do_everything(domain):
 
 	#domain pagelinks
 	links=pagelinks(domain)	
+	links = list(set(links))
+	links.sort()
 	if len(links) >= 1:
+		lhtml = "<ul class='collection'>"
 		for x in links:
 			print x
+			lhtml += "<li class='collection-item'>%s</li>" % x
+		lhtml += "</ul>"
 		dict_to_apend['pagelinks'] = links
+		html, scroll = make_html(html, "Page Links", "page-links", lhtml, scroll)
 
 	
 	#calling and printing subdomains after pagelinks.
@@ -264,45 +348,63 @@ def do_everything(domain):
 	print colored(style.BOLD + '---> Finding subdomains: \n' + style.END, 'blue')
 	time.sleep(0.9)
 	if len(subdomain_list) >= 1:
+		lhtml = "<ul class='collection'>"
 		for sub in subdomain_list:
+			lhtml += "<li class='collection-item'>%s</li>" % sub
 			print sub
+		lhtml += "</ul>"
 		dict_to_apend['subdomains'] = subdomain_list
-	
+		html, scroll = make_html(html, "Subdomains", "subdomains", lhtml, scroll)
+
 	#wikileaks
 	leaklinks=wikileaks(domain)
+	lhtml = "<div style='overflow-x: scroll;'><table class='bordered highlight'><thead><tr><th>URL</th><th>Description</th></tr></thead><tbody>"
 	for tl,lnk in leaklinks.items():
+		lhtml += "<tr><td>%s</td><td>%s</td></tr>" % (lnk, tl)
 		print "%s (%s)" % (lnk, tl)
+	lhtml += "</tbody></table></div>"
+	html, scroll = make_html(html, "WikiLeaks", "wikileaks", lhtml, scroll)
+
 	if len(leaklinks.keys()) >= 1:
 		dict_to_apend['wikileaks'] = leaklinks
 	print "For all results, visit: "+ 'https://search.wikileaks.org/?query=&exact_phrase=%s&include_external_sources=True&order_by=newest_document_date'%(domain)
-	
-	
 
 	links_brd =boardsearch_forumsearch(domain)
-	for tl,lnk in links_brd.items():
-		print "%s (%s)" % (lnk, tl)
+	if links_brd:
+		lhtml = "<ul class='collection'>" 
+		for tl,lnk in links_brd.items():
+			lhtml += "<li class='collection-item'>%s (%s)</li>" % (lnk, tl)
+			print "%s (%s)" % (lnk, tl)
+		lhtml += "</ul>"
+		html, scroll = make_html(html, "Forum Search", "forum-search", lhtml, scroll)
 	if len(links_brd.keys()) >= 1:
 		dict_to_apend['forum_links'] = links_brd
-
 
 	if cfg.zoomeyeuser != "" and cfg.zoomeyepass != "":
 		temp_list =[]
 		zoomeye_results = search_zoomeye(domain)
 		dict_zoomeye_results = json.loads(zoomeye_results)
 		if 'matches' in dict_zoomeye_results.keys():
+			lhtml = ""
 			print len(dict_zoomeye_results['matches'])
 			for x in dict_zoomeye_results['matches']:
 				if x['site'].split('.')[-2] == domain.split('.')[-2]:
 					temp_list.append(x)
-					if 'title' in x.keys() :
-						print "IP: %s\nSite: %s\nTitle: %s\nHeaders: %s\nLocation: %s\n" % (x['ip'], x['site'], x['title'], x['headers'].replace("\n",""), x['geoinfo'])
+					if 'title' in x.keys():
+						zoom_data = "IP: %s\nSite: %s\nTitle: %s\nHeaders: %s\nLocation: %s\n" % (x['ip'], x['site'], x['title'], x['headers'].replace("\n",""), x['geoinfo'])
+						lhtml += zoom_data
+						print zoom_data
 					else:
 						for val in x.keys():
-							print "%s: %s" % (val, x[val])
+							zoom_data = "%s: %s" % (val, x[val])
+							lhtml += zoom_data
+	                                                print zoom_data
+			html, scroll = make_html(html, "Zoomeye Search", "zoomeye-search", "<pre>%s</pre>" % lhtml, scroll)
+
 		if len(temp_list) >= 1:
 			dict_to_apend['zoomeye'] = temp_list
 
-
+	"""
 	if cfg.censysio_id != "" and cfg.censysio_secret != "":
 		print colored(style.BOLD + '\n---> Kicking off Censys Search. This may take a while..\n' + style.END, 'blue')
 		censys_search(domain)
@@ -311,7 +413,7 @@ def do_everything(domain):
 			for x in censys_list:
 				if x is not None and x != 'None':
 					print x
-
+	"""
 
 	if cfg.shodan_api != "":
 		res_from_shodan = json.loads(shodandomainsearch(domain))
@@ -320,6 +422,28 @@ def do_everything(domain):
 			for x in res_from_shodan['matches']:
 				print "IP: %s\nHosts: %s\nDomain: %s\nPort: %s\nData: %s\nLocation: %s\n" % (x['ip_str'], x['hostnames'], x['domains'], x['port'], x['data'].replace("\n",""), x['location'])
 
+	if output:
+		scroll_html = ""
+		for i in scroll:
+			scroll_html += "<li><a href='#%s'>%s</a></li>" % i
+		
+		fh = open("base.html", "r")
+		main_html = fh.read()
+		fh.close()
+		
+		if not os.path.exists("reports/%s" % domain):
+			os.mkdir("reports/%s" % domain)
+
+		now_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")	
+
+		fh = open("reports/%s/%s_%s.html" % (domain, domain, now_time), "w")
+		main_html = main_html.replace("{DOMAIN_NAME}", domain)
+		main_html = main_html.replace("{MAIN_HTML}", html)
+		main_html = main_html.replace("{SCROLL_SECTION}", scroll_html)
+		fh.write(main_html)
+		fh.close()
+
+		print "HTML Report saved to: reports/%s/%s_%s.html" % (domain, domain, now_time)
 
 	'''
 	#insert data into mongodb instance
@@ -339,10 +463,11 @@ def main():
 	options, args = parser.parse_args()
 	printart()
 	domain = options.domain
+	output = options.output
 	if domain == 'spam':
-		print "[-] Invalid argument passed. \nUsage: domainOsint.py [options]\n\nOptions:\n  -h,\t\t--help\t\t\tshow this help message and exit\n  -d DOMAIN,\t--domain=DOMAIN\t\tDomain name against which automated Osint is to be performed."
+                parser.print_help()
 	else:
-		do_everything(domain)
+		do_everything(domain, output)
 		'''
 		Since mongodb support is gone, dont need this snippet
 		cursor = db.domaindata.find({"targetname": domain})

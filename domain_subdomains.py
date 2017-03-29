@@ -149,26 +149,29 @@ def subdomains_from_netcraft(domain):
 	if num_subdomains == []:
 		num_regex = re.compile('First (.*) sites returned')
 		num_subdomains = num_regex.findall(req1.content)
-	if num_subdomains[0] != str(0):
-		num_pages = int(num_subdomains[0])/20+1
-		if num_pages > 1:
-			last_regex = re.compile('<td align="left">%s.</td><td align="left">\n<a href="(.*)" rel="nofollow">' % (20))
-			last_item = last_regex.findall(req1.content)[0].split("/")[2]
-			next_page = 21
+	if num_subdomains:
+		if num_subdomains[0] != str(0):
+			num_pages = int(num_subdomains[0])/20+1
+			if num_pages > 1:
+				last_regex = re.compile('<td align="left">%s.</td><td align="left">\n<a href="(.*)" rel="nofollow">' % (20))
+				last_item = last_regex.findall(req1.content)[0].split("/")[2]
+				next_page = 21
 
-			for x in range(2,num_pages):
-				url  = "http://searchdns.netcraft.com/?host=%s&last=%s&from=%s&restriction=site%%20contains" % (domain, last_item, next_page)
-				req2 = requests.get(url)
-				link_regx = re.compile('<a href="http://toolbar.netcraft.com/site_report\?url=(.*)">')
-				links_list = link_regx.findall(req2.content)
-				for y in links_list:
-					dom_name1 = y.split("/")[2].split(".") 
-					if (dom_name1[len(dom_name1) - 1] == target_dom_name[1]) and (dom_name1[len(dom_name1) - 2] == target_dom_name[0]):
-						check_and_append_subdomains(y.split("/")[2])
-				last_item = links_list[len(links_list) - 1].split("/")[2]
-				next_page = 20 * x + 1
-				#print last_item
-				#print next_page
+				for x in range(2,num_pages):
+					url  = "http://searchdns.netcraft.com/?host=%s&last=%s&from=%s&restriction=site%%20contains" % (domain, last_item, next_page)
+					req2 = requests.get(url)
+					link_regx = re.compile('<a href="http://toolbar.netcraft.com/site_report\?url=(.*)">')
+					links_list = link_regx.findall(req2.content)
+					for y in links_list:
+						dom_name1 = y.split("/")[2].split(".") 
+						if (dom_name1[len(dom_name1) - 1] == target_dom_name[1]) and (dom_name1[len(dom_name1) - 2] == target_dom_name[0]):
+							check_and_append_subdomains(y.split("/")[2])
+					last_item = links_list[len(links_list) - 1].split("/")[2]
+					next_page = 20 * x + 1
+					#print last_item
+					#print next_page
+		else:
+			print colored('zero subdomains found here', 'red')
 	else:
 		print colored('zero subdomains found here', 'red')
 
