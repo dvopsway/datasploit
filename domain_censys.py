@@ -43,7 +43,6 @@ def censys_search(domain):
                 pages = payload['metadata']['pages']
                 page += 1
         else:
-            print "X"
             return None
             break
 

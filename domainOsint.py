@@ -57,7 +57,8 @@ from domain_pastes import google_search,colorize
 import optparse
 parser = optparse.OptionParser()
 parser.add_option('-d', '--domain', action="store", dest="domain", help="Domain name against which automated Osint is to be performed.", default="spam")
-parser.add_option('-o', '--output', action="store_true", dest="output", help="Save the result in an HTML file")
+parser.add_option('-o', '--output', action="store_true", dest="output", help="Save the result in the respective HTML file")
+parser.add_option('-a', '--active', action="store", dest="active", help="Run Active Scan Modules", default = 'false')
 
 
 '''
@@ -65,6 +66,10 @@ collected_emails = []
 subdomain_list = []
 censys_list = []
 '''
+might_be_vuln = []
+
+
+
 ######
 ##   Proram starts here  ##
 ######
@@ -122,7 +127,10 @@ def make_html(html, name, code, data, scroll):
 	return html, scroll
 
 
-def do_everything(domain, output):
+
+
+
+def do_everything(domain, output, active):
 	dict_to_apend['targetname'] = domain
 	
 	API_URL = "https://www.censys.io/api/v1"
@@ -407,6 +415,7 @@ def do_everything(domain, output):
 			dict_to_apend['zoomeye'] = temp_list
 
 
+	
 	if cfg.censysio_id != "" and cfg.censysio_secret != "":
 		print colored(style.BOLD + '\n---> Kicking off Censys Search. This may take a while..\n' + style.END, 'blue')
 		censys_search(domain)
@@ -433,6 +442,7 @@ def do_everything(domain, output):
 			lhtml += "</ul>"
 			html, scroll = make_html(html, "Shodan Search", "shodan-search", lhtml, scroll)
 
+
 	if output:
 		scroll_html = ""
 		for i in scroll:
@@ -450,11 +460,38 @@ def do_everything(domain, output):
 		fh = open("reports/%s/%s_%s.html" % (domain, domain, now_time), "w")
 		main_html = main_html.replace("{DOMAIN_NAME}", domain)
 		main_html = main_html.replace("{MAIN_HTML}", html)
-		main_html = main_html.replace("{SCROLL_SECTION}", scroll_html)
+		main_html = main_html.replace("{scrollROLL_SECTION}", scroll_html)
 		fh.write(main_html)
 		fh.close()
 
-		print "HTML Report saved to: reports/%s/%s_%s.html" % (domain, domain, now_time)
+
+		fh = open("reports/%s/%s_%s.json" % (domain, domain, now_time), "w")
+		fh.write(str(dict_to_apend))
+		fh.close()
+
+
+		fh = open("reports/%s/%s_%s.subdomains.txt" % (domain, domain, now_time), "w")
+		for x in subdomain_list:
+			fh.write("\n%s" % x)
+		fh.close()
+
+		fh = open("reports/%s/%s_%s.emails.txt" % (domain, domain, now_time), "w")
+		for x in collected_emails:
+			fh.write("\n%s" % x)
+		fh.close()
+
+		print colored(style.BOLD + '---> Saving work... \n' + style.END, 'green')
+
+		print "[+] HTML Report saved to: reports/%s/%s_%s.html" % (domain, domain, now_time)
+		print "[+] JSON Report saved to: reports/%s/%s_%s.json" % (domain, domain, now_time)
+		print "[+] List of Emails saved to: reports/%s/%s_%s.emails.txt" % (domain, domain, now_time)
+		print "[+] List of Emails saved to: reports/%s/%s_%s.subdomains.txt" % (domain, domain, now_time)
+		print "\n"
+
+	if active == 'true':
+		print colored(style.BOLD + '---> Running Active Scans: \n' + style.END, 'green')
+		run_active(domain, subdomain_list, collected_emails)
+
 
 	'''
 	#insert data into mongodb instance
@@ -475,10 +512,11 @@ def main():
 	printart()
 	domain = options.domain
 	output = options.output
+	active = options.active
 	if domain == 'spam':
-                parser.print_help()
+		parser.print_help()
 	else:
-		do_everything(domain, output)
+		do_everything(domain, output, active)
 		'''
 		Since mongodb support is gone, dont need this snippet
 		cursor = db.domaindata.find({"targetname": domain})

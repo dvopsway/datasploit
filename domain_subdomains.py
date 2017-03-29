@@ -171,9 +171,9 @@ def subdomains_from_netcraft(domain):
 					#print last_item
 					#print next_page
 		else:
-			print colored('zero subdomains found here', 'red')
+			pass
 	else:
-		print colored('zero subdomains found here', 'red')
+		pass
 
 
 
