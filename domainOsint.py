@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import os
+import cgi
 import time
 import whois
 import requests
@@ -174,7 +175,7 @@ def do_everything(domain, output):
 			"""
 			for x in results['items']:
 				lhtml += "<tr>"
-				lhtml += "<td>%s</td><td>%s</td><td>%s</td>" % (x['title'], x['link'], x['snippet'])
+				lhtml += "<td>%s</td><td>%s</td><td>%s</td>" % (cgi.escape(x['title']), cgi.escape(x['link']), cgi.escape(x['snippet']))
 				lhtml += "</tr>"
 			if (total_results != 0 and total_results > 10):
 				more_iters = (total_results / 10)
@@ -182,10 +183,11 @@ def do_everything(domain, output):
 						print colored(style.BOLD + '\n---> Too many results, Daily API limit might exceed\n' + style.END, 'red')
 				for x in xrange(1,more_iters + 1):	
 					cnt, results = google_search(domain, (x*10)+1)
-					for y in results['items']:
-						lhtml += "<tr>"
-						lhtml += "<td>%s</td><td>%s</td><td>%s</td>" % (y['title'], y['link'], y['snippet'])
-						lhtml += "</tr>"
+					if results:
+						for y in results['items']:
+							lhtml += "<tr>"
+							lhtml += "<td>%s</td><td>%s</td><td>%s</td>" % (cgi.escape(y['title']), cgi.escape(y['link']), cgi.escape(y['snippet']))
+							lhtml += "</tr>"
 			print "\n\n-----------------------------\n"
 			lhtml += "</tbody></table></div>"
 			html, scroll = make_html(html, "Google Search Pastes", "google-search-pastes", lhtml, scroll)
@@ -404,23 +406,32 @@ def do_everything(domain, output):
 		if len(temp_list) >= 1:
 			dict_to_apend['zoomeye'] = temp_list
 
-	
+
 	if cfg.censysio_id != "" and cfg.censysio_secret != "":
 		print colored(style.BOLD + '\n---> Kicking off Censys Search. This may take a while..\n' + style.END, 'blue')
 		censys_search(domain)
 		if len(censys_list) >= 1:
 			dict_to_apend['censys'] = censys_list
+			lhtml = "<ul class='collection'>"
 			for x in censys_list:
-				if x is not None and x != 'None':
+				if not str(x) == 'None':
+					lhtml += "<li class='collection-item'><pre>%s</pre></li>" % cgi.escape(str(x))
 					print x
+			lhtml += "</ul>"
+			html, scroll = make_html(html, "Censys Search", "censys-search", lhtml, scroll)
 	
 
 	if cfg.shodan_api != "":
 		res_from_shodan = json.loads(shodandomainsearch(domain))
 		if 'matches' in res_from_shodan.keys():
 			dict_to_apend['shodan'] = res_from_shodan['matches']
+			lhtml = "<ul class='collection'>"
 			for x in res_from_shodan['matches']:
-				print "IP: %s\nHosts: %s\nDomain: %s\nPort: %s\nData: %s\nLocation: %s\n" % (x['ip_str'], x['hostnames'], x['domains'], x['port'], x['data'].replace("\n",""), x['location'])
+				shod_data = "IP: %s\nHosts: %s\nDomain: %s\nPort: %s\nData: %s\nLocation: %s\n" % (x['ip_str'], x['hostnames'], x['domains'], x['port'], x['data'].replace("\n",""), x['location'])
+				lhtml += "<li class='collection-item'><pre>%s</pre></li>" % shod_data
+				print shod_data
+			lhtml += "</ul>"
+			html, scroll = make_html(html, "Shodan Search", "shodan-search", lhtml, scroll)
 
 	if output:
 		scroll_html = ""
