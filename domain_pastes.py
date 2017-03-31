@@ -39,17 +39,17 @@ def google_search(domain,start_index):
 		for x in results['items']:
 			print "Title: %s\nURL: %s\nSnippet: %s\n" % (x['title'], colorize(x['link']), colorize(x['snippet']))
 			start_index = +1
-		return int(results['searchInformation']['totalResults']), results
+		return int(results['searchInformation']['totalResults'])
 	elif 'searchInformation' in results.keys():
 		if results['searchInformation']['totalResults'] == "0":
 			print '0 Results found'
 			return 0
 	elif results['error']['code'] == 403:
 		print 'Rate limit Exceeded'
-		return 0, []
+		return 0
 	else:
-		return 0, []
-	#return json.loads(res.text)
+		return 0
+		#return json.loads(res.text)
 	
 
 def main():

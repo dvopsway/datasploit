@@ -18,7 +18,6 @@ def github_search(query, code):
 	endpoint_git =  "https://github.com/search?q=\"" + query + "\"&type=" + code
 	req = requests.get(endpoint_git) 
 	print endpoint_git
-	print req.content
 	soup = BeautifulSoup(req.content, 'html.parser')
 	mydivs = soup.findAll("span", { "class" : "counter" })
 	if mydivs and len(mydivs) >= 1:

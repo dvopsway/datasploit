@@ -98,7 +98,7 @@ def list_down_usernames():
 	
 def print_emailosint(email):
 	
-	'''
+
 	hbp = haveIbeenpwned(email)
 	if len(hbp) != 0:
 		print colored("Pwned at %s Instances\n", 'green') % len(hbp)
@@ -106,7 +106,7 @@ def print_emailosint(email):
 			print "Title:%s\nBreachDate%s\nPwnCount%s\nDescription%s\nDataClasses%s\n" % (x.get('Title', ''), x.get('BreachDate', ''), x.get('PwnCount', ''), x.get('Description', ''),x.get('DataClasses', ''))
 	else:
 		print colored("[-] No breach status found.", 'red')
-	'''
+	
 
 	basic_checks(email)
 

@@ -167,6 +167,7 @@ def do_everything(domain, output, active):
 	html, scroll = make_html(html, "DNS Records", "dns-records", lhtml, scroll)
 	
 
+	
 	print colored(style.BOLD + '\n---> Finding Paste(s)..\n' + style.END, 'blue')
 	if cfg.google_cse_key != "" and cfg.google_cse_key != "XYZ" and cfg.google_cse_cx != "" and cfg.google_cse_cx != "XYZ":
 		total_results, results = google_search(domain, 1)
@@ -190,7 +191,8 @@ def do_everything(domain, output, active):
 				if more_iters >= 10:
 						print colored(style.BOLD + '\n---> Too many results, Daily API limit might exceed\n' + style.END, 'red')
 				for x in xrange(1,more_iters + 1):	
-					cnt, results = google_search(domain, (x*10)+1)
+					results = google_search(domain, (x*10)+1)
+					print type(results)
 					if results:
 						for y in results['items']:
 							lhtml += "<tr>"
@@ -201,6 +203,8 @@ def do_everything(domain, output, active):
 			html, scroll = make_html(html, "Google Search Pastes", "google-search-pastes", lhtml, scroll)
 	else:
 		print colored(style.BOLD + '\n[-] google_cse_key and google_cse_cx not configured. Skipping paste(s) search.\nPlease refer to http://datasploit.readthedocs.io/en/latest/apiGeneration/.\n' + style.END, 'red')
+	
+
 
 	#convert domain to reverse_domain for passing to checkpunkspider()
 	reversed_domain = ""
@@ -276,7 +280,6 @@ def do_everything(domain, output, active):
 	git_results = github_search(domain, 'Code')
 	if git_results is not None:
 		html, scroll = make_html(html, "Github Report", "github-report", git_results, scroll)
-		print git_results
 	else:
 		print colored("Sad! Nothing found on github", 'red')
 	
