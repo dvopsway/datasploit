@@ -159,8 +159,12 @@ def do_everything(domain, output, active):
 			lhtml += "<li class='collection-item'>%s</li>" % dns_records[x]
 		else:
 			for y in dns_records[x]:
-				lhtml += "<li class='collection-item'>%s</li>" % y
-				print "\t%s" % (y)
+				if x == "TXT Records":
+					lhtml += "<li class='collection-item'>%s</li>" % ", ".join(y.strings)
+					print "\t%s" % ", ".join(y.strings)
+				else:
+					lhtml += "<li class='collection-item'>%s</li>" % str(y)
+					print "\t%s" % (y)
 			#print type(dns_records[x])
 		lhtml += "</ul></li>"
 	lhtml += "</ul>"
