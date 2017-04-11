@@ -33,29 +33,29 @@ def google_search(domain,start_index):
 	url="https://www.googleapis.com/customsearch/v1?key=%s&cx=%s&q=\"%s\"&start=%s" % (cfg.google_cse_key, cfg.google_cse_cx, domain, start_index)
 	res=requests.get(url)
 	results = json.loads(res.text)
+        #print(results)
 	if 'items' in results.keys():
 		if start_index == 1:
 			print "[+] %s results found\n" % int(results['searchInformation']['totalResults'])
 		for x in results['items']:
 			print "Title: %s\nURL: %s\nSnippet: %s\n" % (x['title'], colorize(x['link']), colorize(x['snippet']))
 			start_index = +1
-		return int(results['searchInformation']['totalResults'])
-	elif 'searchInformation' in results.keys():
-		if results['searchInformation']['totalResults'] == "0":
+		return int(results['searchInformation']['totalResults']), results
+	elif 'searchInformation' in results.keys() and 'totalResults' in results["searchInformation"].keys() and results['searchInformation']['totalResults'] == "0":
 			print '0 Results found'
-			return 0
+			return 0, []
 	elif results['error']['code'] == 403:
-		print 'Rate limit Exceeded'
-		return 0
+		print results['error']["message"]
+		return 0, []
 	else:
-		return 0
-		#return json.loads(res.text)
+		return 0, []
+	#return json.loads(res.text)
 	
 
 def main():
 	domain = sys.argv[1]
 	print colored(style.BOLD + '\n---> Finding Paste(s)..\n' + style.END, 'blue')
-	if cfg.google_cse_key != "" and cfg.google_cse_key != "XYZ" and cfg.google_cse_cx != "" and cfg.google_cse_cx != "XYZ":
+	if cfg.google_cse_key and cfg.google_cse_key != "XYZ" and cfg.google_cse_cx and cfg.google_cse_cx != "XYZ":
 		total_results = google_search(domain, 1)
 		if (total_results != 0 and total_results > 10):
 			more_iters = (total_results / 10)

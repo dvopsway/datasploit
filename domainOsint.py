@@ -173,6 +173,24 @@ def do_everything(domain, output, active):
 
 	
 	print colored(style.BOLD + '\n---> Finding Paste(s)..\n' + style.END, 'blue')
+
+
+
+	'''print colored(style.BOLD + '\n---> Finding Paste(s)..\n' + style.END, 'blue')
+	if cfg.google_cse_key and cfg.google_cse_key != "XYZ" and cfg.google_cse_cx and cfg.google_cse_cx != "XYZ":
+		total_results = google_search(domain, 1)
+		if (total_results != 0 and total_results > 10):
+			more_iters = (total_results / 10)
+			if more_iters >= 10:
+					print colored(style.BOLD + '\n---> Too many results, Daily API limit might exceed\n' + style.END, 'red')
+			for x in xrange(1,more_iters + 1):	
+				google_search(domain, (x*10)+1)
+		print "\n\n-----------------------------------------n"
+	else:
+		print colored(style.BOLD + '\n[-] google_cse_key and google_cse_cx not configured. Skipping paste(s) search.\nPlease refer to http://datasploit.readthedocs.io/en/latest/apiGeneration/.\n' + style.END, 'red')
+	'''
+
+
 	if cfg.google_cse_key != "" and cfg.google_cse_key != "XYZ" and cfg.google_cse_cx != "" and cfg.google_cse_cx != "XYZ":
 		total_results, results = google_search(domain, 1)
 		if not total_results == 0:
@@ -195,8 +213,7 @@ def do_everything(domain, output, active):
 				if more_iters >= 10:
 						print colored(style.BOLD + '\n---> Too many results, Daily API limit might exceed\n' + style.END, 'red')
 				for x in xrange(1,more_iters + 1):	
-					results = google_search(domain, (x*10)+1)
-					print type(results)
+					total_results, results = google_search(domain, (x*10)+1)
 					if results:
 						for y in results['items']:
 							lhtml += "<tr>"
