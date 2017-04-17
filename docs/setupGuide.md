@@ -35,5 +35,5 @@ and enter the respective values in config.py file. Leave all other key value pai
 
 Congratulations, you are now good to go. Lets go ahead and run our automated script for OSINT on a domain. 
 ```
-python domainOsint.py <domain_name>
+python domainOsint.py -d <domain_name>
 ```

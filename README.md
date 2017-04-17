@@ -37,8 +37,8 @@ Options:
 ```
 
 # Required Setup:
+* Python 2.7 (because bunch of dependencies do not support Python 3.0)
 * Bunch of python libraries (use requirements.txt)
-* MongoDb, Django, Celery and RabbitMq (Refer to setup guide).
 
 
 ## Detailed Tool Documentation:
