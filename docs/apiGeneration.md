@@ -1,14 +1,6 @@
-We need following API keys to run this tool efficiently.
-- shodan_api
-- censysio_id
-- censysio_secret
-- zoomeyeuser
-- zoomeyepass
-- clearbit_apikey
-- emailhunter
-- fullcontact
-- google_cse_key
-- google_cse_cx
+We need following API keys to run this tool efficiently:
+
+shodan_api, censysio_id, censysio_secret, zoomeyeuser, zoomeyepass, clearbit_apikey, emailhunter, fullcontact, google_cse_key, google_cse_cx.
 
 ## Shodan_api
 * [Register](https://account.shodan.io/register) an account in shodan.

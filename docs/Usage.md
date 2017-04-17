@@ -14,10 +14,16 @@ While, domainOsint will call all other domain_* scripts and list down data as we
 domainOsint.py generates a JSON and an HTML report in reports folder as following hirarchy (example files are based on abcd.com domain)
 
 ../datasploit/reports
+
 ---------------------|------abcd.com
+
 ---------------------|------|------abcd.com_YYYY-MM-DD-HH-MM-SS.html
+
 ---------------------|------|------abcd.com_YYYY-MM-DD-HH-MM-SS.json
+
 ---------------------|------|------abcd.com_YYYY-MM-DD-HH-MM-SS.subdomains.txt
+
 ---------------------|------|------abcd.com_YYYY-MM-DD-HH-MM-SS.emails.txt
+
 
 
