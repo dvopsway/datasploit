@@ -7,7 +7,7 @@ import re
 import string
 from termcolor import colored
 
-ENABLED = False
+ENABLED = True
 
 
 class style:
