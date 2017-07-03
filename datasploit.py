@@ -46,5 +46,9 @@ def main(user_input):
 
 
 if __name__ == "__main__":
-    user_input = sys.argv[1]
+    try:
+        user_input = sys.argv[1]
+    except:
+        print "\n[-] Invalid Input. Exiting now..\n"
+        sys.exit(0)
     main(user_input)

@@ -13,7 +13,7 @@ def run(component, module_dir, m_input):
         module_name = os.path.basename(os.path.splitext(i)[0])
         x = importlib.import_module(module_name)
         if not x.ENABLED:
-            print "Skipping %s because it is marked as disabled." % module_name.split("_")[1].title()
+            print "[-] Skipping %s because it is marked as disabled." % module_name.split("_")[1].title()
         else:
             active_modules.append(x)
 

@@ -3,7 +3,7 @@ import base
 import re, sys, json, time, requests
 import config as cfg
 
-ENABLED = True
+ENABLED = False
 
 
 def censys_search(domain):
