@@ -75,7 +75,7 @@ def output(data, ip=""):
             print 'ASN: %s' % asn
         if 'vulns' in data.keys():
             print colored(style.BOLD + 'Vulnerabilties: %s' + style.END, 'red') % data['vulns']
-
+    print ""
 
 if __name__ == "__main__":
     try:

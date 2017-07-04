@@ -56,6 +56,7 @@ def output(data, ip=""):
                     if data['objects'][x]['contact']['email'] is not None:
                         for y in data['objects'][x]['contact']['email']:
                             print '\tEmail: %s' % y['value']
+    print ""
 
 
 if __name__ == "__main__":
