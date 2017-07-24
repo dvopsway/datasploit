@@ -5,9 +5,9 @@ from glob import glob
 
 
 def run(component, module_dir, m_input):
-    dir_path = os.path.abspath(module_dir)
+    dir_path = "%s/%s" % (os.path.dirname(os.path.abspath(__file__)), module_dir)
     sys.path.insert(0, dir_path)
-    domain_files = glob("%s/%s_*.py" % (module_dir, component))
+    domain_files = glob("%s/%s_*.py" % (dir_path, component))
     active_modules = []
     for index, i in enumerate(domain_files):
         module_name = os.path.basename(os.path.splitext(i)[0])
