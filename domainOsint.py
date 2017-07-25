@@ -2,12 +2,16 @@
 
 import sys
 import osint_runner
+import optparse
 
 
-def run(domain):
-    osint_runner.run("domain", "domain", domain)
+def run(domain, output = None):
+    osint_runner.run("domain", "domain", domain, output)
 
 
 if __name__ == "__main__":
-    domain = sys.argv[1]
-    run(domain)
+    parser = optparse.OptionParser()
+    parser.add_option('-o', '--output', action="store", dest="output", help="Save output in either JSON or HTML")
+    options, args = parser.parse_args()
+    domain = args[0]
+    run(domain, options.output)

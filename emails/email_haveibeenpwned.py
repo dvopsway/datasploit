@@ -26,7 +26,10 @@ def main(email):
         print "CloudFlare detected"
         return {}
     if req.content != "":
-        return json.loads(req.content)
+	try:
+            return json.loads(req.content)
+	except:
+	    return {}
     else:
         return {}
 

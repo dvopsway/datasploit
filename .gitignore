@@ -82,4 +82,5 @@ target/
 .ipynb_checkpoints
 
 
-
+profile_pic/
+reports/json/

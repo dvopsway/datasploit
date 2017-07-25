@@ -11,8 +11,9 @@ import usernameOsint
 parser = optparse.OptionParser()
 parser.add_option('-a', '--active', action="store", dest="domain", help="Launches Active Scans (work in progress)",
                   default="spam")
+parser.add_option('-o', '--output', action="store", dest="output", help="Save output in either JSON or HTML")
 options, args = parser.parse_args()
-
+print options, args
 
 def printart():
     print "\t                                                           "
@@ -27,28 +28,28 @@ def printart():
     print "\t                                                           "
 
 
-def main(user_input):
+def main(user_input, output = None):
     printart()
     print "User Input: %s" % user_input
 
     if re.match('[^@]+@[^@]+\.[^@]+', user_input):
         print "Looks like an EMAIL, running emailOsint...\n"
-        emailOsint.run(user_input)
+        emailOsint.run(user_input, output)
     elif re.match('^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$', user_input):
         print "Looks like an IP, running ipOsint...\n"
-        ipOsint.run(user_input)
+        ipOsint.run(user_input, output)
     elif re.match('^[a-zA-Z\d-]{,63}(\.[a-zA-Z\d-]{,63}).$', user_input):
         print "Looks like a DOMAIN, running domainOsint...\n"
-        domainOsint.run(user_input)
+        domainOsint.run(user_input, output)
     else:
         print "Looks like a Username, running usernameOsint...\n"
-        usernameOsint.run(user_input)
+        usernameOsint.run(user_input, output)
 
 
 if __name__ == "__main__":
     try:
-        user_input = sys.argv[1]
+        user_input = args[0]
     except:
         print "\n[-] Invalid Input. Exiting now..\n"
         sys.exit(0)
-    main(user_input)
+    main(user_input, options.output)

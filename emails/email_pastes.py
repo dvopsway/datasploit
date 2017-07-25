@@ -50,7 +50,10 @@ def google_search(email):
             url = "https://www.googleapis.com/customsearch/v1?key=%s&cx=%s&q=\"%s\"&start=%s" % (
                 cfg.google_cse_key, cfg.google_cse_cx, email, next_index)
             data = json.loads(requests.get(url).content)
-            all_results += data['items']
+	    if 'error' in data:
+                return True, all_results
+            else:
+                all_results += data['items']
     return True, all_results
 
 

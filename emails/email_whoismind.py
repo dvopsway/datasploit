@@ -28,7 +28,7 @@ def main(email):
     for at in atag:
         if at.text in at['href']:
             domains.append(at.text)
-    domains = set(domains)
+    domains = list(set(domains))
     return domains
 
 
