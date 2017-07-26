@@ -39,7 +39,8 @@ def google_search(domain):
     url = "https://www.googleapis.com/customsearch/v1?key=%s&cx=%s&q=\"%s\"&start=1" % (
         cfg.google_cse_key, cfg.google_cse_cx, domain)
     all_results = []
-    r = requests.get(url)
+    print url
+    r = requests.get(url, headers={'referer': 'www.datasploit.info/hello'})
     data = json.loads(r.content)
     if 'error' in data:
         return False, data
@@ -83,7 +84,18 @@ def output(data, domain=""):
 
 
 if __name__ == "__main__":
-    try:
+        domain = sys.argv[1]
+        banner()
+        result = main(domain)
+        output(result, domain)
+
+
+
+
+
+'''
+
+if __name__ == "__main__":
         domain = sys.argv[1]
         banner()
         result = main(domain)
@@ -91,3 +103,4 @@ if __name__ == "__main__":
     except Exception as e:
         print e
         print "Please provide a domain name as argument"
+'''
