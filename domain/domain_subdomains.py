@@ -8,7 +8,7 @@ import re
 from termcolor import colored
 import time
 import warnings
-
+import json
 
 warnings.filterwarnings("ignore")
 
@@ -18,7 +18,6 @@ ENABLED = True
 class style:
     BOLD = '\033[1m'
     END = '\033[0m'
-
 
 
 def check_and_append_subdomains(subdomain, subdomain_list):
@@ -89,6 +88,20 @@ def subdomains_from_netcraft(domain, subdomain_list):
     return subdomain_list
 
 
+def subdomains_from_google_ct(domain, subdomain_list):
+	next = ''
+	while True:
+		url = 'https://www.google.com/transparencyreport/jsonp/ct/search?domain=%s&incl_exp=true&incl_sub=true&token=%s&c=' % (domain,next)
+		obj = json.loads('('.join(requests.get(url).text.split('(')[1:])[:-3])
+		for x in obj['results']:
+			if x['subject'].endswith(domain):
+				subdomain_list = check_and_append_subdomains(x['subject'], subdomain_list)
+		if 'nextPageToken' not in obj:
+			break
+		next = obj['nextPageToken']
+	return subdomain_list
+
+
 def banner():
     print colored(style.BOLD + '---> Finding subdomains, will be back soon with list. \n' + style.END, 'blue')
 
@@ -98,6 +111,7 @@ def main(domain):
     subdomain_list = []
     subdomain_list = subdomains(domain, subdomain_list)
     subdomain_list = subdomains_from_netcraft(domain, subdomain_list)
+    subdomain_list = subdomains_from_google_ct(domain, subdomain_list)
     return subdomain_list
 
 
