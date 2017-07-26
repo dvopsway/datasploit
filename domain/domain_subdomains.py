@@ -7,6 +7,10 @@ from bs4 import BeautifulSoup
 import re
 from termcolor import colored
 import time
+import warnings
+
+
+warnings.filterwarnings("ignore")
 
 ENABLED = True
 
@@ -16,6 +20,7 @@ class style:
     END = '\033[0m'
 
 
+
 def check_and_append_subdomains(subdomain, subdomain_list):
     if subdomain not in subdomain_list:
         subdomain_list.append(subdomain)
@@ -23,7 +28,7 @@ def check_and_append_subdomains(subdomain, subdomain_list):
 
 
 def subdomains(domain, subdomain_list):
-    r = requests.get("https://dnsdumpster.com/")
+    r = requests.get("https://dnsdumpster.com/", verify=False)
     cookies = {}
     if 'csrftoken' in r.cookies.keys():
         cookies['csrftoken'] = r.cookies['csrftoken']
@@ -32,7 +37,7 @@ def subdomains(domain, subdomain_list):
         data['targetip'] = domain
         headers = {}
         headers['Referer'] = "https://dnsdumpster.com/"
-        req = requests.post("https://dnsdumpster.com/", data=data, cookies=cookies, headers=headers)
+        req = requests.post("https://dnsdumpster.com/", data=data, cookies=cookies, headers=headers, verify=False)
         soup = BeautifulSoup(req.content, 'lxml')
         subdomains_new = soup.findAll('td', {"class": "col-md-4"})
         for subd in subdomains_new:
