@@ -34,7 +34,7 @@ def colorize(string):
     formattedText += string[lastMatch:]
     return formattedText
 
-
+#test
 def google_search(domain):
     url = "https://www.googleapis.com/customsearch/v1?key=%s&cx=%s&q=\"%s\"&start=1" % (
         cfg.google_cse_key, cfg.google_cse_cx, domain)
