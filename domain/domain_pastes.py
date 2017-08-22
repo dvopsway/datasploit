@@ -39,7 +39,6 @@ def google_search(domain):
     url = "https://www.googleapis.com/customsearch/v1?key=%s&cx=%s&q=\"%s\"&start=1" % (
         cfg.google_cse_key, cfg.google_cse_cx, domain)
     all_results = []
-    print url
     r = requests.get(url, headers={'referer': 'www.datasploit.info/hello'})
     data = json.loads(r.content)
     if 'error' in data:
