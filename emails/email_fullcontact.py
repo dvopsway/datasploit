@@ -64,7 +64,7 @@ def output(data, email=""):
         if data.get("demographics", "") != "":
             print "\tGender: %s" % data.get("demographics", "").get('gender', '')
             print "\tCountry: %s" % data.get("demographics", "").get('country', '')
-            print "\tTentative City: %s" % data.get("demographics", "").get('locationGeneral', '')
+            print "\tTentative City: %s" % data.get("demographics", "").get('locationGeneral', '').encode('utf-8')
 
         print "Photos:"
         for x in data.get("photos", ""):
