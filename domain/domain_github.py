@@ -19,7 +19,7 @@ def github_search(query):
     endpoint_git = "https://api.github.com/search/code?q=%s&access_token=%s" % (query, cfg.github_access_token)
     req = requests.get(endpoint_git)
     data = json.loads(req.content)
-    return data['total_count'], data['items']
+    return data.get('total_count'), data.get('items')
 
 
 def banner():
