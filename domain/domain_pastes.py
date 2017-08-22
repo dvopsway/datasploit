@@ -81,7 +81,7 @@ def output(data, domain=""):
     else:
         print "[+] %s results found\n" % len(data[1])
         for x in data[1]:
-            print "Title: %s\nURL: %s\nSnippet: %s\n" % (x['title'], colorize(x['link']), colorize(x['snippet']))
+            print "Title: %s\nURL: %s\nSnippet: %s\n" % (x['title'].encode('utf-8'), colorize(x['link'].encode('utf-8')), colorize(x['snippet'].encode('utf-8')))
 
 
 if __name__ == "__main__":
