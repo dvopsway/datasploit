@@ -71,9 +71,10 @@ def main(username):
 
 
 def output(data, username=""):
-    if data[1] == "INVALID_API":
-        print colored(
-                style.BOLD + '\n[-] Github Access Token not configured. Skipping Github Search.\nPlease refer to http://datasploit.readthedocs.io/en/latest/apiGeneration/.\n' + style.END, 'red')
+    if type(data) == list:
+        if data[1] == "INVALID_API":
+            print colored(
+                 style.BOLD + '\n[-] Github Access Token not configured. Skipping Gi Search.\nPlease refer to http://datasploit.readthedocs.io/en/latest/apiGeneration/.\n' + style.END, 'red')
     else:
         print "[+] Found %s repos for username %s\n" % (len(data), username)
         counter = 1
