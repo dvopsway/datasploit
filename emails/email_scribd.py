@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 
 import base
-import config as cfg
 import re
 import sys
 import requests

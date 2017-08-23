@@ -27,7 +27,8 @@ def run(component, module_dir, m_input, output = None):
         if "banner" in dir(x):
             x.banner()
         data = x.main(m_input)
-        x.output(data, m_input)
+        if data:
+            x.output(data, m_input)
 	if output and str(output).upper() == "JSON":
 		json_output[name] = data
 

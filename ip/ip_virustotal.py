@@ -22,19 +22,26 @@ def banner():
 
 def main(ip):
     # Use the ip variable to do some stuff and return the data
-    print ip
-    api = cfg.virustotal_public_api
-    params = "{'ip': '%s', 'apikey': '%s'}" % (ip, api)
-    url = "http://www.virustotal.com/vtapi/v2/ip-address/report?ip=%s&apikey=%s" % (ip, api)
-    req = requests.get(url, params)
-    return req
+    if cfg.virustotal_public_api != "":
+        print ip
+        api = cfg.virustotal_public_api
+        params = "{'ip': '%s', 'apikey': '%s'}" % (ip, api)
+        url = "http://www.virustotal.com/vtapi/v2/ip-address/report?ip=%s&apikey=%s" % (ip, api)
+        req = requests.get(url, params)
+        return req
+    else:
+        return [False, "INVALID_API"]
 
 
 def output(data, ip=""):
     # Use the data variable to print out to console as you like
-    for i in data:
-        print i
-    print ""
+    if data[1] == "INVALID_API":
+        print colored(
+                style.BOLD + '\n[-] VirusTotal API Key not configured. Skipping VirusTotal Search.\nPlease refer to http://datasploit.readthedocs.io/en/latest/apiGeneration/.\n' + style.END, 'red')
+    else:
+        for i in data:
+            print i
+            print ""
 
 
 if __name__ == "__main__":

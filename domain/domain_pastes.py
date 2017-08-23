@@ -88,7 +88,8 @@ if __name__ == "__main__":
         domain = sys.argv[1]
         banner()
         result = main(domain)
-        output(result, domain)
+        if result:
+            output(result, domain)
 
 
 

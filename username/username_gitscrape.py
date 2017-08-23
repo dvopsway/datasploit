@@ -59,23 +59,30 @@ def find_commits(repo_name):
 
 
 def main(username):
-    repo_list = find_repos(username)
-    master_list = {}
-    if not repo_list == "API_LIMIT":
-        for i in repo_list:
-            master_list[i] = find_commits(i)
-    return master_list
+    if cfg.github_access_token != "":
+        repo_list = find_repos(username)
+        master_list = {}
+        if not repo_list == "API_LIMIT":
+            for i in repo_list:
+                master_list[i] = find_commits(i)
+        return master_list
+    else:
+        return [False, "INVALID_API"]
 
 
 def output(data, username=""):
-    print "[+] Found %s repos for username %s\n" % (len(data), username)
-    counter = 1
-    for repo_name, commits in data.iteritems():
-        print "%s. %s (%s commits)" % (counter, repo_name, len(commits))
-        for commit in commits:
-            print "\t%s" % commit
-        print ""
-        counter += 1
+    if data[1] == "INVALID_API":
+        print colored(
+                style.BOLD + '\n[-] Github Access Token not configured. Skipping Github Search.\nPlease refer to http://datasploit.readthedocs.io/en/latest/apiGeneration/.\n' + style.END, 'red')
+    else:
+        print "[+] Found %s repos for username %s\n" % (len(data), username)
+        counter = 1
+        for repo_name, commits in data.iteritems():
+            print "%s. %s (%s commits)" % (counter, repo_name, len(commits))
+            for commit in commits:
+                print "\t%s" % commit
+            print ""
+            counter += 1
 
 
 if __name__ == "__main__":

@@ -89,7 +89,8 @@ if __name__ == "__main__":
     email = sys.argv[1]
     banner()
     result = main(email)
-    output(result, email)
+    if result:
+        output(result, email)
     #except Exception as e:
     #print e
-    print "Please provide an email as argument"
+    

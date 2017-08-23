@@ -21,26 +21,33 @@ def banner():
 
 
 def main(email):
-    headers = {"Authorization": "Bearer %s" % cfg.clearbit_apikey}
-    req = requests.get("https://person.clearbit.com/v1/people/email/%s" % (email), headers=headers)
-    person_details = json.loads(req.content)
-    if "error" in req.content and "queued" in req.content:
-        print "This might take some more time, Please run this script again, after 5 minutes."
+    if cfg.clearbit_apikey != "":
+        headers = {"Authorization": "Bearer %s" % cfg.clearbit_apikey}
+        req = requests.get("https://person.clearbit.com/v1/people/email/%s" % (email), headers=headers)
+        person_details = json.loads(req.content)
+        if "error" in req.content and "queued" in req.content:
+            print "This might take some more time, Please run this script again, after 5 minutes."
+        else:
+            return person_details
     else:
-        return person_details
+        return [False, "INVALID_API"]
 
 
 def output(data, email=""):
-    for x in data.keys():
-        print '%s details:' % x
-        if type(data[x]) == dict:
-            for y in data[x].keys():
-                if data[x][y] is not None:
-                    print "%s:  %s, " % (y, data[x][y])
-        elif data[x] is not None:
-            print "\n%s:  %s" % (x, data[x])
+    if data[1] == "INVALID_API":
+        print colored(
+                style.BOLD + '\n[-] Clearbit API Key not configured. Skipping Clearbit Search.\nPlease refer to http://datasploit.readthedocs.io/en/latest/apiGeneration/.\n' + style.END, 'red')
+    else:
+        for x in data.keys():
+            print '%s details:' % x
+            if type(data[x]) == dict:
+                for y in data[x].keys():
+                    if data[x][y] is not None:
+                        print "%s:  %s, " % (y, data[x][y])
+            elif data[x] is not None:
+                print "\n%s:  %s" % (x, data[x])
 
-    print "\n-----------------------------\n"
+        print "\n-----------------------------\n"
 
 
 if __name__ == "__main__":

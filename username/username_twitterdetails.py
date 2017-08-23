@@ -63,31 +63,38 @@ def twitterdetails(username):
 
 
 def main(username):
-    r = requests.get("https://twitter.com/%s" % username)
-    if r.status_code == 200:
-        hashlist, userlist = twitterdetails(username)
-        return [hashlist, userlist]
+    if cfg.twitter_consumer_key != "" and cfg.twitter_consumer_secret != "" and cfg.twitter_access_token != "" and cfg.twiter_access_token_secret != "":
+        r = requests.get("https://twitter.com/%s" % username)
+        if r.status_code == 200:
+            hashlist, userlist = twitterdetails(username)
+            return [hashlist, userlist]
+        else:
+            return None
     else:
-        return None
+        return [False, "INVALID_API"]
 
 
 def output(data, username=""):
-    if data:
-        hashlist = data[0]
-        userlist = data[1]
-        count = Counter(hashlist).most_common()
-        print "Top Hashtag Occurrence for user " + username + " based on last 1000 tweets"
-        for hash, cnt in count:
-            print "#" + hash + " : " + str(cnt)
-        print "\n"
-
-        # counting user occurrence
-        countu = Counter(userlist).most_common()
-        print "Top User Occurrence for user " + username + " based on last 1000 tweets"
-        for usr, cnt in countu:
-            print "@" + usr + " : " + str(cnt)
+    if data[1] == "INVALID_API":
+        print colored(
+            style.BOLD + '\n[-] Twitter API Keys not configured. Skipping Twitter search.\nPlease refer to http://datasploit.readthedocs.io/en/latest/apiGeneration/.\n' + style.END, 'red')
     else:
-        print "No Associated Twitter account found."
+        if data:
+            hashlist = data[0]
+            userlist = data[1]
+            count = Counter(hashlist).most_common()
+            print "Top Hashtag Occurrence for user " + username + " based on last 1000 tweets"
+            for hash, cnt in count:
+                print "#" + hash + " : " + str(cnt)
+            print "\n"
+
+            # counting user occurrence
+            countu = Counter(userlist).most_common()
+            print "Top User Occurrence for user " + username + " based on last 1000 tweets"
+            for usr, cnt in countu:
+                print "@" + usr + " : " + str(cnt)
+        else:
+            print "No Associated Twitter account found."
 
 
 if __name__ == "__main__":

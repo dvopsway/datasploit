@@ -36,13 +36,19 @@ def banner():
 
 
 def main(domain):
-    if cfg.emailhunter != "" and cfg.emailhunter != "":
+    if cfg.emailhunter != "":
         return emailhunter(domain)
+    else:
+        return [False, "INVALID_API"]
 
 
 def output(data, domain=""):
-    for x in data:
-        print str(x)
+    if data[1] == "INVALID_API":
+            print colored(
+                style.BOLD + '\n[-] Emailhunter API key not configured, skipping Email Search.\nPlease refer to http://datasploit.readthedocs.io/en/latest/apiGeneration/.\n' + style.END, 'red')
+    else:
+        for x in data:
+            print str(x)
 
 
 if __name__ == "__main__":
@@ -50,7 +56,10 @@ if __name__ == "__main__":
         domain = sys.argv[1]
         banner()
         result = main(domain)
-        output(result, domain)
+        if result:
+            output(result, domain)
+        else:
+            pass
     except Exception as e:
         print e
         print "Please provide a domain name as argument"

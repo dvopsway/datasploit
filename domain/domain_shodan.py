@@ -29,15 +29,22 @@ def banner():
 
 
 def main(domain):
-    return json.loads(shodandomainsearch(domain))
+    if cfg.shodan_api != "":
+        return json.loads(shodandomainsearch(domain))
+    else:
+        return [False, "INVALID_API"]
 
 
 def output(data, domain=""):
-    if 'matches' in data.keys():
-        for x in data['matches']:
-            print "IP: %s\nHosts: %s\nDomain: %s\nPort: %s\nData: %s\nLocation: %s\n" % (
-            x['ip_str'], x['hostnames'], x['domains'], x['port'], x['data'].replace("\n", ""), x['location'])
-    print "-----------------------------\n"
+    if data[1] == "INVALID_API":
+        print colored(
+                style.BOLD + '\n[-] Shodan API Key not configured. Skipping Shodan search.\nPlease refer to http://datasploit.readthedocs.io/en/latest/apiGeneration/.\n' + style.END, 'red')
+    else:
+        if 'matches' in data.keys():
+            for x in data['matches']:
+                print "IP: %s\nHosts: %s\nDomain: %s\nPort: %s\nData: %s\nLocation: %s\n" % (
+                x['ip_str'], x['hostnames'], x['domains'], x['port'], x['data'].replace("\n", ""), x['location'])
+        print "-----------------------------\n"
 
 
 if __name__ == "__main__":
