@@ -42,6 +42,6 @@ Options:
 
 
 ## Detailed Tool Documentation:
-> [http://datasploit.readthedocs.io/en/latest/](http://datasploit.readthedocs.io/en/latest/)
+> [https://datasploit.github.io/datasploit/](https://datasploit.github.io/datasploit/)
 
 
