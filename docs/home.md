@@ -16,9 +16,6 @@ Following API configs are mandatory for proper results in domainOsint.py:
 
 Other modules:
 * github_access_token
-* instagram_token
-* instagram_client_id
-* instagram_client_secret
 * jsonwhois
 
 

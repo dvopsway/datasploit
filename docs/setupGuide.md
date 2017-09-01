@@ -1,9 +1,9 @@
-dataSploit as a Framework
-=========================
+dataSploit as a Framework / Tool
+================================
 
 dataSploit is now available as a framework and can be used in 2 ways, either as a library such that it can be incorporated into other projects or as a standalone tool. Given below are the methods to install and use dataSploit in the mentioned 2 ways.
 
-### 1. Library
+## 1. Set it up as a Library
 
 dataSploit is now available on the [pypi repository](https://pypi.python.org/pypi/datasploit) for easy installation using pip. If you're a developer looking for a way to leverage the capabilities of dataSploit in your own projects, this method is probably the way to go for you. To use dataSploit as a library to incorporate in your own projects, please follow the below instructions to set it up.
 
@@ -41,7 +41,7 @@ Can this domain recieve emails?:  Yes
 Is it a Disposable email?:  No
 ```
 
-### 2. Standalone Tool
+## 2. Set it up as a Standalone Tool
 
 If you're looking to use dataSploit quickly for scavenging information, you can simply run it as a standalone tool. Follow the below commands to set it up.
 

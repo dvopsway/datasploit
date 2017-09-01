@@ -19,8 +19,10 @@ class style:
 def get_accesstoken_zoomeye(domain):
     username = cfg.zoomeyeuser
     password = cfg.zoomeyepass
+    headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
     datalogin = '{"username": "%s","password": "%s"}' % (username, password)
-    s = requests.post("https://api.zoomeye.org/user/login", data=datalogin)
+    s = requests.post("https://api.zoomeye.org/user/login", data=datalogin, headers=headers)
+    print s.text
     responsedata = json.loads(s.text)
     access_token1 = responsedata['access_token']
     return access_token1
@@ -47,7 +49,7 @@ def main(domain):
 
 
 def output(data, domain=""):
-    if data[1] == "INVALID_API":
+    if type(data) == list and data[1] == "INVALID_API":
         print colored(
                 style.BOLD + '\n[-] ZoomEye username and password not configured. Skipping Zoomeye Search.\nPlease refer to http://datasploit.readthedocs.io/en/latest/apiGeneration/.\n' + style.END, 'red')
     else:
@@ -65,11 +67,9 @@ def output(data, domain=""):
 
 
 if __name__ == "__main__":
-    try:
-        domain = sys.argv[1]
-        banner()
-        result = main(domain)
+    domain = sys.argv[1]
+    banner()
+    result = main(domain)
+    if result:
         output(result, domain)
-    except Exception as e:
-        print e
-        print "Please provide a domain name as argument"
+

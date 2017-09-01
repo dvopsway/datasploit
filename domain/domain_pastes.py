@@ -51,7 +51,7 @@ def google_search(domain):
                 cfg.google_cse_key, cfg.google_cse_cx, domain, next_index)
             data = json.loads(requests.get(url).content)
 	    if 'error' in data:
-		return True, all_results
+	       return True, all_results
 	    else:
 	        all_results += data['items']
     return True, all_results
@@ -71,7 +71,7 @@ def main(domain):
 
 def output(data, domain=""):
     if not data[0]:
-        if data[1] == "INVALID_API":
+        if type(data) == list and data[1] == "INVALID_API":
             print colored(
                 style.BOLD + '\n[-] google_cse_key and google_cse_cx not configured. Skipping paste(s) search.\nPlease refer to http://datasploit.readthedocs.io/en/latest/apiGeneration/.\n' + style.END, 'red')
         else:

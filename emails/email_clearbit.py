@@ -8,7 +8,7 @@ import json
 from termcolor import colored
 
 # Control whether the module is enabled or not
-ENABLED = True
+ENABLED = False
 
 
 class style:
@@ -34,7 +34,8 @@ def main(email):
 
 
 def output(data, email=""):
-    if data[1] == "INVALID_API":
+    print data
+    if type(data) == list and data[1] == "INVALID_API":
         print colored(
                 style.BOLD + '\n[-] Clearbit API Key not configured. Skipping Clearbit Search.\nPlease refer to http://datasploit.readthedocs.io/en/latest/apiGeneration/.\n' + style.END, 'red')
     else:

@@ -35,7 +35,7 @@ def main(domain):
 
 
 def output(data, domain=""):
-    if not data[0]:
+    if type(data) == list and not data[0]:
         if data[1] == "INVALID_API":
             print colored(
                 style.BOLD + '\n[-] Github Access Token not configured, skipping Github Search.\nPlease refer to http://datasploit.readthedocs.io/en/latest/apiGeneration/.\n' + style.END, 'red')

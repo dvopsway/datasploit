@@ -35,7 +35,7 @@ def main(ip):
 
 def output(data, ip=""):
     # Use the data variable to print out to console as you like
-    if data[1] == "INVALID_API":
+    if type(data) == list and data[1] == "INVALID_API":
         print colored(
                 style.BOLD + '\n[-] VirusTotal API Key not configured. Skipping VirusTotal Search.\nPlease refer to http://datasploit.readthedocs.io/en/latest/apiGeneration/.\n' + style.END, 'red')
     else:

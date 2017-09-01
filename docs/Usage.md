@@ -11,19 +11,9 @@ python domain_subdomains.py example.com
 ```
 While, domainOsint will call all other domain_* scripts and list down data as well as dump the same in mongoDb, domain_subdomains and other such scripts will just list down data specific to their function. 
 
-domainOsint.py generates a JSON and an HTML report in reports folder as following hirarchy (example files are based on abcd.com domain)
+domainOsint.py generates a JSON report in reports folder as following hirarchy (example files are based on abcd.com domain)
 
-../datasploit/reports
-
----------------------|------abcd.com
-
----------------------|------|------abcd.com_YYYY-MM-DD-HH-MM-SS.html
-
----------------------|------|------abcd.com_YYYY-MM-DD-HH-MM-SS.json
-
----------------------|------|------abcd.com_YYYY-MM-DD-HH-MM-SS.subdomains.txt
-
----------------------|------|------abcd.com_YYYY-MM-DD-HH-MM-SS.emails.txt
-
-
+```
+python domainOsint.py -d example.com -o json
+```
 

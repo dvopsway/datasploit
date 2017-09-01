@@ -29,7 +29,7 @@ def main(ip):
 
 
 def output(data, ip=""):
-    if data[1] == "INVALID_API":
+    if type(data) == list and data[1] == "INVALID_API":
         print colored(
                 style.BOLD + '\n[-] Shodan API Key not configured. Skipping Shodan search.\nPlease refer to http://datasploit.readthedocs.io/en/latest/apiGeneration/.\n' + style.END, 'red')
     else:

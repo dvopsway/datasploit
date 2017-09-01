@@ -70,7 +70,7 @@ def main(email):
 
 
 def output(data, email=""):
-    if not data[0]:
+    if type(data) == list and not data[0]:
         if data[1] == "INVALID_API":
             print colored(
                 style.BOLD + '\n[-] google_cse_key and google_cse_cx not configured. Skipping paste(s) search.\nPlease refer to http://datasploit.readthedocs.io/en/latest/apiGeneration/.\n' + style.END, 'red')
