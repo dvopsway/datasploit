@@ -133,7 +133,7 @@ def analyze_activity(service, **kwargs):
 
 
 def main(username):
-    if google_api:
+    if google_api != "XYZ" and google_api != "":
         API_SERVICE_NAME = "youtube"
         API_VERSION = "v3"
         max_results = 50
