@@ -20,6 +20,7 @@ class style:
     END = '\033[0m'
 
 
+
 def check_and_append_subdomains(subdomain, subdomain_list):
     if subdomain not in subdomain_list:
         subdomain_list.append(subdomain)
@@ -27,6 +28,7 @@ def check_and_append_subdomains(subdomain, subdomain_list):
 
 
 def subdomains(domain, subdomain_list):
+    print colored(' [+] Extracting subdomains from DNS Dumpster\n', 'blue')
     r = requests.get("https://dnsdumpster.com/", verify=False)
     cookies = {}
     if 'csrftoken' in r.cookies.keys():
@@ -46,6 +48,7 @@ def subdomains(domain, subdomain_list):
 
 
 def subdomains_from_netcraft(domain, subdomain_list):
+    print colored(' [+] Extracting subdomains Netcraft\n', 'blue')
     target_dom_name = domain.split(".")
     req1 = requests.get("http://searchdns.netcraft.com/?host=%s" % domain)
     link_regx = re.compile('<a href="http://toolbar.netcraft.com/site_report\?url=(.*)">')
@@ -87,19 +90,19 @@ def subdomains_from_netcraft(domain, subdomain_list):
         pass
     return subdomain_list
 
-
 def subdomains_from_google_ct(domain, subdomain_list):
-	next = ''
-	while True:
-		url = 'https://www.google.com/transparencyreport/jsonp/ct/search?domain=%s&incl_exp=true&incl_sub=true&token=%s&c=' % (domain,next)
-		obj = json.loads('('.join(requests.get(url).text.split('(')[1:])[:-3])
-		for x in obj['results']:
-			if x['subject'].endswith(domain):
-				subdomain_list = check_and_append_subdomains(x['subject'], subdomain_list)
-		if 'nextPageToken' not in obj:
-			break
-		next = obj['nextPageToken']
-	return subdomain_list
+    print colored(' [+] Extracting subdomains from Certificate Transparency Reports\n', 'blue')
+    next = ''
+    while True:
+        url = 'https://www.google.com/transparencyreport/jsonp/ct/search?domain=%s&incl_exp=true&incl_sub=true&token=%s&c=' % (domain,next)
+        obj = json.loads('('.join(requests.get(url).text.split('(')[1:])[:-3])
+        for x in obj['results']:
+            if x['subject'].endswith(domain):
+                subdomain_list = check_and_append_subdomains(x['subject'], subdomain_list)
+        if 'nextPageToken' not in obj:
+            break
+        next = obj['nextPageToken']
+    return subdomain_list
 
 
 def banner():
