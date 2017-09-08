@@ -16,7 +16,7 @@ class style:
 
 
 def github_search(query):
-    endpoint_git = "https://api.github.com/search/code?q=%s&access_token=%s" % (query, cfg.github_access_token)
+    endpoint_git = "https://api.github.com/search/code?q=\"%s\"&access_token=%s" % (query, cfg.github_access_token)
     req = requests.get(endpoint_git)
     data = json.loads(req.content)
     return data.get('total_count'), data.get('items')
@@ -53,7 +53,7 @@ def output(data, domain=""):
             print "    Owner: %s" % snip['repository']['full_name']
             print "    Repository: %s" % snip['repository']['html_url']
             count += 1
-        print "\nCheck results here: https://github.com/search?q=%s&type=Code&utf8=%%E2%%9C%%93" % domain
+        print '\nCheck results here: https://github.com/search?q="%s"&type=Code&utf8=%%E2%%9C%%93"' % domain
         print "-----------------------------\n"
 
 
