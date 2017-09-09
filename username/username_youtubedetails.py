@@ -179,7 +179,11 @@ def output(data, username=""):
                 else:
                     print v
         else:
-            print i
+            if "[!]" in i:
+                print i
+                data.remove(i)
+            else:
+                print i
 
 
 if __name__ == "__main__":
