@@ -10,6 +10,18 @@ from termcolor import colored
 
 ENABLED = True
 
+'''
+Author: @khasmek
+
+Original Idea: @jms_dot_py
+
+Original article -
+http://www.automatingosint.com/blog/2017/07/osint-website-connections-tracking-codes/
+
+Original code -
+https://github.com/automatingosint/osint_public/blob/master/trackingcodes/website_connections.py
+'''
+
 
 class style:
     BOLD = '\033[1m'
@@ -30,7 +42,7 @@ def clean_tracking_code(tracking_code):
 
 def extract_tracking_codes(domain):
     tracking_codes = []
-    connections    = {}
+    connections = {}
     try:
         if not domain.startswith("http:"):
             site = "http://" + domain
