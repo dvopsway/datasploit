@@ -49,6 +49,12 @@ shodan_api, censysio_id, censysio_secret, zoomeyeuser, zoomeyepass, clearbit_api
 * Go to https://cse.google.com/cse/all again and click on the search engine you just created. 
 * Click on the 'Search engine id' button and copy your search engine id. This is the value for *google_cse_cx* field in config.py file.
 
+## SpyOnWeb Access Token
+* [Register](https://api.spyonweb.com/users/sign_up) an account in SpyOnWeb.
+* SpyOnWeb will send a confirmation email with a link you will need to use to confirm the account.
+* [Login](https://api.spyonweb.com/users/sign_in) and your Access Token will be on the main page.
+* Copy the Access Token and use as the value for the *spyonweb_access_token* field in the config.py file.
+
 
 ## Zoomeye Username and Password
 * [Register](https://www.zoomeye.org/accounts/register) an user with zoomeye and use the credentials for this tool. (Don't worry if you are redirected to sso.telnet404.com. *This is how it works.)*
