@@ -15,6 +15,10 @@ warnings.filterwarnings("ignore")
 ENABLED = True
 
 
+'''
+Author(s): @upgoingstar & @khasmek
+'''
+
 class style:
     BOLD = '\033[1m'
     END = '\033[0m'
