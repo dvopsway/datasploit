@@ -28,9 +28,10 @@ def extracting(imglinks, username, prourl, tag, attribute, value, finattrib, pro
         path = "profile_pic/" + username + "/" + profile + ".jpg"
         urllib.urlretrieve(img[finattrib], path)
     else:
-        imglinks.append(img[finattrib])
-        path = "profile_pic/" + username + "/" + profile + ".jpg"
-        urllib.urlretrieve(img[finattrib], path)
+        if img is not None:
+            imglinks.append(img.get(finattrib))
+            path = "profile_pic/" + username + "/" + profile + ".jpg"
+            urllib.urlretrieve(img.get(finattrib), path)
     return imglinks
 
 
@@ -227,11 +228,13 @@ def output(data, username=""):
 
 
 if __name__ == "__main__":
-    try:
-        username = sys.argv[1]
-        banner()
-        result = main(username)
-        output(result, username)
+    #try:
+    username = sys.argv[1]
+    banner()
+    result = main(username)
+    output(result, username)
+    '''
     except Exception as e:
         print e
         print "Please provide a username as argument"
+    '''
