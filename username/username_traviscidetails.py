@@ -15,6 +15,10 @@ from travispy import TravisPy
 import urllib2
 import json
 
+import warnings
+warnings.filterwarnings('ignore')
+
+
 # Control whether the module is enabled or not
 ENABLED = True
 
