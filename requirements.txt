@@ -24,3 +24,4 @@ tldextract==2.0.1
 tqdm==4.7.6
 termcolor
 tweepy==3.5.0
+TravisPy==0.3.5
