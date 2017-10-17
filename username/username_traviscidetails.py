@@ -65,7 +65,7 @@ def output(data, username=""):
         else:
             print "Name(s) and Email(s) of author and associated committer(s):\n"
             for dt in data:
-                print dt
+                print dt[0] + ': ' + dt[1]
     else:
         print "No data found."
 
