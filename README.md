@@ -54,7 +54,7 @@ Options:
 ### Lead Developers
 * Shubham Mittal - https://github.com/upgoingstar
 * Sudhanshu Chauhan - https://github.com/sudhanshu_c
-* Kunal Aggarwal - https://github.com/aggkunal
+* Kunal Aggarwal - https://github.com/KunalAggarwal
 
 ### Social Media 
 * [Official Website](https://datasploit.github.io/datasploit/) 
