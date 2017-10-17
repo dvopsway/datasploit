@@ -33,29 +33,39 @@ def banner():
 
 
 def main(username):
-    # Use the username variable to do some stuff and return the data
-    token = TravisPy.github_auth(github_access_token)
-    q=urllib2.urlopen("https://api.travis-ci.org/repos/%s" % username)
-    jsondata=json.loads(q.read())
-    details=[]
+    if github_access_token != "XYZ" and github_access_token != "":
+        # Use the username variable to do some stuff and return the data
+        token = TravisPy.github_auth(github_access_token)
+        q=urllib2.urlopen("https://api.travis-ci.org/repos/%s" % username)
+        jsondata=json.loads(q.read())
+        details=[]
 
-    if jsondata:
-        for data in jsondata:
-            builds=token.builds(slug=data["slug"])
-            for bd in builds:
-                bid=token.build(bd.id)
-                details.append((bid.commit.author_name,bid.commit.author_email))
-                details.append((bid.commit.committer_name,bid.commit.committer_email))
-    details=list(set(details))
-    return details
+        if jsondata:
+            for data in jsondata:
+                builds=token.builds(slug=data["slug"])
+                for bd in builds:
+                    bid=token.build(bd.id)
+                    details.append((bid.commit.author_name,bid.commit.author_email))
+                    details.append((bid.commit.committer_name,bid.commit.committer_email))
+        details=list(set(details))
+        return details
+    else:
+        return [ colored(style.BOLD +
+                         '[!] Error: No github token for Travis CI found. Skipping' +
+                         style.END, 'red') ]
 
 
 def output(data, username=""):
     # Use the data variable to print out to console as you like
     if data:
-        print "Name(s) and Email(s) of author and associated committer(s):\n"
-        for dt in data:
-            print dt
+        # Check if error and if list length is 1, and remove from file output if so
+        if "[!] Error:" in data[0] and len(data) == 1:
+            print data[0]
+            del data[0]
+        else:
+            print "Name(s) and Email(s) of author and associated committer(s):\n"
+            for dt in data:
+                print dt
     else:
         print "No data found."
 
