@@ -16,7 +16,7 @@
 
 # Overview of the tool:
 * Performs OSINT on a domain / email / username / phone and find out information from different sources.
-* Correlates and collaborate the results, show them in a consolidated manner. 
+* Correlate and collaborate the results, show them in a consolidated manner. 
 * Tries to find out credentials, api-keys, tokens, subdomains, domain history, legacy portals, etc. related to the target. 
 * Use specific script / launch automated OSINT for consolidated data.
 * Performs Active Scans on collected data.
@@ -51,4 +51,12 @@ Options:
 ## Detailed Tool Documentation:
 > [https://datasploit.github.io/datasploit/](https://datasploit.github.io/datasploit/)
 
+### Lead Developers
+* Shubham Mittal - https://github.com/upgoingstar
+* Sudhanshu Chauhan - https://github.com/sudhanshu_c
+* Kunal Aggarwal - https://github.com/aggkunal
 
+### Social Media 
+* [Official Website](https://datasploit.github.io/datasploit/) 
+* [Twitter](https://twitter.com/datasploit)
+* [Facebook](https://facebook.com/datasploit)
