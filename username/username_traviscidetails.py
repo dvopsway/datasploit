@@ -2,12 +2,12 @@
 
 # Credits: https://github.com/int0x80/tcispy
 
-# The required token (github_travis_key) can be generated from the link https://github.com/settings/tokens/new by following the requirement present at https://travispy.readthedocs.io/en/stable/getting_started/
+# The required token (github_access_token) can be generated from the link https://github.com/settings/tokens/new by following the requirement present at https://travispy.readthedocs.io/en/stable/getting_started/
 
 import base
-import config as cfg
 import sys
 from termcolor import colored
+from config import github_access_token
 
 
 #module dependencies
@@ -34,7 +34,7 @@ def banner():
 
 def main(username):
     # Use the username variable to do some stuff and return the data
-    token = TravisPy.github_auth(cfg.github_travis_key)
+    token = TravisPy.github_auth(github_access_token)
     q=urllib2.urlopen("https://api.travis-ci.org/repos/%s" % username)
     jsondata=json.loads(q.read())
     details=[]
