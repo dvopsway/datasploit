@@ -2,6 +2,8 @@
 
 import re
 import sys
+import shutil
+import os
 import textwrap
 import argparse
 import emailOsint
@@ -27,20 +29,33 @@ def main(argv):
     """
     epilog="""              Connect at Social Media: @datasploit                  
                 """
+    # Set all parser arguments here.
     parser = argparse.ArgumentParser(formatter_class=argparse.RawDescriptionHelpFormatter,description=textwrap.dedent(desc),epilog=epilog)
     parser.add_argument("-i","--input",help="Provide Input",dest='target',required=True)
     parser.add_argument("-a","--active",help="Run Active Scan attacks",dest='active',action="store_false")
     parser.add_argument("-q","--quiet",help="Run scans in automated manner accepting default answers",dest='quiet',action="store_false")
     parser.add_argument("-o","--output",help="Provide Destination Directory",dest='output')
+    # check and ensure the config file is present otherwise create one. required for all further operations
+    config_file_path = os.path.dirname(__file__) + os.path.sep + "config.py"
+    config_sample_path= os.path.dirname(__file__) + os.path.sep + "config_sample.py"
+    if not os.path.exists(config_file_path):
+        print "[+] Looks like a new setup, setting up the config file."
+        shutil.copyfile(config_sample_path,config_file_path)
+        print "[+] A config file is added please follow guide at https://datasploit.github.io/datasploit/apiGeneration/ to fill API Keys for better results"
+        # We can think about quiting at this point.
+    # if no argument is provided print help and quit
     if len(argv) == 0:
         parser.print_help()
         sys.exit()
+    # parse arguments in case they are provided.
     x=parser.parse_args()
     active=x.active
     quiet=x.quiet
     user_input=x.target
     output=x.output
+    # Banner print
     print textwrap.dedent(desc)
+    # Auto selection logic
     try:    
         print "User Input: %s" % user_input
         try:
