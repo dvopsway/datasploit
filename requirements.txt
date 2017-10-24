@@ -25,3 +25,5 @@ tqdm==4.7.6
 termcolor
 tweepy==3.5.0
 TravisPy==0.3.5
+netaddr
+tld
