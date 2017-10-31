@@ -53,7 +53,7 @@ Options:
 
 ### Lead Developers
 * Shubham Mittal - https://github.com/upgoingstar
-* Sudhanshu Chauhan - https://github.com/sudhanshu_c
+* Sudhanshu Chauhan - https://github.com/sudhanshuc
 * Kunal Aggarwal - https://github.com/KunalAggarwal
 
 ### Social Media 
