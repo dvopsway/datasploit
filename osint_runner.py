@@ -29,17 +29,17 @@ def run(component, module_dir, m_input, output = None):
         data = x.main(m_input)
         if data:
             x.output(data, m_input)
-	if output and str(output).upper() == "JSON":
-		json_output[name] = data
+        if output and str(output).upper() == "JSON":
+            json_output[name] = data
 
     if output and str(output).upper() == "JSON":
-	timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-	filename = "datasploit_%s_%s_%s.json" % (module_dir, m_input, timestamp)
-	filepath = "reports/json"
-	if not os.path.exists(filepath):
-		os.makedirs(filepath)
-	fh = open("%s/%s" % (filepath, filename), "w")
-	fh.write(json.dumps(json_output, default=json_util.default, indent = 4))
-	fh.close()
-	print "JSON report saved to %s/%s" % (filepath, filename)
-	
+        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+        filename = "datasploit_%s_%s_%s.json" % (module_dir, m_input, timestamp)
+        filepath = "reports/json"
+        if not os.path.exists(filepath):
+            os.makedirs(filepath)
+        file = "%s/%s" % (filepath, filename)
+        fh = open("%s/%s" % (filepath, filename), "w")
+        fh.write(json.dumps(json_output, default=json_util.default, indent = 4))
+        fh.close()
+        print "JSON report saved to %s/%s" % (filepath, filename)
