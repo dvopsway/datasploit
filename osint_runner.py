@@ -5,7 +5,6 @@ import json
 from glob import glob
 from collections import OrderedDict
 from datetime import datetime
-from bson import json_util
 
 
 def run(component, module_dir, m_input, output = None):
@@ -39,7 +38,6 @@ def run(component, module_dir, m_input, output = None):
         if not os.path.exists(filepath):
             os.makedirs(filepath)
         file = "%s/%s" % (filepath, filename)
-        fh = open("%s/%s" % (filepath, filename), "w")
-        fh.write(json.dumps(json_output, default=json_util.default, indent = 4))
-        fh.close()
+        with open(file, "w") as fh:
+            json.dump(json_output, fh, indent=4, sort_keys=True)
         print "JSON report saved to %s/%s" % (filepath, filename)
