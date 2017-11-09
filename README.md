@@ -10,7 +10,7 @@
 
 [![Arsenal-2016-US](https://www.toolswatch.org/badges/arsenal/2016.svg)](http://www.toolswatch.org/2016/06/the-black-hat-arsenal-usa-2016-remarkable-line-up/) - USA
 
-[![DEFCON 25 ReconVillage](https://img.shields.io/badge/DEFCON%2025-Recon%20Village-blue.svg)](http://reconvillage.org/) [![DEFCON 24 Demolabs](https://img.shields.io/badge/DEFCON%2024-Demo%20Labs-blue.svg)](https://www.defcon.org/html/defcon-24/dc-24-demolabs.html)
+[![DEFCON 25 ReconVillage](https://img.shields.io/badge/DEFCON%2025-Recon%20Village-red.svg)](http://reconvillage.org/) [![DEFCON 24 Demolabs](https://img.shields.io/badge/DEFCON%2024-Demo%20Labs-red.svg)](https://www.defcon.org/html/defcon-24/dc-24-demolabs.html)
 
 
 # Overview of the tool:
