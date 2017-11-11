@@ -8,7 +8,7 @@ import config as cfg
 from termcolor import colored
 import time
 
-ENABLED = True
+ENABLED = False
 
 
 class style:
