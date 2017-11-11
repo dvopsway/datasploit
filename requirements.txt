@@ -1,6 +1,7 @@
 anyjson==0.3.3
 BeautifulSoup==3.2.1
-beautifulsoup4==4.4.1
+beautifulsoup4==4.6.0
+html5lib==0.999999999
 billiard==3.3.0.23
 bs4==0.0.1
 clearbit==0.1.4

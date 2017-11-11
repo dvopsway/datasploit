@@ -50,10 +50,10 @@ def google_search(email):
             url = "https://www.googleapis.com/customsearch/v1?key=%s&cx=%s&q=\"%s\"&start=%s" % (
                 cfg.google_cse_key, cfg.google_cse_cx, email, next_index)
             data = json.loads(requests.get(url).content)
-        if 'error' in data:
-            return True, all_results
-        else:
-            all_results += data['items']
+	    if 'error' in data:
+                return True, all_results
+            else:
+                all_results += data['items']
     return True, all_results
 
 
@@ -81,16 +81,18 @@ def output(data, email=""):
     else:
         print "[+] %s results found\n" % len(data[1])
         for x in data[1]:
-            print "Title: %s\nURL: %s\nSnippet: %s\n" % (x['title'].encode('utf-8'), colorize(x['link'].encode('utf-8')), colorize(x['snippet'].encode('utf-8')))
+	    title = x['title'].encode('ascii', 'ignore').decode('ascii')
+            snippet = x['snippet'].encode('ascii', 'ignore').decode('ascii')
+            link = x['link'].encode('ascii', 'ignore').decode('ascii')
+            print "Title: %s\nURL: %s\nSnippet: %s\n" % (title, colorize(link), colorize(snippet))
 
 
 if __name__ == "__main__":
-    #try:
-    email = sys.argv[1]
-    banner()
-    result = main(email)
-    if result:
+    try:
+	email = sys.argv[1]
+	banner()
+	result = main(email)
         output(result, email)
-    #except Exception as e:
-    #print e
+    except Exception as e:
+    	print e
     
