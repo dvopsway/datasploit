@@ -26,7 +26,7 @@ def main(username):
     # Use the username variable to do some stuff and return the data
     gitlabdetails = []
     url = "https://gitlab.com/" + username
-    if (requests.head(url).status_code == 200):
+    if (requests.head(url, verify=False).status_code == 200):
         response = requests.get(url)
         soup = BeautifulSoup(response.content, "lxml")
         handle= soup.find("span", {"class" : "middle-dot-divider"})
