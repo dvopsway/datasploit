@@ -51,7 +51,10 @@ def output(data, domain=""):
             print "\t%s" % data[x]
         else:
             for y in data[x]:
-                print "\t%s" % y
+                try:
+                    print "\t%s" % y
+                except:
+                    pass
     print "\n-----------------------------\n"
 
 
