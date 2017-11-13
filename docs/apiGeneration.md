@@ -74,4 +74,4 @@ shodan_api, censysio_id, censysio_secret, zoomeyeuser, zoomeyepass, clearbit_api
 * [Register](https://github.com/join?source=header-home) an account with Github.
 * Login into Github (https://github.com/login) and go to the page 'New personal access token' (https://github.com/settings/tokens/new).
 * Generate a Github access token based on the instructions present at https://travispy.readthedocs.io/en/stable/getting_started/.
-* Copy the Access Token and use as the value for the *github_travis_key* field in the config.py file.
+* Copy the Access Token and use as the value for the *github_access_token* field in the config.py file.
