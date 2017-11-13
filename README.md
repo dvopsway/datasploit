@@ -16,7 +16,7 @@
 
 [![Join Datasploit Slack](https://img.shields.io/badge/slack-open-e01563.svg)](http://selfinvite.datasploit.info "Join our Slack community")
 
-[![Follow Datasploit on Twitter](https://img.shields.io/twitter/follow/conjurinc.svg?style=social&label=Follow%20%40datasploit)](https://twitter.com/intent/user?screen_name=datasploit "Follow Datasploit on Twitter")
+[![Follow Datasploit on Twitter](https://img.shields.io/twitter/follow/datasploit.svg?style=social&label=Follow%20%40datasploit)](https://twitter.com/intent/user?screen_name=datasploit "Follow Datasploit on Twitter")
 
 # Overview of the tool:
 * Performs OSINT on a domain / email / username / phone and find out information from different sources.
