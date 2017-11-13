@@ -12,7 +12,7 @@ google-api-python-client==1.6.3
 idna==2.1
 ipwhois==0.15.1
 json2html==1.0.1
-lxml==3.6.0
+lxml
 piplapis-python==5.1.0
 pymongo==3.3.0
 python-Wappalyzer==0.2.2
