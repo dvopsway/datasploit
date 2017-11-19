@@ -49,6 +49,7 @@ def output(data, domain=""):
         print x
         if "No" in data[x] and "Found" in data[x]:
             print "\t%s" % data[x]
+            data[x] = ''
         else:
             for y in data[x]:
                 try:
