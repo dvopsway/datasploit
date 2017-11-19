@@ -28,6 +28,9 @@ def main(domain):
 
 
 def output(data, domain=""):
+    data['creation_date'] = data['creation_date'].strftime('%m/%d/%Y')
+    data['expiration_date'] = data['expiration_date'].strftime('%m/%d/%Y')
+    data['updated_date'] = data['updated_date'].strftime('%m/%d/%Y')
     print data
     print "\n-----------------------------\n"
 
