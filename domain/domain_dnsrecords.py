@@ -18,7 +18,7 @@ def fetch_dns_records(domain, rec_type):
         answers = dns.resolver.query(domain, rec_type)
         rec_list = []
         for rdata in answers:
-            rec_list.append(rdata)
+            rec_list.append(str(rdata))
         return rec_list
     except:
         return colored("No Records Found", 'red')
