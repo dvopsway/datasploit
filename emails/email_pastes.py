@@ -87,7 +87,10 @@ def output(data, email):
 
 
 if __name__ == "__main__":
-    email = sys.argv[1]
-    banner()
-    result = main(email)
-    output(result, email)
+    try:
+        email = sys.argv[1]
+        banner()
+        result = main(email)
+        output(result, email)
+    except e as Exception:
+        print e
