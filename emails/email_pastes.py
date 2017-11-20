@@ -62,23 +62,22 @@ def banner():
 
 
 def main(email):
-    if cfg.google_cse_key != "" and cfg.google_cse_key != "XYZ" and cfg.google_cse_cx != "" and cfg.google_cse_cx != "XYZ":
-        status, data = google_search(email)
-        return [status, data]
-    else:
+    try:
+        if cfg.google_cse_key != "" and cfg.google_cse_key != "XYZ" and cfg.google_cse_cx != "" and cfg.google_cse_cx != "XYZ":
+            status, data = google_search(email)
+            return [status, data]
+        else:
+            return False, "INVALID_API"
+    except:
         return False, "INVALID_API"
 
 
-def output(data, email=""):
-    if type(data) == list and not data[0]:
-        if data[1] == "INVALID_API":
-            print colored(
-                style.BOLD + '\n[-] google_cse_key and google_cse_cx not configured. Skipping paste(s) search.\nPlease refer to http://datasploit.readthedocs.io/en/latest/apiGeneration/.\n' + style.END, 'red')
-        else:
-            print "Error Message: %s" % data[1]['error']['message']
-            print "Error Code: %s" % data[1]['error']['code']
-            print "Error Description: %s" % data[1]['error']['errors'][0]['reason']
+def output(data, email):
+    if data[0] == False:
+        print colored(
+            style.BOLD + '[-] google_cse_key and google_cse_cx not configured. Skipping paste(s) search.\nPlease refer to http://datasploit.readthedocs.io/en/latest/apiGeneration/.\n' + style.END, 'red')
     else:
+        #print data[0]
         print "[+] %s results found\n" % len(data[1])
         for x in data[1]:
 	    title = x['title'].encode('ascii', 'ignore').decode('ascii')
@@ -88,11 +87,7 @@ def output(data, email=""):
 
 
 if __name__ == "__main__":
-    try:
-	email = sys.argv[1]
-	banner()
-	result = main(email)
-        output(result, email)
-    except Exception as e:
-    	print e
-    
+    email = sys.argv[1]
+    banner()
+    result = main(email)
+    output(result, email)
