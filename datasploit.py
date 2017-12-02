@@ -55,7 +55,7 @@ def main(argv):
     output=x.output
     # if no target is provided print help and quit.
     if not (single_input or file_input):
-        print "\nSingle target or file input requered to run\n"
+        print "\nSingle target or file input required to run\n"
         parser.print_help()
         sys.exit()
     # Banner print
