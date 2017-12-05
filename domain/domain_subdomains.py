@@ -112,11 +112,13 @@ def find_domains_from_next_page_ct(page_identifier, domain, subdomain_list, othe
             subdomain_list = check_and_append_subdomains(x[1], subdomain_list)
         else:
             other_related_domain_list = check_and_append_other_domains(x[1], other_related_domain_list)
-    nextpage_details = dd2[0][3]
-    if nextpage_details[3] != nextpage_details[4]:
-        page_identifier = nextpage_details[1]
-        find_domains_from_next_page_ct(page_identifier, domain, subdomain_list, other_related_domain_list)
-
+    try:
+        nextpage_details = dd2[0][3]
+        if nextpage_details[3] != nextpage_details[4]:
+            page_identifier = nextpage_details[1]
+            find_domains_from_next_page_ct(page_identifier, domain, subdomain_list, other_related_domain_list)
+    except:
+        pass
 
 def subdomains_from_google_ct(domain, subdomain_list, other_related_domain_list):
     print colored(' [+] Extracting subdomains from Certificate Transparency Reports\n', 'blue')
@@ -134,10 +136,13 @@ def subdomains_from_google_ct(domain, subdomain_list, other_related_domain_list)
         else:
             other_related_domain_list = check_and_append_other_domains(x[1], other_related_domain_list)
 
-    nextpage_details = dd[0][3]
-    if nextpage_details[3] != nextpage_details[4]:
-        page_identifier = nextpage_details[1]
-        find_domains_from_next_page_ct(page_identifier, domain, subdomain_list, other_related_domain_list)
+    try:
+        nextpage_details = dd[0][3]
+        if nextpage_details[3] != nextpage_details[4]:
+            page_identifier = nextpage_details[1]
+            find_domains_from_next_page_ct(page_identifier, domain, subdomain_list, other_related_domain_list)
+    except:
+        pass
     return subdomain_list, other_related_domain_list
 
 
