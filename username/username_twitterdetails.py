@@ -27,7 +27,7 @@ def twitterdetails(username):
     twitter_consumer_key = vault.get_key('twitter_consumer_key')
     twitter_consumer_secret = vault.get_key('twitter_consumer_secret')
     twitter_access_token = vault.get_key('twitter_access_token')
-    twiter_access_token_secret = vault.get_key('twitter_access_token_secret')
+    twitter_access_token_secret = vault.get_key('twitter_access_token_secret')
 
     auth = tweepy.OAuthHandler(twitter_consumer_key, twitter_consumer_secret)
     auth.set_access_token(twitter_access_token, twitter_access_token_secret)
@@ -92,9 +92,9 @@ def main(username):
     twitter_consumer_key = vault.get_key('twitter_consumer_key')
     twitter_consumer_secret = vault.get_key('twitter_consumer_secret')
     twitter_access_token = vault.get_key('twitter_access_token')
-    twiter_access_token_secret = vault.get_key('twitter_access_token_secret')
-    
-    if twitter_consumer_key != None and twitter_consumer_secret != None and twitter_access_token != None and twiter_access_token_secret != None:
+    twitter_access_token_secret = vault.get_key('twitter_access_token_secret')
+
+    if twitter_consumer_key != None and twitter_consumer_secret != None and twitter_access_token != None and twitter_access_token_secret != None:
         r = requests.get("https://twitter.com/%s" % username)
         if r.status_code == 200:
             activitydetails, userdetails = twitterdetails(username)
