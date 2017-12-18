@@ -28,3 +28,4 @@ tweepy
 TravisPy
 netaddr
 tld
+configobj

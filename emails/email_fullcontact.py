@@ -3,7 +3,7 @@
 import base
 import requests
 import sys
-import config as cfg
+import vault
 import json
 from termcolor import colored
 
@@ -16,9 +16,10 @@ class style:
 
 
 def main(email):
-    if cfg.fullcontact_api != "":
+    fullcontact_api = vault.get_key('fullcontact_api')
+    if fullcontact_api != None:
         req = requests.get("https://api.fullcontact.com/v2/person.json?email=%s" % email,
-                           headers={"X-FullContact-APIKey": cfg.fullcontact_api})
+                           headers={"X-FullContact-APIKey": fullcontact_api})
         data = json.loads(req.content)
         return data
     else:

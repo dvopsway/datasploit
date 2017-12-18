@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import base
-import config as cfg
+import vault
 import requests
 import json
 import sys
@@ -36,8 +36,10 @@ def colorize(string):
 
 
 def google_search(domain):
+    google_cse_key = vault.get_key('google_cse_key')
+    google_cse_cx = vault.get_key('google_cse_cx')
     url = "https://www.googleapis.com/customsearch/v1?key=%s&cx=%s&q=\"%s\"&start=1" % (
-        cfg.google_cse_key, cfg.google_cse_cx, domain)
+        google_cse_key, google_cse_cx, domain)
     all_results = []
     r = requests.get(url, headers={'referer': 'www.datasploit.info/hello'})
     data = json.loads(r.content)
@@ -48,7 +50,7 @@ def google_search(domain):
         while "nextPage" in data['queries']:
             next_index = data['queries']['nextPage'][0]['startIndex']
             url = "https://www.googleapis.com/customsearch/v1?key=%s&cx=%s&q=\"%s\"&start=%s" % (
-                cfg.google_cse_key, cfg.google_cse_cx, domain, next_index)
+                google_cse_key, google_cse_cx, domain, next_index)
             data = json.loads(requests.get(url).content)
 	    if 'error' in data:
 	       return True, all_results
@@ -62,7 +64,7 @@ def banner():
 
 
 def main(domain):
-    if cfg.google_cse_key != "" and cfg.google_cse_key != "XYZ" and cfg.google_cse_cx != "" and cfg.google_cse_cx != "XYZ":
+    if vault.get_key('google_cse_key') != None and vault.get_key('google_cse_cx') != None:
         status, data = google_search(domain)
         return [status, data]
     else:

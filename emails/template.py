@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import base
-import config as cfg
+import vault
 import sys
 
 # Control whether the module is enabled or not

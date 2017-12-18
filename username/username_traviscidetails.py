@@ -7,7 +7,7 @@
 import base
 import sys
 from termcolor import colored
-from config import github_access_token
+import vault
 
 
 #module dependencies
@@ -17,7 +17,7 @@ import json
 
 import warnings
 warnings.filterwarnings('ignore')
-    
+
 
 # Control whether the module is enabled or not
 ENABLED = True
@@ -33,7 +33,8 @@ def banner():
 
 
 def main(username):
-    if github_access_token != "XYZ" and github_access_token != "":
+    github_access_token = vault.get_key('github_access_token')
+    if github_access_token != None:
         # Use the username variable to do some stuff and return the data
         token = TravisPy.github_auth(github_access_token)
         q=urllib2.urlopen("https://api.travis-ci.org/repos/%s" % username)

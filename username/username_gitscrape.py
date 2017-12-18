@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import base
-import config as cfg
+import vault
 import sys
 import json
 import time
@@ -24,7 +24,7 @@ def banner():
 
 
 def find_repos(username):
-    access_token = cfg.github_access_token
+    access_token = vault.get_key('github_access_token')
     list_repos = []
     url = "https://api.github.com/users/%s/repos?access_token=%s" % (username, access_token)
     req = requests.get(url)
@@ -42,7 +42,7 @@ def find_repos(username):
 
 def find_commits(repo_name):
     list_commits = []
-    access_token = cfg.github_access_token
+    access_token = vault.get_key('github_access_token')
     for x in xrange(1, 10):
         url = "https://api.github.com/repos/%s/commits?page=%s&access_token=%s" % (repo_name, x, access_token)
         req = requests.get(url)
@@ -59,7 +59,7 @@ def find_commits(repo_name):
 
 
 def main(username):
-    if cfg.github_access_token != "":
+    if vault.get_key('github_access_token') != None:
         repo_list = find_repos(username)
         master_list = {}
         if not repo_list == "API_LIMIT":

@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import base
-import config as cfg
+import vault
 import httplib2
 import os
 import sys
 import urllib
 from apiclient.discovery import build
-from config import google_api
 from termcolor import colored
 
 
@@ -133,7 +132,8 @@ def analyze_activity(service, **kwargs):
 
 
 def main(username):
-    if google_api != "XYZ" and google_api != "":
+    google_api = vault.get_key('google_api')
+    if google_api != None:
         API_SERVICE_NAME = "youtube"
         API_VERSION = "v3"
         max_results = 50
