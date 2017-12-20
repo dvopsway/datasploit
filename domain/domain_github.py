@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import base
-import config as cfg
+import vault
 import sys
 import json
 import requests
@@ -16,7 +16,8 @@ class style:
 
 
 def github_search(query):
-    endpoint_git = "https://api.github.com/search/code?q=\"%s\"&access_token=%s" % (query, cfg.github_access_token)
+    github_access_token = vault.get_key('github_access_token')
+    endpoint_git = "https://api.github.com/search/code?q=\"%s\"&access_token=%s" % (query, github_access_token)
     req = requests.get(endpoint_git)
     data = json.loads(req.content)
     return data.get('total_count'), data.get('items')
@@ -27,9 +28,9 @@ def banner():
 
 
 def main(domain):
-    if cfg.github_access_token != "":
+    if vault.get_key('github_access_token') != None:
         count, results = github_search(domain)
-        return [count, results]    
+        return [count, results]
     else:
         return [False, "INVALID_API"]
 

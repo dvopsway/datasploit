@@ -4,7 +4,7 @@ import base
 import requests
 import json
 import sys
-import config as cfg
+import vault
 from termcolor import colored
 import time
 
@@ -17,8 +17,8 @@ class style:
 
 
 def get_accesstoken_zoomeye(domain):
-    username = cfg.zoomeyeuser
-    password = cfg.zoomeyepass
+    username = vault.get_key('zoomeyeuser')
+    password = vault.get_key('zoomeyepass')
     headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
     datalogin = '{"username": "%s","password": "%s"}' % (username, password)
     s = requests.post("https://api.zoomeye.org/user/login", data=datalogin, headers=headers)
@@ -44,7 +44,7 @@ def banner():
 
 
 def main(domain):
-    if cfg.zoomeyepass != "" and cfg.zoomeyeuser != "":
+    if vault.get_key('zoomeyepass') != "" and vault.get_key('zoomeyeuser') != "":
         zoomeye_results = search_zoomeye(domain)
 	if zoomeye_results[0]:
 	        return True, json.loads(zoomeye_results)
@@ -81,4 +81,3 @@ if __name__ == "__main__":
     result = main(domain)
     if result:
         output(result, domain)
-

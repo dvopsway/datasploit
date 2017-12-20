@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import base
 import re, sys, json, time, requests
-import config as cfg
+import vault
 from termcolor import colored
 
 
@@ -13,7 +13,7 @@ class style:
 
 def check_api_keys():
     try:
-        if cfg.censysio_id != "" and cfg.censysio_id != "XYZ" and cfg.censysio_secret != "" and cfg.censysio_secret != "XYZ":
+        if vault.get_key('censysio_id') != None and vault.get_key('censysio_secret') != None:
             return True
         else:
             return False
@@ -26,12 +26,15 @@ def censys_search(domain):
     pages = float('inf')
     page = 1
 
+    censysio_id = vault.get_key('censysio_id')
+    censysio_secret = vault.get_key('censysio_secret')
+
     while page <= pages:
         print "Parsed and collected results from page %s" % (str(page))
         #time.sleep(0.5)
         params = {'query': domain, 'page': page}
         res = requests.post("https://www.censys.io/api/v1/search/ipv4", json=params,
-                            auth=(cfg.censysio_id, cfg.censysio_secret))
+                            auth=(censysio_id, censysio_secret))
         payload = res.json()
 
         if 'error' not in payload.keys():
@@ -62,8 +65,10 @@ def censys_search(domain):
 
 
 def view(server, temp_dict):
+    censysio_id = vault.get_key('censysio_id')
+    censysio_secret = vault.get_key('censysio_secret')
     res = requests.get("https://www.censys.io/api/v1/view/ipv4/%s" % (server),
-                       auth=(cfg.censysio_id, cfg.censysio_secret))
+                       auth=(censysio_id, censysio_secret))
     payload = res.json()
 
     try:

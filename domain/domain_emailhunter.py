@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import base
-import config as cfg
+import vault
 import requests
 import json
 import sys
@@ -19,7 +19,8 @@ class style:
 def emailhunter(domain):
     collected_emails = []
     time.sleep(0.3)
-    url = "https://api.emailhunter.co/v1/search?api_key=%s&domain=%s" % (cfg.emailhunter, domain)
+    emailhunter_api = vault.get_key('emailhunter')
+    url = "https://api.emailhunter.co/v1/search?api_key=%s&domain=%s" % (emailhunter_api, domain)
     res = requests.get(url)
     try:
         parsed = json.loads(res.text)
@@ -38,7 +39,7 @@ def banner():
 
 
 def main(domain):
-    if cfg.emailhunter != "":
+    if vault.get_key('emailhunter') != None:
         return emailhunter(domain)
     else:
         return [False, "INVALID_API"]

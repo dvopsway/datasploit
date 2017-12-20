@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import base
-import config as cfg
+import vault
 import os
 import re
 import sys
@@ -24,8 +24,13 @@ def banner():
 
 
 def twitterdetails(username):
-    auth = tweepy.OAuthHandler(cfg.twitter_consumer_key, cfg.twitter_consumer_secret)
-    auth.set_access_token(cfg.twitter_access_token, cfg.twiter_access_token_secret)
+    twitter_consumer_key = vault.get_key('twitter_consumer_key')
+    twitter_consumer_secret = vault.get_key('twitter_consumer_secret')
+    twitter_access_token = vault.get_key('twitter_access_token')
+    twitter_access_token_secret = vault.get_key('twitter_access_token_secret')
+
+    auth = tweepy.OAuthHandler(twitter_consumer_key, twitter_consumer_secret)
+    auth.set_access_token(twitter_access_token, twitter_access_token_secret)
 
     # preparing auth
     api = tweepy.API(auth)
@@ -84,7 +89,12 @@ def twitterdetails(username):
 
 
 def main(username):
-    if cfg.twitter_consumer_key != "" and cfg.twitter_consumer_secret != "" and cfg.twitter_access_token != "" and cfg.twiter_access_token_secret != "":
+    twitter_consumer_key = vault.get_key('twitter_consumer_key')
+    twitter_consumer_secret = vault.get_key('twitter_consumer_secret')
+    twitter_access_token = vault.get_key('twitter_access_token')
+    twitter_access_token_secret = vault.get_key('twitter_access_token_secret')
+
+    if twitter_consumer_key != None and twitter_consumer_secret != None and twitter_access_token != None and twitter_access_token_secret != None:
         r = requests.get("https://twitter.com/%s" % username)
         if r.status_code == 200:
             activitydetails, userdetails = twitterdetails(username)

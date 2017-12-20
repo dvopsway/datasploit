@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import base
-import config as cfg
+import vault
 import requests
 import json
 import sys
@@ -19,7 +19,7 @@ class style:
 def shodandomainsearch(domain):
     time.sleep(0.3)
     endpoint = "https://api.shodan.io/shodan/host/search?key=%s&query=hostname:%s&facets={facets}" % (
-    cfg.shodan_api, domain)
+    vault.get_key('shodan_api'), domain)
     req = requests.get(endpoint)
     return req.content
 
@@ -29,7 +29,7 @@ def banner():
 
 
 def main(domain):
-    if cfg.shodan_api != "":
+    if vault.get_key('shodan_api') != None:
         return json.loads(shodandomainsearch(domain))
     else:
         return [False, "INVALID_API"]

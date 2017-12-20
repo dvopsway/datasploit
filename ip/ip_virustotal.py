@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import base
-import config as cfg
+import vault
 import sys
 import requests
 import json
@@ -22,9 +22,9 @@ def banner():
 
 def main(ip):
     # Use the ip variable to do some stuff and return the data
-    if cfg.virustotal_public_api != "":
+    if vault.get_key('virustotal_public_api') != None:
         print ip
-        api = cfg.virustotal_public_api
+        api = vault.get_key('virustotal_public_api')
         params = "{'ip': '%s', 'apikey': '%s'}" % (ip, api)
         url = "http://www.virustotal.com/vtapi/v2/ip-address/report?ip=%s&apikey=%s" % (ip, api)
         req = requests.get(url, params)

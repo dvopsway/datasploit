@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 
 import base
-import config as cfg
+import vault
 import re
 import requests
 import sys
-from config import spyonweb_access_token
 from termcolor import colored
 
 ENABLED = True
@@ -70,7 +69,7 @@ def extract_tracking_codes(domain):
 
 def spyonweb_request(data,request_type="domain"):
     params = {}
-    params['access_token'] = spyonweb_access_token
+    params['access_token'] = vault.get_key('spyonweb_access_token')
     response = requests.get('https://api.spyonweb.com/v1/' +
                             request_type + '/' + data, params=params)
     if response.status_code == 200:
@@ -102,7 +101,7 @@ def spyonweb_analytics_codes(connections):
 
 
 def main(domain):
-    if spyonweb_access_token != "XYZ" and spyonweb_access_token != "":
+    if vault.get_key('spyonweb_access_token') != None:
         connections = extract_tracking_codes(domain)
         if 'err' in connections:
             return [ connections ]

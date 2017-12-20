@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import base
-import config as cfg
+import vault
 import requests
 import json
 import sys
@@ -18,8 +18,9 @@ class style:
 
 def basic_checks(email):
     if re.match('[^@]+@[^@]+\.[^@]+', email):
-        if cfg.mailboxlayer_api != "" and cfg.mailboxlayer_api != "XYZ" and cfg.mailboxlayer_api != "" and cfg.mailboxlayer_api != "XYZ":
-            url = "http://apilayer.net/api/check?access_key=%s&email=%s&smtp=1&format=1" % (cfg.mailboxlayer_api, email)
+        mailboxlayer_api = vault.get_key('mailboxlayer_api')
+        if vault.get_key('mailboxlayer_api') != None:
+            url = "http://apilayer.net/api/check?access_key=%s&email=%s&smtp=1&format=1" % (mailboxlayer_api, email)
             req = requests.get(url)
             resp = json.loads(req.text)
             return resp

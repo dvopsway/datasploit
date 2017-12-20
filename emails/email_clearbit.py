@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import base
-import config as cfg
+import vault
 import sys
 import requests
 import json
@@ -21,8 +21,9 @@ def banner():
 
 
 def main(email):
-    if cfg.clearbit_apikey != "":
-        headers = {"Authorization": "Bearer %s" % cfg.clearbit_apikey}
+    clearbit_apikey = vault.get_key('clearbit_apikey')
+    if clearbit_apikey != None:
+        headers = {"Authorization": "Bearer %s" % clearbit_apikey}
         req = requests.get("https://person.clearbit.com/v1/people/email/%s" % (email), headers=headers)
         person_details = json.loads(req.content)
         if "error" in req.content and "queued" in req.content:

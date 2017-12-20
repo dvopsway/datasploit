@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import base
-import config as cfg
+import vault
 import requests
 import json
 import sys
@@ -20,8 +20,9 @@ def banner():
 
 
 def main(ip):
-    if cfg.shodan_api != "":
-        endpoint = "https://api.shodan.io/shodan/host/" + str(ip) + "?key=" + cfg.shodan_api
+    shodan_api = vault.get_key('shodan_api')
+    if shodan_api != None:
+        endpoint = "https://api.shodan.io/shodan/host/" + str(ip) + "?key=" + shodan_api
         req = requests.get(endpoint)
         return json.loads(req.content)
     else:
