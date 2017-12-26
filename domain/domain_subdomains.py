@@ -145,6 +145,27 @@ def subdomains_from_google_ct(domain, subdomain_list, other_related_domain_list)
         pass
     return subdomain_list, other_related_domain_list
 
+def subdomains_from_dnstrails(domain, subdomain_list):
+    print colored(' [+] Extracting subdomains from DNSTrails\n', 'blue')
+    url = 'https://app.securitytrails.com/api/domain/info/' + domain
+    headers = {
+        'User-Agent': 'Mozilla/5.0 Firefox/57.0',
+        'Referer': 'https://dnstrails.com/',
+        'Origin': 'https://dnstrails.com',
+        'DNT': '1',
+    }
+    req = requests.get(url, headers=headers)
+    if req.status_code == 200:
+        data = json.loads(req.text)
+        if 'subdomains' in data['result'] and len(data['result']['subdomains']) != 0:
+            subdomains_new = data['result']['subdomains']
+            for a in range(0, len(subdomains_new)):
+                subdomains_new[a] = subdomains_new[a] + '.' + domain
+                print subdomains_new[a]
+                subdomain_list = check_and_append_subdomains(subdomains_new[a], subdomain_list)
+    else:
+        print colored(' [+] DNSTrails API rate limit exceeded\n', 'yellow')
+    return subdomain_list
 
 def banner():
     print colored(style.BOLD + '---> Finding subdomains, will be back soon with list. \n' + style.END, 'blue')
@@ -156,7 +177,8 @@ def main(domain):
     other_related_domain_list = []
     subdomain_list = subdomains(domain, subdomain_list)
     subdomain_list = subdomains_from_netcraft(domain, subdomain_list)
-    subdomain_list, other_related_domain_list = subdomains_from_google_ct(domain, subdomain_list, other_related_domain_list)\
+    subdomain_list, other_related_domain_list = subdomains_from_google_ct(domain, subdomain_list, other_related_domain_list)
+    subdomain_list = subdomains_from_dnstrails(domain, subdomain_list)
     # not printing list of 'other_related_domain_list' anywhere. This is done for later changes.
     return subdomain_list
 
@@ -177,4 +199,3 @@ if __name__ == "__main__":
         #except Exception as e:
     else:
         print "Please provide a domain name as argument"
-        
