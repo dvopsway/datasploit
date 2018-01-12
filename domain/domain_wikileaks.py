@@ -39,7 +39,8 @@ def main(domain):
 
 def output(data, domain=""):
     for tl, lnk in data.items():
-        print "%s (%s)" % (lnk, tl)
+        print "%s (%s)" % (repr(lnk), tl)
+    print ""
     print "For all results, visit: " + 'https://search.wikileaks.org/?query=&exact_phrase=%s&include_external_sources=True&order_by=newest_document_date' % domain
     print "\n-----------------------------\n"
 
@@ -53,4 +54,3 @@ if __name__ == "__main__":
     except Exception as e:
         print e
         print "Please provide a domain name as argument"
-        
