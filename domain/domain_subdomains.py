@@ -157,12 +157,14 @@ def subdomains_from_dnstrails(domain, subdomain_list):
     req = requests.get(url, headers=headers)
     if req.status_code == 200:
         data = json.loads(req.text)
-        if 'subdomains' in data['result'] and len(data['result']['subdomains']) != 0:
+        if 'result' in data and 'subdomains' in data['result'] and len(data['result']['subdomains']) != 0:
             subdomains_new = data['result']['subdomains']
             for a in range(0, len(subdomains_new)):
                 subdomains_new[a] = subdomains_new[a] + '.' + domain
                 print subdomains_new[a]
                 subdomain_list = check_and_append_subdomains(subdomains_new[a], subdomain_list)
+        else:
+            print colored(' [!] {}\n'.format(data['error']), 'yellow')
     else:
         print colored(' [+] DNSTrails API rate limit exceeded\n', 'yellow')
     return subdomain_list
