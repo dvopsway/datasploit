@@ -80,3 +80,10 @@ shodan_api, censysio_id, censysio_secret, zoomeyeuser, zoomeyepass, clearbit_api
 * Login into Github (https://github.com/login) and go to the page 'New personal access token' (https://github.com/settings/tokens/new).
 * Generate a Github access token based on the instructions present at https://travispy.readthedocs.io/en/stable/getting_started/.
 * Copy the Access Token and use as the value for the *github_access_token* field in the config.py file.
+
+## URLScan.io API Key
+* [Register](https://urlscan.io/user/signup) for an account with URLScan.io.
+* [Login](https://urlscan.io/user/login/) to urlscan.io, go [here](https://urlscan.io/user/) and click on the "Add API key" button.
+* Give the key a description when prompted, then click "Create API key". (This may return an error, but a key will be generated, just return to the main user page if this occurs.)
+* There will be a new button next to "Add API key" that will show you your API key.
+* Copy the API key and use it as the value for the *urlscanio_api* field in config.py.
