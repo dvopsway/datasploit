@@ -1,14 +1,14 @@
 [![ToolsWatch Best Tools](https://www.toolswatch.org/badges/toptools/2016.svg)](http://www.toolswatch.org/2017/02/2016-top-security-tools-as-voted-by-toolswatch-org-readers/)
 
-[![Arsenal-2017-EU](https://github.com/toolswatch/badges/blob/master/arsenal/europe/2017.svg)](http://www.toolswatch.org/2017/09/black-hat-arsenal-europe-2017-lineup/) - EUROPE
+[![Arsenal-2017-EU](https://github.com/toolswatch/badges/blob/master/arsenal/europe/2017.svg)](http://www.toolswatch.org/2017/09/black-hat-arsenal-europe-2017-lineup/)
 
-[![Arsenal-2017-US](https://github.com/toolswatch/badges/blob/master/arsenal/usa/2017.svg)](http://www.toolswatch.org/2017/06/the-black-hat-arsenal-usa-2017-phenomenal-line-up-announced/) - USA
+[![Arsenal-2017-US](https://github.com/toolswatch/badges/blob/master/arsenal/usa/2017.svg)](http://www.toolswatch.org/2017/06/the-black-hat-arsenal-usa-2017-phenomenal-line-up-announced/)
 
-[![Arsenal-2017-ASIA](https://github.com/toolswatch/badges/blob/master/arsenal/asia/2017.svg)](http://www.toolswatch.org/2017/02/the-black-hat-arsenal-asia-2017-great-line-up/) - ASIA
+[![Arsenal-2017-ASIA](https://github.com/toolswatch/badges/blob/master/arsenal/asia/2017.svg)](http://www.toolswatch.org/2017/02/the-black-hat-arsenal-asia-2017-great-line-up/)
 
-[![Arsenal-2016-EU](https://www.toolswatch.org/badges/arsenal/2016.svg)](http://www.toolswatch.org/2016/09/the-black-hat-arsenal-europe-2016-line-up/) - EUROPE
+[![Arsenal-2016-EU](https://www.toolswatch.org/badges/arsenal/2016.svg)](http://www.toolswatch.org/2016/09/the-black-hat-arsenal-europe-2016-line-up/)
 
-[![Arsenal-2016-US](https://www.toolswatch.org/badges/arsenal/2016.svg)](http://www.toolswatch.org/2016/06/the-black-hat-arsenal-usa-2016-remarkable-line-up/) - USA
+[![Arsenal-2016-US](https://www.toolswatch.org/badges/arsenal/2016.svg)](http://www.toolswatch.org/2016/06/the-black-hat-arsenal-usa-2016-remarkable-line-up/) 
 
 [![DEFCON 25 ReconVillage](https://img.shields.io/badge/DEFCON%2025-Recon%20Village-red.svg)](http://reconvillage.org/) [![DEFCON 24 Demolabs](https://img.shields.io/badge/DEFCON%2024-Demo%20Labs-red.svg)](https://www.defcon.org/html/defcon-24/dc-24-demolabs.html)
 
