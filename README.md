@@ -1,10 +1,10 @@
 [![ToolsWatch Best Tools](https://www.toolswatch.org/badges/toptools/2016.svg)](http://www.toolswatch.org/2017/02/2016-top-security-tools-as-voted-by-toolswatch-org-readers/)
 
-[![Arsenal-2017-EU](https://rawgit.com/toolswatch/badges/master/arsenal/2017.svg)](http://www.toolswatch.org/2017/09/black-hat-arsenal-europe-2017-lineup/) - EUROPE
+[![Arsenal-2017-EU](https://github.com/toolswatch/badges/blob/master/arsenal/europe/2017.svg)](http://www.toolswatch.org/2017/09/black-hat-arsenal-europe-2017-lineup/) - EUROPE
 
-[![Arsenal-2017-US](https://rawgit.com/toolswatch/badges/master/arsenal/2017.svg)](http://www.toolswatch.org/2017/06/the-black-hat-arsenal-usa-2017-phenomenal-line-up-announced/) - USA
+[![Arsenal-2017-US](https://github.com/toolswatch/badges/blob/master/arsenal/usa/2017.svg)](http://www.toolswatch.org/2017/06/the-black-hat-arsenal-usa-2017-phenomenal-line-up-announced/) - USA
 
-[![Arsenal-2017-ASIA](https://rawgit.com/toolswatch/badges/master/arsenal/2017.svg)](http://www.toolswatch.org/2017/02/the-black-hat-arsenal-asia-2017-great-line-up/) - ASIA
+[![Arsenal-2017-ASIA](https://github.com/toolswatch/badges/blob/master/arsenal/asia/2017.svg)](http://www.toolswatch.org/2017/02/the-black-hat-arsenal-asia-2017-great-line-up/) - ASIA
 
 [![Arsenal-2016-EU](https://www.toolswatch.org/badges/arsenal/2016.svg)](http://www.toolswatch.org/2016/09/the-black-hat-arsenal-europe-2016-line-up/) - EUROPE
 
