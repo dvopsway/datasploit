@@ -28,6 +28,18 @@ def run(component, module_dir, m_input, output = None):
         data = x.main(m_input)
         if data:
             x.output(data, m_input)
+	if output and str(output).lower() == "text":
+            try:
+                if x.WRITE_TEXT_FILE:
+                    filename = "text_report_%s_%s_%s.txt" % (m_input, x.MODULE_NAME, datetime.now().strftime("%Y-%m-%d_%H-%M-%S"))
+                    text_data = x.output_text(data)
+		    fh = open(filename, "w")
+		    fh.write(text_data)
+		    fh.close()
+		    print "[+] Text Report written to %s" % filename
+            except Exception as e:
+                pass
+"""
         if output and str(output).upper() == "JSON":
             json_output[name] = data
 
@@ -41,3 +53,4 @@ def run(component, module_dir, m_input, output = None):
         with open(file, "w") as fh:
             json.dump(json_output, fh, indent=4, sort_keys=True)
         print "JSON report saved to %s/%s" % (filepath, filename)
+"""

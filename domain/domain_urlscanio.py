@@ -11,7 +11,7 @@ from termcolor import colored
 
 
 # Control whether the module is enabled or not
-ENABLED = True
+ENABLED = False
 
 # Set alternative UserAgent, if desired, here.
 custom_agent = 'DataSploit - (https://github.com/DataSploit/datasploit)'

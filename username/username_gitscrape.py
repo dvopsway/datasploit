@@ -11,6 +11,8 @@ from termcolor import colored
 
 # Control whether the module is enabled or not
 ENABLED = True
+WRITE_TEXT_FILE = True
+MODULE_NAME = "Git_Repos_Commits"
 
 
 class style:
@@ -84,6 +86,13 @@ def output(data, username=""):
                 print "\t%s" % commit
             print ""
             counter += 1
+
+def output_text(data):
+	text_data = []
+	for repo_name, commits in data.iteritems():
+		for commit in commits:
+			text_data.append(commit)
+	return "\n".join(text_data)
 
 
 if __name__ == "__main__":

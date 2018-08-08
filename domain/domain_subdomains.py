@@ -13,6 +13,8 @@ import json
 warnings.filterwarnings("ignore")
 
 ENABLED = True
+WRITE_TEXT_FILE = True
+MODULE_NAME = "Domain_subdomains"
 
 
 '''
@@ -249,7 +251,16 @@ def main(domain):
 def output(data, domain=""):
     print colored("List of subdomains found\n", 'green')
     for sub in data:
-        print sub
+	if not re.match("\d{4}-\d{2}-\d{2}", sub):
+            print sub
+
+
+def output_text(data):
+	ret_out = []
+	for sub in data:
+        	if not re.match("\d{4}-\d{2}-\d{2}", sub):
+        		ret_out.append(sub)
+	return "\n".join(ret_out)
 
 
 if __name__ == "__main__":

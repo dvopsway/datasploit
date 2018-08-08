@@ -25,7 +25,7 @@ def main(email):
     atag = soup.findAll('a')
     domains = []
     for at in atag:
-        if at.text in at['href']:
+        if 'href' in at and at.text in at['href']:
             domains.append(at.text)
     domains = list(set(domains))
     return domains

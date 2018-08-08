@@ -42,7 +42,7 @@ def parse_page(content):
         'name': str(content.find(id='name').text),
         'age': content.find(id='age').text.encode('utf-8').strip(',\xc2\xa0'),
         'picture': str(content.find(id='user-photo').get('src')),
-        'teaser': str(content.find(id='teaser').text),
+        'teaser': str(content.find(id='teaser').text.encode('ascii', 'ignore')),
     }
     return userinfo
 
@@ -73,11 +73,11 @@ def output(data, username=""):
 
 
 if __name__ == "__main__":
-    try:
+    #try:
         username = sys.argv[1]
         banner()
         result = main(username)
         output(result, username)
-    except Exception as e:
-        print e
-        print "Please provide a username as argument"
+    #except Exception as e:
+    #    print e
+    #    print "Please provide a username as argument"

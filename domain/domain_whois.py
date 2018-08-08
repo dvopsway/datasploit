@@ -15,8 +15,11 @@ class style:
 
 
 def whoisnew(domain):
-    w = whois.whois(domain)
-    return dict(w)
+	try:
+	    w = whois.whois(domain)
+	    return dict(w)
+	except:
+		return {}
 
 
 def banner():

@@ -9,6 +9,8 @@ import time
 from termcolor import colored
 
 ENABLED = True
+WRITE_TEXT_FILE = True
+MODULE_NAME = "Domain_Emails"
 
 
 class style:
@@ -54,15 +56,13 @@ def output(data, domain=""):
             print str(x)
 
 
+def output_text(data):
+	return "\n".join(data)
+
+
 if __name__ == "__main__":
-    try:
         domain = sys.argv[1]
         banner()
         result = main(domain)
         if result:
             output(result, domain)
-        else:
-            pass
-    except Exception as e:
-        print e
-        print "Please provide a domain name as argument"

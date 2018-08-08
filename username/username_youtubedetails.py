@@ -60,7 +60,7 @@ def get_channel_details(username, service, **kwargs):
             if not os.path.exists(file_path):
                 os.makedirs(file_path)
             path = file_path + "/youtube." + url.split('.')[-1]
-            urllib.urlretrieve(url, path)
+            #urllib.urlretrieve(url, path)
         if 'customUrl' in result['snippet']:
             details["Full URL"] = str("https://www.youtube.com/channel/{id}"
                                       .format(id=result['snippet']['customUrl']))
