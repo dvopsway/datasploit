@@ -40,7 +40,7 @@ Usage: domainOsint.py domain [options]
 
 Options:
   -h,	    	--help			    show this help message and exit
-  -o,		--option[text, json]	    Generate a report in the reports directory reports/json ou reports/text
+  -o,		--option[text, json]	    Generate a report in the reports directory reports/json or reports/text
 
 ```
 
