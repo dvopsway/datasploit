@@ -1,0 +1,41 @@
+site_name: DataSploit
+theme: material
+pages:
+- 'Overview': 'index.md'
+- 'Setting up the Environment': 'setupGuide.md'
+- 'Writing a Module': 'Writing_Modules.md'
+- 'How to Generate Api Keys': 'apiGeneration.md'
+- Usage: 'Usage.md'
+- Contributors: 'contributors.md'
+- Roadmap: 'roadmap.md'
+
+
+# Options
+extra:
+  feature:
+    tabs: true
+  palette:
+    primary: indigo
+    accent: indigo
+  social:
+    - type: github-alt
+      link: https://github.com/datasploit/datasploit
+    - type: twitter
+      link: https://twitter.com/datasploit
+    - type: facebook
+      link: https://www.facebook.com/datasploit
+
+
+
+# Project information
+site_name: DataSploit
+site_description: All about DataSploit.
+site_author: Shubham Mittal
+site_url: http://datasploit.github.io/datasploit/
+
+# Repository
+repo_name: datasploit/datasploit
+repo_url: https://github.com/datasploit/datasploit
+
+# Copyright
+copyright: 'Copyright &copy; 2017 - 2018'

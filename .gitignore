@@ -5,6 +5,23 @@ __pycache__/
 
 config.py
 /config.py
+facebook_user_details.py
+generate_passwords.py
+git_searcher.py
+temptweets.txt
+
+instaUsernameOsint.py
+ip_to_neighboursites.py
+test.py
+test_domainOsint.py
+testhtml.html
+testreg.py
+username_reddit.py
+active_default_file_check.py
+
+core/ui/migrations/*
+*.swp
+db.sqlite3
 
 # C extensions
 *.so
@@ -64,3 +81,6 @@ target/
 #Ipython Notebook
 .ipynb_checkpoints
 
+
+profile_pic/
+reports/json/
